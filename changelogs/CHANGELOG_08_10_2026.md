@@ -86,4 +86,27 @@
 - Menambahkan unit test suite `tests/pdfToWord.test.ts` (40 unit test total lulus 100%).
 - Memperbarui dokumen spesifikasi `docs/PRD.md` Bagian US-08 dan Arsitektur Teknis.
 
+### Rebranding: Tanpa Batas & Free (Peniadaan Klaim 100% No-Backend)
+- Menghapus klaim mutlak "100% client-side", "Zero Server", "Zero Leak", dan "Tanpa Server Backend" dari seluruh komponen antarmuka pengguna seiring diterapkannya arsitektur hybrid backend.
+- Memperbarui branding utama menjadi **Tanpa Batas & Free**:
+  - Header (`src/components/header.ts`): badge `Tanpa Batas`, subjudul `Tanpa Batas • Bebas Biaya • 100% Free`, dan pill status `Tanpa Batas & Free`.
+  - Footer (`src/components/footer.ts`): label `Andesa PDF - Toolkit PDF Tanpa Batas & Free` dan tag `Tanpa Batas Kuota`.
+  - Hero (`src/components/hero.ts`): badge `Toolkit PDF Lengkap Tanpa Batas & 100% Free`, heading `Tanpa Batas dan Bebas Biaya`, dan pills fokus kebebasan kuota serta presisi konversi.
+  - Workspace (`src/components/toolWorkspace.ts`): label info `Tanpa Batas & Free`, pembersihan teks "100% lokal", dan pembaruan fallback filename menjadi `dokumen-andesa.pdf`.
+  - Registry Alat (`src/tools/index.ts`): pembaruan badge `Tanpa Batas` dan deskripsi modul Word ke PDF.
+- Memperbarui metadata halaman `index.html` (title `Andesa PDF - Utilitas PDF Tanpa Batas & Free` dan deskripsi).
+- Memperbarui dokumen `README.md` dan `docs/PRD.md` (Bagian 1, 3, dan 15) mencerminkan arsitektur hybrid dan positioning "Tanpa Batas dan Free".
+- Menambahkan pengujian branding pada `tests/branding.test.ts` untuk memastikan tidak ada sisa klaim zero-server/client-side pada header, hero, footer, dan index.html (41 unit test lolos 100%).
+
+## Versi 0.1.2
+
+### Penambahan Copyright Footer & Konsistensi Identitas
+- Menambahkan baris copyright resmi di bagian bawah footer (`src/components/footer.ts`):
+  - Copyright notice: `© 2026 Andrian Tonur Iskandar. All rights reserved.`
+  - Tautan lisensi MIT: `MIT License`.
+  - Tata letak responsif mobile-first (`flex-col sm:flex-row`), pemusatan di viewport sempit, serta spasi padding rapi.
+- Sinkronisasi versi package `0.1.2` pada `package.json` dan `package-lock.json`.
+- Memperbarui unit test `tests/branding.test.ts` untuk memvalidasi teks copyright dan lisensi pada komponen footer.
+- Memperbarui dokumentasi spesifikasi identitas `docs/PRD.md` Bagian 15.
+
 

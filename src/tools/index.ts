@@ -72,11 +72,11 @@ export const TOOLS_LIST: ToolInfo[] = [
   {
     id: 'word-to-pdf',
     title: 'Word ke PDF',
-    description: 'Konversi file Microsoft Word (.docx) menjadi dokumen PDF secara instan di browser.',
+    description: 'Konversi file Microsoft Word (.docx) menjadi dokumen PDF secara instan, presisi, dan gratis.',
     icon: 'file-up',
     category: 'convert',
     accentColor: 'from-sky-500 to-indigo-600',
-    badge: 'Client-side',
+    badge: 'Tanpa Batas',
     accept: '.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     multiple: false,
     actionText: 'Konversi ke PDF',

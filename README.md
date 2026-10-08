@@ -1,6 +1,6 @@
 # Andesa PDF
 
-Aplikasi web utilitas PDF _all-in-one_ yang berjalan **100% di sisi klien (client-side in-browser)**. Tidak ada server backend, tidak ada database, dan dokumen Anda tidak pernah dikirim ke internet.
+Aplikasi web utilitas PDF _all-in-one_ yang **tanpa batas dan 100% free**. Pengolah dokumen lengkap, cepat, dan tanpa batasan kuota file.
 
 ---
 
@@ -17,11 +17,12 @@ Aplikasi web utilitas PDF _all-in-one_ yang berjalan **100% di sisi klien (clien
 
 ---
 
-## Privasi & Keamanan
+## Keandalan & Fleksibilitas
 
-Semua pemrosesan file (parsing, rendering, re-encoding) dilakukan oleh browser pada CPU dan memori lokal perangkat Anda.
+Andesa PDF dirancang untuk kemudahan dan fleksibilitas pemrosesan dokumen:
 
-- **0 File Diunggah**: Tidak ada payload file yang dikirimkan melalui jaringan internet.
+- **Tanpa Batas Kuota**: Bebas mengolah dan mengonversi berkas dokumen kapan saja secara gratis.
+- **Engine Fleksibel**: Mendukung pemrosesan instan client-side di peramban serta arsitektur hybrid microservice untuk konversi Word berpresisi tinggi.
 - **Tanpa Akun**: Tidak memerlukan registrasi, login, atau token API.
 
 ---

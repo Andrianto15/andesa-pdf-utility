@@ -1,16 +1,16 @@
 # Product Requirements Document (PRD)
 
-## Andesa PDF (Zero-Server Client-Side PDF Utilities)
+## Andesa PDF (Toolkit PDF Tanpa Batas & Free)
 
 ---
 
 ### 1. Executive Summary
 
-Andesa PDF adalah web application suite utilitas PDF all-in-one yang beroperasi **100% di sisi klien (in-browser)** tanpa database, tanpa backend server untuk pemrosesan file, dan tanpa registrasi akun.
+Andesa PDF adalah web application suite utilitas PDF all-in-one yang beroperasi **tanpa batas dan 100% free** tanpa batasan kuota penggunaan, tanpa paywall, dan tanpa registrasi akun.
 
-Semua manipulasi file (merging, splitting, conversion, signing, kompresi) dieksekusi langsung pada CPU/memori perangkat pengguna menggunakan JavaScript, WebAssembly (WASM), dan Web Workers. Andesa PDF menawarkan privasi total: dokumen rahasia (KTP, kontrak, laporan keuangan) tidak pernah dikirim melalui jaringan internet.
+Aplikasi mengadopsi arsitektur hybrid modern: modul manipulasi dasar (merging, splitting, compression, signing, JPG-to-PDF, Markdown) diproses instan langsung di peramban pengguna, sementara modul konversi dokumen tingkat lanjut (Word ke PDF dan PDF ke Word) didukung oleh integrasi backend microservice converter dengan fallback mulus ke engine lokal browser.
 
-Aplikasi dibangun dengan stack **Vite + TypeScript + Tailwind CSS** menggunakan **Light Theme** modern, berlisensi **MIT License** (Open Source & memperbolehkan modifikasi/komersialisasi dengan menyertakan copyright notice), mengedepankan performa tinggi, UI mobile-first yang responsif, serta pemrosesan file yang aman dan cepat.
+Aplikasi dibangun dengan stack **Vite + TypeScript + Tailwind CSS** menggunakan **Light Theme** modern, berlisensi **MIT License** (Open Source), mengedepankan performa tinggi, UI mobile-first yang responsif, serta kenyamanan pemrosesan berkas tanpa batasan.
 
 ---
 
@@ -26,8 +26,8 @@ Aplikasi dibangun dengan stack **Vite + TypeScript + Tailwind CSS** menggunakan 
 
 | Tujuan                        | Target                                                              |
 | ----------------------------- | ------------------------------------------------------------------- |
-| **Zero Server Transmission**  | 100% proses dokumen lokal di memori browser                         |
-| **Zero Backend Cost**         | Web dapat di-host statis (Cloudflare Pages / Vercel / GitHub Pages) |
+| **Tanpa Batas Kuota & Biaya** | 100% free tanpa kuota harian atau paywall tersembunyi              |
+| **Hybrid Conversion Engine**  | Konversi dokumen presisi tinggi via backend dengan fallback lokal  |
 | **Comprehensive MVP Toolkit** | 8 modul utama siap pakai di peluncuran perdana                      |
 | **Blazing Fast Execution**    | Operasi standar (merge/split/jpg-to-pdf) selesai < 2 detik          |
 | **Zero Friction**             | Tidak ada login, tidak ada database, langsung drag-and-drop         |
@@ -272,11 +272,13 @@ graph TD
 
 - **Nama Aplikasi Resmi**: **Andesa PDF**.
 - **Slug Package**: `andesa-pdf` (`package.json`, `package-lock.json`).
+- **Tagline & Nilai Utama**: Tanpa Batas & Free (Bebas Biaya, Tanpa Batasan Kuota).
 - **Komponen Identitas UI**:
-  - Header: Menampilkan teks `Andesa PDF` dengan badge `Client-Side` dan deskripsi responsif.
-  - Footer: Menampilkan label `Andesa PDF - Client-Side PDF Toolkit`.
-  - Halaman Web (`index.html`): Title tag `Andesa PDF - Utilitas PDF 100% Client-Side (Zero Server, Zero Limit)` dan meta description yang selaras.
+  - Header: Menampilkan teks `Andesa PDF` dengan badge `Tanpa Batas`, subjudul `Tanpa Batas • Bebas Biaya • 100% Free`, dan pill `Tanpa Batas & Free`.
+  - Footer: Menampilkan label `Andesa PDF - Toolkit PDF Tanpa Batas & Free`, indikator `Tanpa Batas Kuota`, serta pemberitahuan hak cipta `© 2026 Andrian Tonur Iskandar. All rights reserved.` dan tautan lisensi MIT.
+  - Hero: Menampilkan `Toolkit PDF Lengkap Tanpa Batas & 100% Free` dan `Tanpa Batas dan Bebas Biaya`.
+  - Halaman Web (`index.html`): Title tag `Andesa PDF - Utilitas PDF Tanpa Batas & Free` dan meta description yang selaras.
   - Nama Berkas Output: File PDF hasil ekspor menggunakan prefix default `andesa-pdf-*.pdf`.
-- **Verifikasi Unit Test**: Suite pengujian `tests/branding.test.ts` memverifikasi konsistensi nama merek pada package.json, index.html, dan komponen UI.
+- **Verifikasi Unit Test**: Suite pengujian `tests/branding.test.ts` memverifikasi konsistensi nama merek, branding Tanpa Batas & Free, dan copyright footer pada package.json, index.html, dan komponen UI.
 
 
