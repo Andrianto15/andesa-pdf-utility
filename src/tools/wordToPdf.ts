@@ -1,119 +1,235 @@
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import { PDFDocument } from 'pdf-lib';
 import { renderAsync } from 'docx-preview';
+import html2canvas from 'html2canvas';
 import { readFileAsArrayBuffer } from '../utils/format';
 
-export async function convertWordToPdf(
+export interface PageSlice {
+  startY: number;
+  height: number;
+}
+
+export interface WordToPdfOptions {
+  preferServer?: boolean;
+  backendUrl?: string;
+}
+
+export interface BackendHealthResponse {
+  available: boolean;
+  engine: string;
+}
+
+export function calculatePageSlices(totalHeight: number, pageHeight: number): PageSlice[] {
+  if (totalHeight <= 0 || pageHeight <= 0) {
+    return [{ startY: 0, height: 0 }];
+  }
+
+  if (totalHeight <= pageHeight * 1.05) {
+    return [{ startY: 0, height: totalHeight }];
+  }
+
+  const slices: PageSlice[] = [];
+  let currentY = 0;
+  while (currentY < totalHeight) {
+    const remaining = totalHeight - currentY;
+    const sliceHeight = Math.min(pageHeight, remaining);
+    slices.push({ startY: currentY, height: sliceHeight });
+    currentY += sliceHeight;
+  }
+
+  return slices;
+}
+
+export async function checkBackendHealth(
+  backendUrl = 'http://localhost:3001'
+): Promise<BackendHealthResponse> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 2000);
+  if (typeof (timeoutId as unknown as { unref?: () => void }).unref === 'function') {
+    (timeoutId as unknown as { unref: () => void }).unref();
+  }
+
+  try {
+    const res = await fetch(`${backendUrl}/api/health`, {
+      method: 'GET',
+      signal: controller.signal,
+    });
+
+    if (!res.ok) {
+      return { available: false, engine: 'unavailable' };
+    }
+
+    const data = await res.json();
+    return {
+      available: data.status === 'ok' && data.engine === 'libreoffice',
+      engine: data.engine || 'unavailable',
+    };
+  } catch {
+    return { available: false, engine: 'unavailable' };
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+export async function convertWordToPdfViaServer(
+  file: File,
+  backendUrl = 'http://localhost:3001',
+  onProgress?: (current: number, total: number) => void
+): Promise<Blob> {
+  onProgress?.(1, 3);
+  const formData = new FormData();
+  formData.append('file', file);
+
+  onProgress?.(2, 3);
+  const response = await fetch(`${backendUrl}/api/convert/word-to-pdf`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    let errorMsg = `Server error (${response.status})`;
+    try {
+      const errJson = await response.json();
+      if (errJson.error) errorMsg = errJson.error;
+    } catch {
+      // Ignore JSON parse error
+    }
+    throw new Error(errorMsg);
+  }
+
+  onProgress?.(3, 3);
+  return await response.blob();
+}
+
+export async function convertWordToPdfClient(
   file: File,
   onProgress?: (current: number, total: number) => void
 ): Promise<Blob> {
   const buffer = await readFileAsArrayBuffer(file);
-  onProgress?.(1, 3);
+  onProgress?.(1, 4);
 
-  // Buat offscreen container sementara untuk rendering docx-preview
+  const wrapper = document.createElement('div');
+  wrapper.style.position = 'fixed';
+  wrapper.style.top = '0';
+  wrapper.style.left = '0';
+  wrapper.style.width = '1000px';
+  wrapper.style.height = '1000px';
+  wrapper.style.overflow = 'hidden';
+  wrapper.style.opacity = '0';
+  wrapper.style.pointerEvents = 'none';
+  wrapper.style.zIndex = '-99999';
+
   const container = document.createElement('div');
-  container.style.position = 'fixed';
-  container.style.left = '-9999px';
-  container.style.top = '-9999px';
-  container.style.width = '794px'; // ~A4 width @96dpi
+  container.style.width = '794px';
   container.style.background = '#ffffff';
   container.style.color = '#000000';
-  document.body.appendChild(container);
+  wrapper.appendChild(container);
+  document.body.appendChild(wrapper);
 
   try {
     await renderAsync(buffer, container, undefined, {
       inWrapper: true,
       ignoreWidth: false,
       ignoreHeight: false,
+      breakPages: true,
+      ignoreLastRenderedPageBreak: false,
+      useBase64URL: true,
     });
 
-    onProgress?.(2, 3);
+    onProgress?.(2, 4);
 
-    // Ekstrak teks dan struktur halaman dari elemen yang dirender
     const sections = container.querySelectorAll('section.docx, article');
+    const elementsToProcess: HTMLElement[] =
+      sections.length > 0 ? (Array.from(sections) as HTMLElement[]) : [container];
+
     const pdfDoc = await PDFDocument.create();
-    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+    const a4Width = 595.28;
+    const a4Height = 841.89;
+    const a4Ratio = a4Height / a4Width;
 
-    const elementsToProcess = sections.length > 0 ? Array.from(sections) : [container];
+    for (let i = 0; i < elementsToProcess.length; i++) {
+      const sectionEl = elementsToProcess[i];
+      const canvas = await html2canvas(sectionEl, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+      });
 
-    for (let sIdx = 0; sIdx < elementsToProcess.length; sIdx++) {
-      const sec = elementsToProcess[sIdx] as HTMLElement;
-      const page = pdfDoc.addPage([595.28, 841.89]); // A4
-      const { width, height } = page.getSize();
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+      const targetPageHeight = Math.round(canvasWidth * a4Ratio);
 
-      const margin = 50;
-      let currentY = height - margin;
+      const slices = calculatePageSlices(canvasHeight, targetPageHeight);
 
-      // Ambil semua elemen teks/paragraf
-      const paragraphs = sec.querySelectorAll('p, h1, h2, h3, h4, li');
-      const textNodes = paragraphs.length > 0 ? Array.from(paragraphs) : [sec];
+      for (const slice of slices) {
+        if (slice.height <= 0) continue;
 
-      for (const el of textNodes) {
-        const text = (el.textContent || '').trim();
-        if (!text) continue;
+        const sliceCanvas = document.createElement('canvas');
+        sliceCanvas.width = canvasWidth;
+        sliceCanvas.height = targetPageHeight;
 
-        const tagName = el.tagName.toLowerCase();
-        const isHeader = tagName.startsWith('h');
-        const activeFont = isHeader ? fontBold : font;
-        const fontSize = isHeader ? (tagName === 'h1' ? 18 : 14) : 10;
-        const lineHeight = fontSize * 1.35;
-
-        // Bungkus baris teks jika melebihi lebar halaman
-        const maxWidth = width - margin * 2;
-        const words = text.split(' ');
-        let currentLine = '';
-
-        for (const word of words) {
-          const testLine = currentLine ? `${currentLine} ${word}` : word;
-          const textWidth = activeFont.widthOfTextAtSize(testLine, fontSize);
-
-          if (textWidth > maxWidth && currentLine) {
-            if (currentY - lineHeight < margin) {
-              // Halaman baru jika melebihi batas bawah
-              const newPage = pdfDoc.addPage([width, height]);
-              currentY = height - margin;
-              newPage.drawText(currentLine, {
-                x: margin,
-                y: currentY,
-                size: fontSize,
-                font: activeFont,
-                color: rgb(0.1, 0.1, 0.1),
-              });
-            } else {
-              page.drawText(currentLine, {
-                x: margin,
-                y: currentY,
-                size: fontSize,
-                font: activeFont,
-                color: rgb(0.1, 0.1, 0.1),
-              });
-            }
-            currentY -= lineHeight;
-            currentLine = word;
-          } else {
-            currentLine = testLine;
-          }
+        const ctx = sliceCanvas.getContext('2d');
+        if (ctx) {
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, sliceCanvas.width, sliceCanvas.height);
+          ctx.drawImage(
+            canvas,
+            0,
+            slice.startY,
+            canvasWidth,
+            slice.height,
+            0,
+            0,
+            canvasWidth,
+            slice.height
+          );
         }
 
-        if (currentLine) {
-          if (currentY - lineHeight >= margin) {
-            page.drawText(currentLine, {
-              x: margin,
-              y: currentY,
-              size: fontSize,
-              font: activeFont,
-              color: rgb(0.1, 0.1, 0.1),
-            });
-            currentY -= lineHeight + (isHeader ? 6 : 4);
-          }
-        }
+        const dataUrl = sliceCanvas.toDataURL('image/jpeg', 0.95);
+        const image = await pdfDoc.embedJpg(dataUrl);
+        const pdfPage = pdfDoc.addPage([a4Width, a4Height]);
+        pdfPage.drawImage(image, {
+          x: 0,
+          y: 0,
+          width: a4Width,
+          height: a4Height,
+        });
       }
+
+      onProgress?.(2 + Math.round(((i + 1) / elementsToProcess.length) * 1), 4);
     }
 
-    onProgress?.(3, 3);
+    onProgress?.(4, 4);
     const pdfBytes = await pdfDoc.save();
-    return new Blob([pdfBytes as any], { type: 'application/pdf' });
+    return new Blob([pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
   } finally {
-    document.body.removeChild(container);
+    if (wrapper.parentNode) {
+      wrapper.parentNode.removeChild(wrapper);
+    }
   }
+}
+
+export async function convertWordToPdf(
+  file: File,
+  onProgress?: (current: number, total: number) => void,
+  options?: WordToPdfOptions
+): Promise<Blob> {
+  const backendUrl =
+    options?.backendUrl ||
+    (typeof window !== 'undefined' && (window as unknown as { __ANDESA_BACKEND_URL__?: string }).__ANDESA_BACKEND_URL__) ||
+    'http://localhost:3001';
+  const preferServer = options?.preferServer !== false;
+
+  if (preferServer) {
+    try {
+      const health = await checkBackendHealth(backendUrl);
+      if (health.available) {
+        return await convertWordToPdfViaServer(file, backendUrl, onProgress);
+      }
+    } catch {
+      // Fallback to client converter
+    }
+  }
+
+  return await convertWordToPdfClient(file, onProgress);
 }

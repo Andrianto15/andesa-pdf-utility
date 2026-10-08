@@ -123,11 +123,13 @@ Aplikasi dibangun dengan stack **Vite + TypeScript + Tailwind CSS** menggunakan 
 
 #### US-07: Word (.docx) to PDF
 
-- **Cerita**: Sebagai pengguna, saya ingin mengubah file Word menjadi PDF langsung di browser.
+- **Cerita**: Sebagai pengguna, saya ingin mengubah file Word menjadi PDF langsung dengan tata letak, tabel, dan format visual yang 100% presisi mendekati Microsoft Word asli.
 - **Kriteria Penerimaan**:
   - Menerima file format `.docx`.
-  - Mengonversi elemen teks, tabel dasar, dan styling ke representasi PDF.
-  - Menampilkan warning/preview batas tata letak format kompleks.
+  - **Arsitektur Hybrid**:
+    - **Server Microservice Engine (Utama)**: Mengirimkan dokumen ke backend Node.js Express (`server/`) yang menjalankan engine **LibreOffice Headless** (`soffice`) dalam Docker container (`docker-compose.yml`) untuk konversi 99% presisi tinggi dengan render tabel, border, kolom, font asli, dan tanda tangan resmi.
+    - **Browser Client-Side Engine (Fallback Otomatis)**: Jika backend offline atau tidak tersedia, sistem otomatis beralih ke rendering lokal browser menggunakan pipeline `docx-preview` + `html2canvas` (2x DPI) + vertical page slicing `pdf-lib` tanpa mengalami crash atau teks bertumpuk.
+  - Resolusi tajam dan output berkas PDF standar A4 (595.28 x 841.89 pt).
 
 #### US-08: PDF to Word (.docx)
 
@@ -146,10 +148,16 @@ graph TD
     WW[Web Worker Engine]
 
     subgraph Client Memory [Browser Execution Sandbox]
-        PDFLIB[pdf-lib: Merge, Split, Sign, Structure]
+        PDFLIB[pdf-lib: Merge, Split, Sign, Structure, PDF Generation]
         PDFJS[pdfjs-dist: Render, Thumbnail, Text Extraction]
         CANVAS[HTML5 Canvas: Compression, Stamp, Sign Pad]
         DOCXTOOL[docx & docx-preview: Word Conversion]
+        H2C[html2canvas: High-Fidelity DOM-to-Canvas Rasterization]
+    end
+
+    subgraph Backend Microservice [Optional Docker Engine - Port 3001]
+        EXPRESS[Express.js REST API]
+        SOFFICE[LibreOffice Headless Engine]
     end
 
     UI -->|Offload Heavy Task| WW
@@ -157,19 +165,27 @@ graph TD
     WW --> PDFJS
     WW --> CANVAS
     WW --> DOCXTOOL
+    DOCXTOOL --> H2C
+    H2C --> PDFLIB
+
+    UI -.->|Word to PDF Server Mode| EXPRESS
+    EXPRESS --> SOFFICE
+    SOFFICE -->|High-Fidelity PDF Stream| UI
 
     PDFLIB -->|Blob / ObjectURL| UI
     CANVAS -->|Blob / ObjectURL| UI
     DOCXTOOL -->|Blob / ObjectURL| UI
 ```
 
-#### Library Selection
+#### Library & Backend Selection
 
-1. **`pdf-lib`**: Manipulasi struktur PDF (merge, split, embed image, draw text, delete pages). Ringan (~300KB), bebas ketergantungan native.
-2. **`pdfjs-dist`**: Render halaman PDF ke `<canvas>` untuk thumbnail, preview visual, dan ekstraksi teks untuk PDF-to-Markdown.
-3. **`docx` & `docx-preview`**: Parsing `.docx` ke DOM dan pembuatan dokumen Word client-side.
-4. **HTML5 Canvas API**: Signature pad dan image downsampling untuk kompresi raster.
-5. **Web Workers API**: Menjalankan konversi berat di background thread untuk menjaga UI tetap 60fps.
+1. **`server/` (Node.js Express + LibreOffice Microservice)**: Endpoint `POST /api/convert/word-to-pdf` untuk memproses dokumen DOCX dengan engine native LibreOffice headless di dalam Docker (`Dockerfile` & `docker-compose.yml`).
+2. **`pdf-lib`**: Manipulasi struktur PDF (merge, split, embed image, draw text, page packaging). Ringan (~300KB), bebas ketergantungan native.
+3. **`pdfjs-dist`**: Render halaman PDF ke `<canvas>` untuk thumbnail, preview visual, dan ekstraksi teks untuk PDF-to-Markdown.
+4. **`docx` & `docx-preview`**: Parsing `.docx` ke DOM dan pembuatan dokumen Word client-side.
+5. **`html2canvas`**: Render struktur visual DOM dari `docx-preview` ke canvas resolusi tinggi (2x DPI) untuk fallback lokal Word to PDF.
+6. **HTML5 Canvas API**: Signature pad, image downsampling untuk kompresi raster, dan vertical page slicing.
+7. **Web Workers API**: Menjalankan konversi berat di background thread untuk menjaga UI tetap 60fps.
 
 #### Memory Management
 

@@ -58,4 +58,21 @@
 - Sinkronisasi dokumentasi `README.md` dan `docs/PRD.md` (termasuk penambahan Bagian 15: Branding & Identity Standards).
 - Penambahan unit test verifikasi identitas merek di `tests/branding.test.ts` dan pembaruan `tests/readme.test.ts`.
 
+### Perbaikan Konversi Word ke PDF (High-Fidelity Rendering)
+- Memperbaiki bug kritis penumpukan teks (superimposed/overlapping text) di mana seluruh baris halaman berikutnya menimpa halaman pertama pada `src/tools/wordToPdf.ts`.
+- Mengimplementasikan pipeline visual rendering presisi tinggi: `docx-preview` -> `html2canvas` (2x DPI) -> `pdf-lib`.
+- Menjaga keutuhan tata letak dokumen Word asli: tabel, garis border, kolom, heading, warna teks, margin, dan tanda tangan (sign-off).
+- Menambahkan algoritma vertical page slicing otomatis (`calculatePageSlices`) agar dokumen Word multi-halaman terpotong rapi per halaman A4 tanpa teks hilang atau tumpang tindih.
+- Menambahkan unit test suite baru `tests/wordToPdf.test.ts` untuk memverifikasi kalkulasi pemotongan halaman dan interface modul.
+- Memperbarui dokumentasi kebutuhan produk `docs/PRD.md` Bagian US-07 dan Arsitektur Teknis.
+
+### Backend Microservice Word ke PDF (LibreOffice Native Engine)
+- Menambahkan backend service di folder `server/` berbasis Node.js Express + LibreOffice headless (`soffice`).
+- Menyediakan endpoint REST API `POST /api/convert/word-to-pdf` untuk konversi dokumen DOCX dengan fidelity visual 99% (render tabel, font, margin, dan tanda tangan native).
+- Menyediakan endpoint health check `GET /api/health` untuk mendeteksi kesiapan LibreOffice engine di server.
+- Menyediakan `server/Dockerfile` (Debian node:20-slim + libreoffice + font packages) dan root `docker-compose.yml` untuk deployment lokal / server via container.
+- Mengintegrasikan arsitektur hybrid pada client `src/tools/wordToPdf.ts`: memprioritaskan backend LibreOffice jika tersedia, dan otomatis melakukan fallback ke client-side renderer jika backend offline.
+- Menambahkan unit test integrasi backend dan error handling di `tests/wordToPdf.test.ts` (33 unit test lulus).
+- Memperbarui `docs/PRD.md` Bagian 6 (US-07) dan Bagian 7 (Arsitektur Teknis Hybrid).
+
 
