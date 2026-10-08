@@ -140,3 +140,19 @@
 - Memperbarui URL clone repositori pada panduan instalasi `README.md` menjadi `https://github.com/Andrianto15/andesa-pdf-utility.git`.
 - Menambahkan unit test suite verifikasi badges di `tests/readme.test.ts`.
 - Memperbarui spesifikasi dokumentasi proyek pada `docs/PRD.md` Bagian 13.
+
+## Versi 0.1.4
+
+### Konfigurasi Environment Variables Frontend & Standarisasi Resolusi Backend URL
+- Menambahkan berkas template environment `.env.example` dan berkas `.env` lokal dengan konfigurasi variabel `VITE_BACKEND_URL`.
+- Memperbarui `.gitignore` agar mengabaikan `.env` dan `.env.*` untuk keamanan, dengan pengecualian `.env.example`.
+- Membuat helper konfigurasi terpusat `src/utils/config.ts` (`getBackendUrl`) dengan hirarki resolusi bertingkat:
+  1. Parameter override fungsi eksplisit (`options.backendUrl`).
+  2. Vite build/runtime environment variable (`import.meta.env.VITE_BACKEND_URL`).
+  3. Variabel injeksi global window (`window.__ANDESA_BACKEND_URL__`).
+  4. Node/Jest environment variable (`process.env.VITE_BACKEND_URL`).
+  5. Fallback lokal default (`http://localhost:3001`).
+- Mengintegrasikan modul `src/tools/wordToPdf.ts` dan `src/tools/pdfToWord.ts` menggunakan helper `getBackendUrl`.
+- Menambahkan test suite `tests/config.test.ts` (7 pengujian unit baru, total 62 pengujian unit lulus 100%).
+- Memperbarui `README.md` (status badge tests 62 passed & instruksi penyalinan `.env.example`).
+- Memperbarui dokumen spesifikasi arsitektur `docs/PRD.md` Bagian 7.

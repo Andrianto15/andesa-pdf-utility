@@ -200,6 +200,20 @@ graph TD
 - Penggunaan `URL.createObjectURL(blob)` dan pemanggilan wajib `URL.revokeObjectURL(url)` setelah unduhan selesai untuk mencegah memory leaks.
 - Batasan rekomendasi ukuran file: hingga 50MB per file untuk menjaga stabilitas RAM browser mobile/desktop.
 
+#### Environment Configuration & Deployment
+
+- **Frontend Environment Variables (`.env`)**:
+  - `VITE_BACKEND_URL`: URL endpoint microservice konversi LibreOffice (default lokal: `http://localhost:3001`).
+  - Berkas contoh: `.env.example`. Berkas `.env` dan `.env.*` diabaikan oleh Git untuk keamanan kredensial.
+- **Hierarki Resolusi URL Backend (`src/utils/config.ts`)**:
+  1. Parameter opsi pemanggilan fungsi eksplisit (`options.backendUrl`).
+  2. Vite build/runtime environment variable (`import.meta.env.VITE_BACKEND_URL`).
+  3. Injeksi variabel global window (`window.__ANDESA_BACKEND_URL__`).
+  4. Node.js environment variable (`process.env.VITE_BACKEND_URL`) untuk pengujian unit Jest.
+  5. Fallback lokal default (`http://localhost:3001`).
+- **Verifikasi & Pengujian**:
+  - Validasi menyeluruh pada modul `tests/config.test.ts`.
+
 ---
 
 ### 8. Design & UX Requirements

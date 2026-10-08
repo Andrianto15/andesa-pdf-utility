@@ -3,7 +3,7 @@
 [![App Version](https://img.shields.io/github/package-json/v/Andrianto15/andesa-pdf-utility?color=2563EB&label=app%20version&logo=github)](https://github.com/Andrianto15/andesa-pdf-utility)
 [![NPM Version](https://img.shields.io/badge/npm-v0.1.3-CB3837?logo=npm&logoColor=white)](https://www.npmjs.com/package/andesa-pdf)
 [![License: MIT](https://img.shields.io/github/license/Andrianto15/andesa-pdf-utility?color=16A34A)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-55%20passed-16A34A?logo=jest&logoColor=white)](tests)
+[![Tests](https://img.shields.io/badge/tests-62%20passed-16A34A?logo=jest&logoColor=white)](tests)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
@@ -69,24 +69,32 @@ Andesa PDF dirancang untuk kemudahan dan fleksibilitas pemrosesan dokumen:
    npm install
    ```
 
-3. Jalankan server pengembangan lokal:
+3. Konfigurasi environment (opsional untuk backend microservice):
+
+   ```bash
+   cp .env.example .env
+   ```
+
+4. Jalankan server pengembangan lokal:
 
    ```bash
    npm run dev
    ```
 
-4. Bangun untuk produksi:
+5. Bangun untuk produksi:
 
    ```bash
    npm run build
    ```
 
-5. Jalankan unit test:
+6. Jalankan unit test:
+
    ```bash
    npm test
    ```
 
-6. Jalankan lint & autofix:
+7. Jalankan lint & autofix:
+
    ```bash
    npm run lint
    npm run lint:fix

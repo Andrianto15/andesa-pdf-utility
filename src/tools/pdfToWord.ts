@@ -2,6 +2,7 @@ import { Document, Packer, Paragraph, TextRun, HeadingLevel } from 'docx';
 import { readFileAsArrayBuffer } from '../utils/format';
 import { loadPdf } from '../utils/pdf';
 import { checkBackendHealth } from './wordToPdf';
+import { getBackendUrl } from '../utils/config';
 
 export interface PdfToWordOptions {
   preferServer?: boolean;
@@ -10,15 +11,16 @@ export interface PdfToWordOptions {
 
 export async function convertPdfToWordViaServer(
   file: File,
-  backendUrl = 'http://localhost:3001',
+  backendUrl?: string,
   onProgress?: (current: number, total: number) => void
 ): Promise<Blob> {
+  const targetUrl = getBackendUrl(backendUrl);
   onProgress?.(1, 3);
   const formData = new FormData();
   formData.append('file', file);
 
   onProgress?.(2, 3);
-  const response = await fetch(`${backendUrl}/api/convert/pdf-to-word`, {
+  const response = await fetch(`${targetUrl}/api/convert/pdf-to-word`, {
     method: 'POST',
     body: formData,
   });
@@ -151,10 +153,7 @@ export async function convertPdfToWord(
   onProgress?: (current: number, total: number) => void,
   options?: PdfToWordOptions
 ): Promise<Blob> {
-  const backendUrl =
-    options?.backendUrl ||
-    (typeof window !== 'undefined' && (window as unknown as { __ANDESA_BACKEND_URL__?: string }).__ANDESA_BACKEND_URL__) ||
-    'http://localhost:3001';
+  const backendUrl = getBackendUrl(options?.backendUrl);
   const preferServer = options?.preferServer !== false;
 
   if (preferServer) {

@@ -2,6 +2,7 @@ import { PDFDocument } from 'pdf-lib';
 import { renderAsync } from 'docx-preview';
 import html2canvas from 'html2canvas';
 import { readFileAsArrayBuffer } from '../utils/format';
+import { getBackendUrl } from '../utils/config';
 
 export interface PageSlice {
   startY: number;
@@ -40,8 +41,9 @@ export function calculatePageSlices(totalHeight: number, pageHeight: number): Pa
 }
 
 export async function checkBackendHealth(
-  backendUrl = 'http://localhost:3001'
+  backendUrl?: string
 ): Promise<BackendHealthResponse> {
+  const targetUrl = getBackendUrl(backendUrl);
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 2000);
   if (typeof (timeoutId as unknown as { unref?: () => void }).unref === 'function') {
@@ -49,7 +51,7 @@ export async function checkBackendHealth(
   }
 
   try {
-    const res = await fetch(`${backendUrl}/api/health`, {
+    const res = await fetch(`${targetUrl}/api/health`, {
       method: 'GET',
       signal: controller.signal,
     });
@@ -72,15 +74,16 @@ export async function checkBackendHealth(
 
 export async function convertWordToPdfViaServer(
   file: File,
-  backendUrl = 'http://localhost:3001',
+  backendUrl?: string,
   onProgress?: (current: number, total: number) => void
 ): Promise<Blob> {
+  const targetUrl = getBackendUrl(backendUrl);
   onProgress?.(1, 3);
   const formData = new FormData();
   formData.append('file', file);
 
   onProgress?.(2, 3);
-  const response = await fetch(`${backendUrl}/api/convert/word-to-pdf`, {
+  const response = await fetch(`${targetUrl}/api/convert/word-to-pdf`, {
     method: 'POST',
     body: formData,
   });
@@ -214,10 +217,7 @@ export async function convertWordToPdf(
   onProgress?: (current: number, total: number) => void,
   options?: WordToPdfOptions
 ): Promise<Blob> {
-  const backendUrl =
-    options?.backendUrl ||
-    (typeof window !== 'undefined' && (window as unknown as { __ANDESA_BACKEND_URL__?: string }).__ANDESA_BACKEND_URL__) ||
-    'http://localhost:3001';
+  const backendUrl = getBackendUrl(options?.backendUrl);
   const preferServer = options?.preferServer !== false;
 
   if (preferServer) {
