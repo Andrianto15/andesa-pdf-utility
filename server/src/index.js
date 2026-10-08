@@ -125,6 +125,77 @@ app.post('/api/convert/word-to-pdf', upload.single('file'), async (req, res) => 
   }
 });
 
+app.post('/api/convert/pdf-to-word', upload.single('file'), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'Tidak ada berkas yang diunggah' });
+  }
+
+  const originalName = req.file.originalname || 'document.pdf';
+  if (!originalName.toLowerCase().endsWith('.pdf')) {
+    return res.status(400).json({ error: 'Format berkas harus berupa .pdf' });
+  }
+
+  const binary = await findLibreOfficeBinary();
+  if (!binary) {
+    return res.status(503).json({
+      error: 'LibreOffice tidak tersedia di server. Silakan jalankan via Docker atau install LibreOffice.',
+    });
+  }
+
+  const randomId = crypto.randomBytes(8).toString('hex');
+  const tempDir = path.join(os.tmpdir(), `andesa-pdf-${randomId}`);
+  await fs.mkdir(tempDir, { recursive: true });
+
+  const inputPath = path.join(tempDir, 'input.pdf');
+  const baseName = path.parse(originalName).name;
+  const expectedDocxPath = path.join(tempDir, 'input.docx');
+
+  try {
+    await fs.writeFile(inputPath, req.file.buffer);
+
+    await new Promise((resolve, reject) => {
+      execFile(
+        binary,
+        [
+          '--headless',
+          '--infilter=writer_pdf_import',
+          '--convert-to',
+          'docx',
+          '--outdir',
+          tempDir,
+          inputPath,
+        ],
+        { timeout: 45000 },
+        (error, stdout, stderr) => {
+          if (error) {
+            return reject(new Error(`Konversi gagal: ${stderr || error.message}`));
+          }
+          resolve(stdout);
+        }
+      );
+    });
+
+    const docxBuffer = await fs.readFile(expectedDocxPath);
+    const encodedFilename = encodeURIComponent(`${baseName}-converted.docx`);
+
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    );
+    res.setHeader('Content-Disposition', `attachment; filename="${encodedFilename}"`);
+    res.send(docxBuffer);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Terjadi kesalahan internal konversi';
+    res.status(500).json({ error: message });
+  } finally {
+    try {
+      await fs.rm(tempDir, { recursive: true, force: true });
+    } catch {
+      // Ignore cleanup error
+    }
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Andesa PDF Backend running on http://localhost:${PORT}`);
 });

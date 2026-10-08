@@ -1,8 +1,44 @@
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from 'docx';
 import { readFileAsArrayBuffer } from '../utils/format';
 import { loadPdf } from '../utils/pdf';
+import { checkBackendHealth } from './wordToPdf';
 
-export async function convertPdfToWord(
+export interface PdfToWordOptions {
+  preferServer?: boolean;
+  backendUrl?: string;
+}
+
+export async function convertPdfToWordViaServer(
+  file: File,
+  backendUrl = 'http://localhost:3001',
+  onProgress?: (current: number, total: number) => void
+): Promise<Blob> {
+  onProgress?.(1, 3);
+  const formData = new FormData();
+  formData.append('file', file);
+
+  onProgress?.(2, 3);
+  const response = await fetch(`${backendUrl}/api/convert/pdf-to-word`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    let errorMsg = `Server error (${response.status})`;
+    try {
+      const errJson = await response.json();
+      if (errJson.error) errorMsg = errJson.error;
+    } catch {
+      // Ignore JSON parse error
+    }
+    throw new Error(errorMsg);
+  }
+
+  onProgress?.(3, 3);
+  return await response.blob();
+}
+
+export async function convertPdfToWordClient(
   file: File,
   onProgress?: (current: number, total: number) => void
 ): Promise<Blob> {
@@ -20,7 +56,6 @@ export async function convertPdfToWord(
 
     if (items.length === 0) continue;
 
-    // Tambah penanda halaman jika lebih dari 1 halaman
     if (i > 1) {
       docChildren.push(
         new Paragraph({
@@ -93,7 +128,7 @@ function createWordParagraph(text: string, isHeader: boolean): Paragraph {
         new TextRun({
           text,
           bold: true,
-          size: 26, // 13pt
+          size: 26,
         }),
       ],
       spacing: { before: 180, after: 80 },
@@ -104,9 +139,34 @@ function createWordParagraph(text: string, isHeader: boolean): Paragraph {
     children: [
       new TextRun({
         text,
-        size: 22, // 11pt
+        size: 22,
       }),
     ],
     spacing: { after: 100 },
   });
+}
+
+export async function convertPdfToWord(
+  file: File,
+  onProgress?: (current: number, total: number) => void,
+  options?: PdfToWordOptions
+): Promise<Blob> {
+  const backendUrl =
+    options?.backendUrl ||
+    (typeof window !== 'undefined' && (window as unknown as { __ANDESA_BACKEND_URL__?: string }).__ANDESA_BACKEND_URL__) ||
+    'http://localhost:3001';
+  const preferServer = options?.preferServer !== false;
+
+  if (preferServer) {
+    try {
+      const health = await checkBackendHealth(backendUrl);
+      if (health.available) {
+        return await convertPdfToWordViaServer(file, backendUrl, onProgress);
+      }
+    } catch {
+      // Fallback to client converter
+    }
+  }
+
+  return await convertPdfToWordClient(file, onProgress);
 }

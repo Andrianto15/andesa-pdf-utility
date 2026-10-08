@@ -133,10 +133,13 @@ Aplikasi dibangun dengan stack **Vite + TypeScript + Tailwind CSS** menggunakan 
 
 #### US-08: PDF to Word (.docx)
 
-- **Cerita**: Sebagai pengguna, saya ingin mengonversi dokumen PDF menjadi file Word yang dapat diedit.
+- **Cerita**: Sebagai pengguna, saya ingin mengonversi dokumen PDF menjadi file Word (.docx) yang dapat diedit dengan format, tata letak, dan struktur dokumen yang tetap utuh dan presisi.
 - **Kriteria Penerimaan**:
-  - Mengekstrak teks dan paragraf dari PDF ke file `.docx` baru menggunakan pustaka docx.
-  - File `.docx` hasil konversi dapat dibuka di Microsoft Word / Google Docs / LibreOffice.
+  - Menerima file input `.pdf`.
+  - **Arsitektur Hybrid**:
+    - **Server Microservice Engine (Utama)**: Mengirimkan berkas PDF ke backend Node.js Express (`server/`) yang menjalankan LibreOffice Headless dengan filter import `writer_pdf_import` (`--headless --infilter=writer_pdf_import --convert-to docx`) dalam Docker container (`docker-compose.yml`) untuk rekonstruksi visual dokumen berpresisi tinggi (tabel, paragraf, font, dan format asli).
+    - **Browser Client-Side Engine (Fallback Otomatis)**: Jika backend offline atau tidak terjangkau, aplikasi otomatis beralih ke ekstraksi teks lokal di browser menggunakan `pdfjs-dist` dan pembuatan berkas `.docx` melalui pustaka `docx`.
+  - File `.docx` hasil konversi dapat diedit di Microsoft Word, Google Docs, dan LibreOffice Writer.
 
 ---
 
@@ -169,8 +172,9 @@ graph TD
     H2C --> PDFLIB
 
     UI -.->|Word to PDF Server Mode| EXPRESS
+    UI -.->|PDF to Word Server Mode| EXPRESS
     EXPRESS --> SOFFICE
-    SOFFICE -->|High-Fidelity PDF Stream| UI
+    SOFFICE -->|High-Fidelity PDF / DOCX Stream| UI
 
     PDFLIB -->|Blob / ObjectURL| UI
     CANVAS -->|Blob / ObjectURL| UI
@@ -179,7 +183,7 @@ graph TD
 
 #### Library & Backend Selection
 
-1. **`server/` (Node.js Express + LibreOffice Microservice)**: Endpoint `POST /api/convert/word-to-pdf` untuk memproses dokumen DOCX dengan engine native LibreOffice headless di dalam Docker (`Dockerfile` & `docker-compose.yml`).
+1. **`server/` (Node.js Express + LibreOffice Microservice)**: Endpoint `POST /api/convert/word-to-pdf` dan `POST /api/convert/pdf-to-word` untuk memproses konversi dokumen DOCX dan PDF dengan engine native LibreOffice headless di dalam Docker (`Dockerfile` & `docker-compose.yml`).
 2. **`pdf-lib`**: Manipulasi struktur PDF (merge, split, embed image, draw text, page packaging). Ringan (~300KB), bebas ketergantungan native.
 3. **`pdfjs-dist`**: Render halaman PDF ke `<canvas>` untuk thumbnail, preview visual, dan ekstraksi teks untuk PDF-to-Markdown.
 4. **`docx` & `docx-preview`**: Parsing `.docx` ke DOM dan pembuatan dokumen Word client-side.

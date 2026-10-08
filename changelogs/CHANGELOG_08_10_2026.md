@@ -75,4 +75,15 @@
 - Menambahkan unit test integrasi backend dan error handling di `tests/wordToPdf.test.ts` (33 unit test lulus).
 - Memperbarui `docs/PRD.md` Bagian 6 (US-07) dan Bagian 7 (Arsitektur Teknis Hybrid).
 
+## Versi 0.1.1
+
+### Backend Microservice PDF ke Word (LibreOffice Native Engine)
+- Menambahkan endpoint REST API `POST /api/convert/pdf-to-word` pada `server/src/index.js` menggunakan LibreOffice headless dengan filter import `writer_pdf_import`.
+- Menjaga keutuhan tata letak dokumen Word hasil konversi dari PDF: tabel, teks multi-kolom, styling heading, dan penataan paragraf.
+- Memperbarui `server/Dockerfile` dengan penambahan paket `libreoffice-draw` untuk kelengkapan PDF import filter di lingkungan Debian Linux.
+- Mengimplementasikan arsitektur hybrid pada `src/tools/pdfToWord.ts`: memprioritaskan pemrosesan di server microservice jika aktif, dan otomatis melakukan fallback ke client-side extractor (`convertPdfToWordClient`) jika server offline/tidak terjangkau.
+- Menambahkan konfigurasi Jest polyfill `DOMMatrix` di `tests/setup.cjs` untuk kompatibilitas pengujian modul PDF di lingkungan Node.js.
+- Menambahkan unit test suite `tests/pdfToWord.test.ts` (40 unit test total lulus 100%).
+- Memperbarui dokumen spesifikasi `docs/PRD.md` Bagian US-08 dan Arsitektur Teknis.
+
 
