@@ -109,4 +109,23 @@
 - Memperbarui unit test `tests/branding.test.ts` untuk memvalidasi teks copyright dan lisensi pada komponen footer.
 - Memperbarui dokumentasi spesifikasi identitas `docs/PRD.md` Bagian 15.
 
+### Optimasi Fitur PDF to Markdown (Rekonstruksi Spasial & Tipografi)
+- Mengoptimalkan modul konversi PDF ke Markdown (`src/tools/pdfToMarkdown.ts`):
+  - Pengurutan teks spasial (Y descending, X ascending) berdasarkan toleransi baseline baris visual untuk menjamin urutan baca (reading order) yang akurat.
+  - Rekonstruksi struktur heading otomatis (`#`, `##`, `###`) dengan menghitung font size dominan dokumen dan mendeteksi bobot font (bold).
+  - Smart paragraph joining: menyambungkan baris yang terputus akibat word wrap menjadi paragraf yang koheren, de-hyphenation kata terpotong di akhir baris (`-`), dan pemisahan paragraf hanya jika terdapat jeda baris vertikal yang signifikan.
+  - Normalisasi list item: konversi simbol bullet (`•`, `●`, `▪`, dll.) menjadi format standar `- item` serta perapian numbered list (`1.`, `2.`).
+  - Deteksi dan pembungkusan teks monospace (`Courier`, `Consolas`, dll.) ke dalam blok kode Markdown (```).
+  - Penambahan opsi pemrosesan: `smartParagraphs`, `detectHeadings`, dan `includePageBreaks`.
+  - Penambahan metrik ekstraksi dokumen: `pageCount`, `wordCount`, dan `charCount`.
+- Memperbarui antarmuka workspace (`src/components/toolWorkspace.ts` & `src/main.ts`):
+  - Panel kontrol konfigurasi optimasi Markdown (mobile-first, responsive grid): toggle Gabungkan Paragraf, Deteksi Heading, dan Pemisah Halaman (`---`).
+  - Tampilan pratinjau hasil Markdown dilengkapi badge statistik (jumlah halaman, kata, karakter) dan tombol Salin ke Clipboard.
+- Meningkatkan kompatibilitas utilitas (`src/utils/format.ts` & `src/utils/pdf.ts`):
+  - Penggunaan `file.arrayBuffer()` modern dengan fallback `FileReader`.
+  - Penambahan polyfill `Promise.withResolvers` dan `Promise.try` untuk keandalan eksekusi pdf.js.
+- Menambahkan test suite komprehensif `tests/pdfToMarkdown.test.ts` (13 pengujian unit baru, 54 unit test total lulus 100%).
+- Memperbarui dokumentasi spesifikasi `docs/PRD.md` Bagian US-05.
+
+
 

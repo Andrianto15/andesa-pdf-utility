@@ -107,11 +107,15 @@ Aplikasi dibangun dengan stack **Vite + TypeScript + Tailwind CSS** menggunakan 
 
 #### US-05: PDF to Markdown
 
-- **Cerita**: Sebagai pengguna, saya ingin mengekstrak teks dari PDF ke Markdown untuk catatan atau prompt AI.
+- **Cerita**: Sebagai pengguna, saya ingin mengekstrak teks dari PDF ke Markdown untuk catatan atau prompt AI dengan struktur heading, paragraf, dan daftar yang rapi.
 - **Kriteria Penerimaan**:
-  - Ekstrak teks halaman per halaman menggunakan `pdfjs-dist`.
-  - Rekonstruksi struktur heading berdasarkan font size / weight.
-  - Tombol Copy to Clipboard dan Download `.md`.
+  - Ekstrak teks halaman per halaman menggunakan `pdfjs-dist` dengan pengurutan spasial koordinat (top-to-bottom, left-to-right).
+  - Rekonstruksi struktur heading hierarkis (`#`, `##`, `###`) otomatis berdasarkan analisis ukuran font dominan dokumen dan bobot font (bold).
+  - Smart paragraph joining: menyambung kalimat bersambung tanpa hard line breaks dan de-hyphenation kata yang terpotong (`-`), dengan tetap memisahkan paragraf pada jarak baris vertikal.
+  - Normalisasi list item: konversi simbol bullet (`•`, `●`, `▪`, dll.) menjadi format `- item` dan penataan nomor teratur.
+  - Deteksi monospace code block (```).
+  - Kontrol konfigurasi konversi: Toggle Gabungkan Paragraf Cerdas, Deteksi Heading, dan Pemisah Halaman (`---`).
+  - Indikator statistik ekstraksi (jumlah halaman, kata, karakter), tombol Salin ke Clipboard, dan Unduh berkas `.md`.
 
 #### US-06: Kompresi PDF
 

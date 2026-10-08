@@ -9,7 +9,15 @@ export function renderToolWorkspace(
   progressText: string,
   progressPercent: number,
   resultBlob: Blob | null,
-  resultDetails?: { filename: string; originalSize?: number; newSize?: number; markdownText?: string }
+  resultDetails?: {
+    filename: string;
+    originalSize?: number;
+    newSize?: number;
+    markdownText?: string;
+    pageCount?: number;
+    wordCount?: number;
+    charCount?: number;
+  }
 ): string {
   return `
     <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
@@ -196,6 +204,7 @@ function renderSpecificToolControls(tool: ToolInfo, files: UploadedFileItem[]): 
     case 'sign':
       return renderSignControls(files[0]);
     case 'pdf-to-markdown':
+      return renderPdfToMarkdownControls(files[0]);
     case 'word-to-pdf':
     case 'pdf-to-word':
       return renderStandardSingleFileControls(files[0]);
@@ -480,6 +489,54 @@ function renderSignControls(file: UploadedFileItem): string {
   `;
 }
 
+function renderPdfToMarkdownControls(file: UploadedFileItem): string {
+  return `
+    <div class="space-y-4">
+      <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <div class="truncate">
+            <h4 class="text-sm font-bold text-slate-900 truncate">${file.file.name}</h4>
+            <p class="text-xs text-slate-500">${file.sizeFormatted} • Siap dikonversi</p>
+          </div>
+        </div>
+        <span class="self-start sm:self-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Siap</span>
+      </div>
+
+      <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 shadow-xs">
+        <h5 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Opsi Optimasi Markdown</h5>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-300 transition-colors cursor-pointer min-h-[44px]">
+            <input type="checkbox" id="md-opt-smart-paragraphs" class="mt-0.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer" checked />
+            <div class="text-left">
+              <span class="text-xs font-semibold text-slate-800 block">Gabungkan Paragraf</span>
+              <span class="text-[11px] text-slate-500 block leading-tight">Sambung baris yang terputus & rapikan tanda hubung</span>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-300 transition-colors cursor-pointer min-h-[44px]">
+            <input type="checkbox" id="md-opt-headings" class="mt-0.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer" checked />
+            <div class="text-left">
+              <span class="text-xs font-semibold text-slate-800 block">Deteksi Heading</span>
+              <span class="text-[11px] text-slate-500 block leading-tight">Ubah font besar & tebal jadi #, ##, ###</span>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-300 transition-colors cursor-pointer min-h-[44px]">
+            <input type="checkbox" id="md-opt-page-breaks" class="mt-0.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer" checked />
+            <div class="text-left">
+              <span class="text-xs font-semibold text-slate-800 block">Pemisah Halaman</span>
+              <span class="text-[11px] text-slate-500 block leading-tight">Sertakan pembatas (---) antar halaman</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function renderStandardSingleFileControls(file: UploadedFileItem): string {
   return `
     <div class="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
@@ -500,7 +557,15 @@ function renderStandardSingleFileControls(file: UploadedFileItem): string {
 function renderResultView(
   _tool: ToolInfo,
   _blob: Blob,
-  details?: { filename: string; originalSize?: number; newSize?: number; markdownText?: string }
+  details?: {
+    filename: string;
+    originalSize?: number;
+    newSize?: number;
+    markdownText?: string;
+    pageCount?: number;
+    wordCount?: number;
+    charCount?: number;
+  }
 ): string {
   const filename = details?.filename || 'dokumen-andesa.pdf';
 
@@ -537,13 +602,30 @@ function renderResultView(
         details?.markdownText
           ? `
         <div class="text-left mb-6 max-w-3xl mx-auto">
-          <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-200">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-600">Pratinjau Markdown</span>
-            <button id="btn-copy-markdown" class="px-3 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold cursor-pointer border border-indigo-200">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-200">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-600">Pratinjau Markdown</span>
+              ${
+                details.pageCount !== undefined
+                  ? `<span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[11px] font-medium">${details.pageCount} Halaman</span>`
+                  : ''
+              }
+              ${
+                details.wordCount !== undefined
+                  ? `<span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-[11px] font-medium">${details.wordCount} Kata</span>`
+                  : ''
+              }
+              ${
+                details.charCount !== undefined
+                  ? `<span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[11px] font-medium">${details.charCount} Karakter</span>`
+                  : ''
+              }
+            </div>
+            <button id="btn-copy-markdown" class="px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold cursor-pointer border border-indigo-200 transition-colors min-h-[36px] flex items-center justify-center">
               Salin ke Clipboard
             </button>
           </div>
-          <pre class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-slate-800 max-h-60 overflow-y-auto whitespace-pre-wrap">${details.markdownText}</pre>
+          <pre class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-slate-800 max-h-64 overflow-y-auto whitespace-pre-wrap">${details.markdownText}</pre>
         </div>
       `
           : ''

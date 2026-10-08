@@ -28,7 +28,15 @@ interface AppState {
   progressText: string;
   progressPercent: number;
   resultBlob: Blob | null;
-  resultDetails?: { filename: string; originalSize?: number; newSize?: number; markdownText?: string };
+  resultDetails?: {
+    filename: string;
+    originalSize?: number;
+    newSize?: number;
+    markdownText?: string;
+    pageCount?: number;
+    wordCount?: number;
+    charCount?: number;
+  };
   // Tool-specific sub-states
   splitSelectedPages: Set<number>;
   splitMode: 'single' | 'zip';
@@ -38,6 +46,11 @@ interface AppState {
   signPenColor: string;
   signBoxNorm: { x: number; y: number; w: number; h: number };
   signatureDataUrl: string | null;
+  markdownOptions: {
+    smartParagraphs: boolean;
+    detectHeadings: boolean;
+    includePageBreaks: boolean;
+  };
 }
 
 const state: AppState = {
@@ -56,6 +69,11 @@ const state: AppState = {
   signPenColor: '#000000',
   signBoxNorm: { x: 0.1, y: 0.7, w: 0.3, h: 0.15 },
   signatureDataUrl: null,
+  markdownOptions: {
+    smartParagraphs: true,
+    detectHeadings: true,
+    includePageBreaks: true,
+  },
 };
 
 // Render Orchestrator
@@ -239,6 +257,35 @@ function bindWorkspaceEvents(): void {
     bindJpgToPdfControls();
   } else if (tool.id === 'sign') {
     bindSignControls();
+  } else if (tool.id === 'pdf-to-markdown') {
+    bindPdfToMarkdownControls();
+  }
+}
+
+function bindPdfToMarkdownControls(): void {
+  const smartParagraphsEl = document.getElementById('md-opt-smart-paragraphs') as HTMLInputElement | null;
+  const headingsEl = document.getElementById('md-opt-headings') as HTMLInputElement | null;
+  const pageBreaksEl = document.getElementById('md-opt-page-breaks') as HTMLInputElement | null;
+
+  if (smartParagraphsEl) {
+    smartParagraphsEl.checked = state.markdownOptions.smartParagraphs;
+    smartParagraphsEl.addEventListener('change', () => {
+      state.markdownOptions.smartParagraphs = smartParagraphsEl.checked;
+    });
+  }
+
+  if (headingsEl) {
+    headingsEl.checked = state.markdownOptions.detectHeadings;
+    headingsEl.addEventListener('change', () => {
+      state.markdownOptions.detectHeadings = headingsEl.checked;
+    });
+  }
+
+  if (pageBreaksEl) {
+    pageBreaksEl.checked = state.markdownOptions.includePageBreaks;
+    pageBreaksEl.addEventListener('change', () => {
+      state.markdownOptions.includePageBreaks = pageBreaksEl.checked;
+    });
   }
 }
 
@@ -746,13 +793,20 @@ async function executeToolAction(): Promise<void> {
       }
 
       case 'pdf-to-markdown': {
-        const { markdown } = await convertPdfToMarkdown(primaryFile, updateProgress);
+        const { markdown, pageCount, wordCount, charCount } = await convertPdfToMarkdown(
+          primaryFile,
+          updateProgress,
+          state.markdownOptions
+        );
         const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8' });
         state.resultBlob = blob;
         state.resultDetails = {
           filename: `${baseName}.md`,
           markdownText: markdown,
           newSize: blob.size,
+          pageCount,
+          wordCount,
+          charCount,
         };
         break;
       }
