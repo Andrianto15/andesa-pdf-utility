@@ -25,4 +25,14 @@ describe('README Verification', () => {
     expect(readmeContent).toContain('npm test');
     expect(readmeContent).toContain('npm run lint');
   });
+
+  test('README.md should include GitHub status badges', () => {
+    const readmeContent = fs.readFileSync(readmePath, 'utf8');
+
+    expect(readmeContent).toMatch(/img\.shields\.io\/github\/package-json\/v\/Andrianto15\/andesa-pdf-utility/);
+    expect(readmeContent).toMatch(/img\.shields\.io.*npm/i);
+    expect(readmeContent).toMatch(/img\.shields\.io\/github\/license\/Andrianto15\/andesa-pdf-utility/);
+    expect(readmeContent).toMatch(/img\.shields\.io.*jest/i);
+    expect(readmeContent).toMatch(/img\.shields\.io.*typescript/i);
+  });
 });

@@ -127,5 +127,16 @@
 - Menambahkan test suite komprehensif `tests/pdfToMarkdown.test.ts` (13 pengujian unit baru, 54 unit test total lulus 100%).
 - Memperbarui dokumentasi spesifikasi `docs/PRD.md` Bagian US-05.
 
+## Versi 0.1.3
 
-
+### Penambahan GitHub Status Badges pada README.md
+- Menambahkan status badges resmi (Shields.io) pada bagian header `README.md`:
+  - **App Version**: Terhubung secara dinamis via metadata GitHub repository `Andrianto15/andesa-pdf-utility`.
+  - **NPM Version**: Menampilkan versi npm dengan tautan ke registry package `andesa-pdf`.
+  - **License**: Menampilkan lisensi MIT dengan tautan ke berkas `LICENSE`.
+  - **Test Suite**: Menampilkan status passing unit test Jest (55 test passed).
+  - **Tech Stack**: Badges untuk Node.js (>=18), TypeScript (5.x), Vite (6.x), dan Tailwind CSS (4.x).
+  - **Komunitas**: Badge `PRs welcome` terhubung ke pull requests GitHub.
+- Memperbarui URL clone repositori pada panduan instalasi `README.md` menjadi `https://github.com/Andrianto15/andesa-pdf-utility.git`.
+- Menambahkan unit test suite verifikasi badges di `tests/readme.test.ts`.
+- Memperbarui spesifikasi dokumentasi proyek pada `docs/PRD.md` Bagian 13.

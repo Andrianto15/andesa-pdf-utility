@@ -258,6 +258,13 @@ graph TD
 ### 13. Project Documentation
 
 - **README.md**: Dokumentasi esensial untuk developer dan pengguna, mencakup ikhtisar ringkas fitur, garansi privasi client-side, panduan setup lokal (`npm run dev`, `npm run build`, `npm test`, `npm run lint`, `npm run lint:fix`), serta tautan lisensi.
+  - **Status Badges**: Dilengkapi status badges resmi dari Shields.io untuk GitHub display:
+    - *App Version*: Dynamic sync via `img.shields.io/github/package-json/v/Andrianto15/andesa-pdf-utility`.
+    - *NPM Version*: Custom badge terstruktur `img.shields.io/badge/npm-v0.1.3-CB3837?logo=npm` terhubung ke direktori npm `andesa-pdf`.
+    - *License*: MIT badge dari GitHub repository metadata.
+    - *Test Suite*: Status kelulusan test suite Jest.
+    - *Tech Stack*: Badge ekosistem Node.js, TypeScript, Vite, dan Tailwind CSS.
+    - *Community*: Badge `PRs welcome`.
 - **PRD.md**: Spesifikasi fungsional, arsitektur teknis, kriteria penerimaan, dan acuan implementasi mendalam.
 
 ---

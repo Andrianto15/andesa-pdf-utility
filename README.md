@@ -1,5 +1,15 @@
 # Andesa PDF
 
+[![App Version](https://img.shields.io/github/package-json/v/Andrianto15/andesa-pdf-utility?color=2563EB&label=app%20version&logo=github)](https://github.com/Andrianto15/andesa-pdf-utility)
+[![NPM Version](https://img.shields.io/badge/npm-v0.1.3-CB3837?logo=npm&logoColor=white)](https://www.npmjs.com/package/andesa-pdf)
+[![License: MIT](https://img.shields.io/github/license/Andrianto15/andesa-pdf-utility?color=16A34A)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-55%20passed-16A34A?logo=jest&logoColor=white)](tests)
+[![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.x-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Andrianto15/andesa-pdf-utility/pulls)
+
 Aplikasi web utilitas PDF _all-in-one_ yang **tanpa batas dan 100% free**. Pengolah dokumen lengkap, cepat, dan tanpa batasan kuota file.
 
 ---
@@ -49,7 +59,7 @@ Andesa PDF dirancang untuk kemudahan dan fleksibilitas pemrosesan dokumen:
 1. Clone repositori:
 
    ```bash
-   git clone https://github.com/username/andesa-pdf.git
+   git clone https://github.com/Andrianto15/andesa-pdf-utility.git
    cd andesa-pdf
    ```
 
