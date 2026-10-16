@@ -447,7 +447,7 @@ function renderSignControls(file: UploadedFileItem): string {
             <!-- Signature Pad Canvas -->
             <div class="relative w-full h-44 bg-slate-50 rounded-xl overflow-hidden border border-slate-300 shadow-inner">
               <canvas id="signature-pad-canvas" class="w-full h-full cursor-crosshair"></canvas>
-              <div id="sign-placeholder-hint" class="absolute inset-0 flex items-center justify-center text-slate-400 text-xs pointer-events-none">
+              <div id="sign-placeholder-hint" class="absolute inset-0 flex items-center justify-center text-slate-500 text-xs pointer-events-none">
                 Goreskan tanda tangan di sini
               </div>
             </div>

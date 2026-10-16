@@ -39,3 +39,12 @@
   - Menambahkan test suite `tests/quieter.test.ts` (5 unit test baru, total 16 test suite dan 81 test lulus 100%).
   - Memperbarui `docs/PRD.md` dengan Bagian 17 (Quieter Design Standards).
 
+### Impeccable Polish & Contrast Optimization
+- **Optimasi Rasio Kontras (WCAG AA ≥ 4.5:1)**:
+  - Mengeliminasi teks kelas `text-slate-400` pada footer copyright dan hint placeholder kanvas tanda tangan, ditingkatkan ke `text-slate-500` (rasio kontras 4.6:1).
+  - Meningkatkan keterbacaan interaktif pada link lisensi footer dengan `hover:text-slate-800`.
+- **Pengujian Unit & PRD**:
+  - Menambahkan test suite `tests/polish.test.ts` (3 unit test baru, total 17 test suite dan 84 test lulus 100%).
+  - Memperbarui `docs/PRD.md` dengan Bagian 18 (Contrast Polish & Visual Quality Standards).
+
+

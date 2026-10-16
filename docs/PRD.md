@@ -349,6 +349,18 @@ graph TD
 - **Verifikasi Unit Test**:
   - Suite pengujian `tests/quieter.test.ts` memverifikasi ketiadaan teks gradien klise, ketiadaan animasi pulse status, penggunaan warna solid pada registry alat, serta ketiadaan blur blob jenuh.
 
+---
+
+### 18. Contrast Polish & Visual Quality Standards (Impeccable Polish)
+
+- **Kepatuhan Rasio Kontras WCAG AA (≥ 4.5:1)**:
+  - Mengeliminasi teks redup `text-slate-400` pada seluruh komponen aplikasi (footer copyright, teks lisensi MIT, serta hint placeholder kanvas tanda tangan) dan meningkatkannya menjadi `text-slate-500` dengan rasio kontras 4.6:1 terhadap latar putih.
+- **Interaktivitas & State Aksesibel**:
+  - Mempertegas warna hover link lisensi footer dari `hover:text-slate-600` menjadi `hover:text-slate-800` untuk transisi visual yang tajam dan jelas.
+- **Verifikasi Unit Test**:
+  - Suite pengujian `tests/polish.test.ts` memverifikasi footer dan seluruh file komponen di `src/components/` tidak menggunakan kelas kontras rendah `text-slate-400`.
+
+
 
 
 
