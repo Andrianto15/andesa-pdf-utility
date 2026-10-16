@@ -77,6 +77,7 @@ function renderUploadDropzone(tool: ToolInfo): string {
         class="hidden"
         accept="${tool.accept}"
         ${tool.multiple ? 'multiple' : ''}
+        aria-label="Pilih berkas dokumen"
       />
       <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 mx-auto flex items-center justify-center mb-5 group-hover:scale-105 group-hover:bg-indigo-100/70 transition-all duration-300 shadow-xs">
         <svg class="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
@@ -134,7 +135,7 @@ function renderToolControlPanel(
             <label class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 cursor-pointer border border-slate-200 transition-colors inline-flex items-center gap-1.5 min-h-[40px]">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
               <span>Tambah File</span>
-              <input type="file" id="file-add-more" class="hidden" accept="${tool.accept}" multiple />
+              <input type="file" id="file-add-more" class="hidden" accept="${tool.accept}" multiple aria-label="Tambah berkas dokumen tambahan" />
             </label>
           `
               : `
@@ -229,13 +230,13 @@ function renderMergeControls(files: UploadedFileItem[]): string {
             </div>
           </div>
           <div class="flex items-center gap-1.5 flex-shrink-0">
-            <button data-move-up="${item.id}" class="p-2 rounded-lg bg-white hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 transition-colors cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center" title="Geser ke Atas">
+            <button data-move-up="${item.id}" aria-label="Geser ${item.file.name} ke atas" class="p-2 rounded-lg bg-white hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 transition-colors cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center" title="Geser ke Atas">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
             </button>
-            <button data-move-down="${item.id}" class="p-2 rounded-lg bg-white hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 transition-colors cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center" title="Geser ke Bawah">
+            <button data-move-down="${item.id}" aria-label="Geser ${item.file.name} ke bawah" class="p-2 rounded-lg bg-white hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 transition-colors cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center" title="Geser ke Bawah">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </button>
-            <button data-remove="${item.id}" class="p-2 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 transition-colors cursor-pointer border border-rose-200 min-h-[36px] min-w-[36px] flex items-center justify-center" title="Hapus">
+            <button data-remove="${item.id}" aria-label="Hapus ${item.file.name}" class="p-2 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 transition-colors cursor-pointer border border-rose-200 min-h-[36px] min-w-[36px] flex items-center justify-center" title="Hapus">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
             </button>
           </div>
@@ -280,7 +281,7 @@ function renderSplitControls(file: UploadedFileItem): string {
 
       <!-- Input Rentang Halaman -->
       <div>
-        <label class="block text-xs font-semibold text-slate-700 mb-2">
+        <label for="split-range-input" class="block text-xs font-semibold text-slate-700 mb-2">
           Rentang Halaman (Contoh: <code class="text-indigo-600 bg-indigo-50 px-1 py-0.5 rounded">1-3, 5</code>)
         </label>
         <input
@@ -362,7 +363,7 @@ function renderJpgToPdfControls(files: UploadedFileItem[]): string {
     <div class="space-y-6">
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-2">Ukuran Halaman</label>
+          <label for="jpg-page-size" class="block text-xs font-semibold text-slate-700 mb-2">Ukuran Halaman</label>
           <select id="jpg-page-size" class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:border-indigo-600 focus:outline-none cursor-pointer min-h-[44px]">
             <option value="a4" selected>A4 (Standar)</option>
             <option value="letter">Letter</option>
@@ -371,7 +372,7 @@ function renderJpgToPdfControls(files: UploadedFileItem[]): string {
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-2">Orientasi</label>
+          <label for="jpg-orientation" class="block text-xs font-semibold text-slate-700 mb-2">Orientasi</label>
           <select id="jpg-orientation" class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:border-indigo-600 focus:outline-none cursor-pointer min-h-[44px]">
             <option value="auto" selected>Otomatis (Sesuai Gambar)</option>
             <option value="portrait">Tegak (Portrait)</option>
@@ -380,7 +381,7 @@ function renderJpgToPdfControls(files: UploadedFileItem[]): string {
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-2">Margin Halaman</label>
+          <label for="jpg-margin" class="block text-xs font-semibold text-slate-700 mb-2">Margin Halaman</label>
           <select id="jpg-margin" class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:border-indigo-600 focus:outline-none cursor-pointer min-h-[44px]">
             <option value="0" selected>Tanpa Margin</option>
             <option value="20">Kecil (20pt)</option>
@@ -397,9 +398,9 @@ function renderJpgToPdfControls(files: UploadedFileItem[]): string {
             .map(
               (item, idx) => `
             <div class="relative group rounded-xl overflow-hidden border border-slate-200 bg-white aspect-square flex flex-col items-center justify-center shadow-xs">
-              <img src="${item.previewUrl || ''}" class="w-full h-full object-cover" />
+              <img src="${item.previewUrl || ''}" alt="Pratinjau berkas gambar ${idx + 1}" class="w-full h-full object-cover" />
               <div class="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                <button data-remove-img="${item.id}" class="p-2 rounded-lg bg-rose-600 text-white hover:bg-rose-500 transition-colors" title="Hapus">
+                <button data-remove-img="${item.id}" aria-label="Hapus gambar ${idx + 1}" class="p-2 rounded-lg bg-rose-600 text-white hover:bg-rose-500 transition-colors" title="Hapus">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 </button>
               </div>
@@ -423,7 +424,7 @@ function renderSignControls(file: UploadedFileItem): string {
           <p class="text-xs text-slate-500">${file.sizeFormatted} • ${file.pageCount || 1} Halaman</p>
         </div>
         <div class="flex items-center gap-2">
-          <label class="text-xs font-medium text-slate-700">Pilih Halaman Target:</label>
+          <label for="sign-page-select" class="text-xs font-medium text-slate-700">Pilih Halaman Target:</label>
           <select id="sign-page-select" class="px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-900 text-xs focus:outline-none min-h-[36px]">
             ${Array.from({ length: file.pageCount || 1 }, (_, i) => `<option value="${i}">Halaman ${i + 1}</option>`).join('')}
           </select>
@@ -437,9 +438,9 @@ function renderSignControls(file: UploadedFileItem): string {
             <div class="flex items-center justify-between mb-3">
               <h5 class="text-xs font-bold uppercase tracking-wider text-slate-700">Buat Tanda Tangan</h5>
               <div class="flex items-center gap-2">
-                <button id="sign-color-black" class="w-6 h-6 rounded-full bg-black border-2 border-indigo-600 cursor-pointer" title="Hitam"></button>
-                <button id="sign-color-blue" class="w-6 h-6 rounded-full bg-blue-600 border border-slate-300 cursor-pointer" title="Biru"></button>
-                <button id="sign-color-red" class="w-6 h-6 rounded-full bg-rose-600 border border-slate-300 cursor-pointer" title="Merah"></button>
+                <button id="sign-color-black" aria-label="Pilih tinta hitam" class="w-6 h-6 rounded-full bg-black border-2 border-indigo-600 cursor-pointer" title="Hitam"></button>
+                <button id="sign-color-blue" aria-label="Pilih tinta biru" class="w-6 h-6 rounded-full bg-blue-600 border border-slate-300 cursor-pointer" title="Biru"></button>
+                <button id="sign-color-red" aria-label="Pilih tinta merah" class="w-6 h-6 rounded-full bg-rose-600 border border-slate-300 cursor-pointer" title="Merah"></button>
               </div>
             </div>
 
@@ -455,7 +456,7 @@ function renderSignControls(file: UploadedFileItem): string {
               <button id="btn-clear-signature" class="text-xs text-rose-600 hover:text-rose-700 font-semibold cursor-pointer min-h-[36px]">Bersihkan Goresan</button>
               <label class="text-xs text-indigo-600 hover:text-indigo-700 font-semibold cursor-pointer min-h-[36px] flex items-center">
                 Upload PNG Transparan
-                <input type="file" id="sign-upload-png" class="hidden" accept="image/png" />
+                <input type="file" id="sign-upload-png" class="hidden" accept="image/png" aria-label="Upload gambar tanda tangan format PNG" />
               </label>
             </div>
           </div>
@@ -478,8 +479,17 @@ function renderSignControls(file: UploadedFileItem): string {
               class="absolute top-10 left-10 w-36 h-20 border-2 border-indigo-600 bg-indigo-50/40 cursor-move flex items-center justify-center select-none"
               style="touch-action: none;"
             >
-              <img id="overlay-signature-img" class="max-w-full max-h-full pointer-events-none" />
-              <div id="sign-resize-handle" class="absolute bottom-0 right-0 w-4 h-4 bg-indigo-600 cursor-se-resize"></div>
+              <img id="overlay-signature-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="Pratinjau tanda tangan" class="max-w-full max-h-full pointer-events-none hidden" />
+              <div
+                id="sign-resize-handle"
+                role="slider"
+                aria-label="Ubah ukuran tanda tangan"
+                tabindex="0"
+                class="absolute -bottom-2.5 -right-2.5 w-8 h-8 flex items-center justify-center cursor-se-resize touch-none select-none z-10"
+                title="Tarik untuk mengubah ukuran tanda tangan"
+              >
+                <span class="w-3.5 h-3.5 rounded-full bg-indigo-600 border-2 border-white shadow-xs pointer-events-none"></span>
+              </div>
             </div>
           </div>
           <p class="text-[11px] text-slate-500 mt-2">Tarik kotak tanda tangan untuk memindahkan posisinya di atas halaman.</p>

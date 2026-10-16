@@ -41,11 +41,14 @@ export function renderToolGrid(activeCategory: ToolCategory = 'all'): string {
   return `
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
       <!-- Category Tabs (Mobile Scrollable) -->
-      <div class="flex items-center justify-start sm:justify-center gap-2 mb-8 overflow-x-auto py-2 no-scrollbar">
+      <div role="tablist" aria-label="Filter kategori alat" class="flex items-center justify-start sm:justify-center gap-2 mb-8 overflow-x-auto py-2 no-scrollbar">
         ${categories
           .map(
             (cat) => `
           <button
+            role="tab"
+            aria-selected="${activeCategory === cat.id}"
+            aria-controls="tool-grid-list"
             data-category="${cat.id}"
             class="category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap min-h-[44px] flex items-center justify-center ${
               activeCategory === cat.id
@@ -61,7 +64,7 @@ export function renderToolGrid(activeCategory: ToolCategory = 'all'): string {
       </div>
 
       <!-- Tools Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div id="tool-grid-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         ${filteredTools.map((tool) => renderSingleToolCard(tool)).join('')}
       </div>
     </section>
@@ -71,8 +74,11 @@ export function renderToolGrid(activeCategory: ToolCategory = 'all'): string {
 function renderSingleToolCard(tool: ToolInfo): string {
   return `
     <div
+      role="button"
+      tabindex="0"
+      aria-label="${tool.title}: ${tool.description}"
       data-tool-id="${tool.id}"
-      class="tool-card group relative p-6 rounded-2xl bg-white border border-slate-200/90 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col justify-between shadow-xs"
+      class="tool-card group relative p-6 rounded-2xl bg-white border border-slate-200/90 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/10 focus-visible:ring-2 focus-visible:ring-indigo-600 focus:outline-none transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col justify-between shadow-xs"
     >
       <div>
         <!-- Top icon and badge -->

@@ -132,14 +132,25 @@ function bindEvents(): void {
     });
   });
 
-  // Tool Card Click
+  // Tool Card Click & Keyboard Activation
   document.querySelectorAll('.tool-card').forEach((card) => {
-    card.addEventListener('click', (e) => {
-      const target = e.currentTarget as HTMLElement;
+    const triggerTool = (target: HTMLElement) => {
       const toolId = target.dataset.toolId as ToolId;
       const tool = TOOLS_LIST.find((t) => t.id === toolId);
       if (tool) {
         selectTool(tool);
+      }
+    };
+
+    card.addEventListener('click', (e) => {
+      triggerTool(e.currentTarget as HTMLElement);
+    });
+
+    card.addEventListener('keydown', (e) => {
+      const key = (e as KeyboardEvent).key;
+      if (key === 'Enter' || key === ' ') {
+        e.preventDefault();
+        triggerTool(e.currentTarget as HTMLElement);
       }
     });
   });
@@ -379,7 +390,7 @@ async function bindSplitControls(): Promise<void> {
         }`;
         card.dataset.pageIndex = `${pageIdx}`;
         card.innerHTML = `
-          <img src="${thumbUrl}" class="w-full rounded-lg object-contain bg-white" />
+          <img src="${thumbUrl}" alt="Thumbnail halaman ${i}" class="w-full rounded-lg object-contain bg-white" />
           <div class="flex items-center justify-between mt-1 px-1 text-[11px]">
             <span class="font-bold text-white">Hal. ${i}</span>
             <input type="checkbox" ${isChecked ? 'checked' : ''} class="thumb-checkbox pointer-events-none" />
@@ -510,7 +521,10 @@ async function bindSignControls(): Promise<void> {
       isDrawing = false;
       if (hasDrawn && canvas) {
         state.signatureDataUrl = canvas.toDataURL('image/png');
-        if (overlayImg) overlayImg.src = state.signatureDataUrl;
+        if (overlayImg) {
+          overlayImg.src = state.signatureDataUrl;
+          overlayImg.classList.remove('hidden');
+        }
       }
     };
 
@@ -548,7 +562,10 @@ async function bindSignControls(): Promise<void> {
       ctx?.clearRect(0, 0, canvas.width, canvas.height);
       hint?.classList.remove('hidden');
       state.signatureDataUrl = null;
-      if (overlayImg) overlayImg.src = '';
+      if (overlayImg) {
+        overlayImg.src = '';
+        overlayImg.classList.add('hidden');
+      }
     }
   });
 
@@ -570,7 +587,10 @@ async function bindSignControls(): Promise<void> {
     if (uploadPngInput.files && uploadPngInput.files[0]) {
       const url = await readFileAsDataURL(uploadPngInput.files[0]);
       state.signatureDataUrl = url;
-      if (overlayImg) overlayImg.src = url;
+      if (overlayImg) {
+        overlayImg.src = url;
+        overlayImg.classList.remove('hidden');
+      }
       hint?.classList.add('hidden');
       showToast('Gambar tanda tangan PNG dimuat', 'success');
     }
@@ -611,7 +631,7 @@ async function bindSignControls(): Promise<void> {
     let initialTop = 0;
 
     dragBox.addEventListener('pointerdown', (e) => {
-      if ((e.target as HTMLElement).id === 'sign-resize-handle') return;
+      if ((e.target as HTMLElement).closest('#sign-resize-handle')) return;
       isDragging = true;
       startX = e.clientX;
       startY = e.clientY;
@@ -648,6 +668,85 @@ async function bindSignControls(): Promise<void> {
     };
     dragBox.addEventListener('pointerup', stopDrag);
     dragBox.addEventListener('pointercancel', stopDrag);
+
+    // Resizable Signature Box Logic
+    const resizeHandle = document.getElementById('sign-resize-handle');
+    if (resizeHandle) {
+      let isResizing = false;
+      let startResizeX = 0;
+      let startResizeY = 0;
+      let initialW = 0;
+      let initialH = 0;
+
+      resizeHandle.addEventListener('pointerdown', (e) => {
+        e.stopPropagation();
+        isResizing = true;
+        startResizeX = e.clientX;
+        startResizeY = e.clientY;
+        initialW = dragBox.offsetWidth;
+        initialH = dragBox.offsetHeight;
+        resizeHandle.setPointerCapture(e.pointerId);
+      });
+
+      resizeHandle.addEventListener('pointermove', (e) => {
+        if (!isResizing) return;
+        const wrapper = document.getElementById('sign-preview-wrapper');
+        if (!wrapper) return;
+
+        const deltaX = e.clientX - startResizeX;
+        const deltaY = e.clientY - startResizeY;
+
+        const maxW = wrapper.clientWidth - dragBox.offsetLeft;
+        const maxH = wrapper.clientHeight - dragBox.offsetTop;
+
+        const newW = Math.max(48, Math.min(maxW, initialW + deltaX));
+        const newH = Math.max(28, Math.min(maxH, initialH + deltaY));
+
+        dragBox.style.width = `${newW}px`;
+        dragBox.style.height = `${newH}px`;
+
+        state.signBoxNorm.w = newW / wrapper.clientWidth;
+        state.signBoxNorm.h = newH / wrapper.clientHeight;
+      });
+
+      const stopResize = (e: PointerEvent) => {
+        if (isResizing) {
+          isResizing = false;
+          try {
+            resizeHandle.releasePointerCapture(e.pointerId);
+          } catch {
+            // safe fallback
+          }
+        }
+      };
+
+      resizeHandle.addEventListener('pointerup', stopResize);
+      resizeHandle.addEventListener('pointercancel', stopResize);
+
+      // Keyboard arrow keys resize
+      resizeHandle.addEventListener('keydown', (e) => {
+        const wrapper = document.getElementById('sign-preview-wrapper');
+        if (!wrapper) return;
+        let deltaW = 0;
+        let deltaH = 0;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          deltaW = 10;
+          deltaH = 6;
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          deltaW = -10;
+          deltaH = -6;
+        }
+        if (deltaW !== 0 || deltaH !== 0) {
+          e.preventDefault();
+          const newW = Math.max(48, Math.min(wrapper.clientWidth - dragBox.offsetLeft, dragBox.offsetWidth + deltaW));
+          const newH = Math.max(28, Math.min(wrapper.clientHeight - dragBox.offsetTop, dragBox.offsetHeight + deltaH));
+          dragBox.style.width = `${newW}px`;
+          dragBox.style.height = `${newH}px`;
+          state.signBoxNorm.w = newW / wrapper.clientWidth;
+          state.signBoxNorm.h = newH / wrapper.clientHeight;
+        }
+      });
+    }
   }
 }
 
