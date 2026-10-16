@@ -195,10 +195,12 @@ graph TD
 6. **HTML5 Canvas API**: Signature pad, image downsampling untuk kompresi raster, dan vertical page slicing.
 7. **Web Workers API**: Menjalankan konversi berat di background thread untuk menjaga UI tetap 60fps.
 
-#### Memory Management
+#### Memory Management & Runtime Performance Optimization
 
-- Penggunaan `URL.createObjectURL(blob)` dan pemanggilan wajib `URL.revokeObjectURL(url)` setelah unduhan selesai untuk mencegah memory leaks.
-- Batasan rekomendasi ukuran file: hingga 50MB per file untuk menjaga stabilitas RAM browser mobile/desktop.
+- **Pelepasan Blob Object URL (`URL.revokeObjectURL`)**: Implementasi fungsi `revokeFilePreviews()` dan `clearUploadedFiles()` yang memanggil `URL.revokeObjectURL(url)` secara proaktif setiap kali berkas dihapus tunggal, berkas diganti, alat beralih, atau alur kerja di-reset untuk mengeliminasi memory leak pada sesi pemrosesan dokumen besar/banyak.
+- **Eliminasi DOM Thrashing pada Progress Tracker**: Pelacakan progres konversi/pemrosesan (`updateProgress`) memperbarui node DOM secara langsung (`#progress-text`, `#progress-percent`, `#progress-bar-fill`) tanpa membongkar ulang seluruh `app.innerHTML` via `renderApp()`. Ini menjaga stabilitas frame 60fps dan mencegah layout thrashing.
+- **Pointer Event Capture pada Signature Pad Canvas**: Menggantikan listener mouse dan touch terpisah di `window` dengan Pointer Events terpadu (`pointerdown`, `pointermove`, `pointerup`, `pointercancel`) langsung di elemen `<canvas>` menggunakan `setPointerCapture(e.pointerId)`. Mencegah penumpukan listener global di window dan mendukung input stylus, mouse, dan touch secara terisolasi.
+- **Batasan Rekomendasi Ukuran File**: Hingga 50MB per file untuk menjaga stabilitas RAM browser mobile/desktop.
 
 #### Environment Configuration & Deployment
 

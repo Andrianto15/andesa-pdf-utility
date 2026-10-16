@@ -160,9 +160,35 @@ function bindEvents(): void {
   }
 }
 
-function selectTool(tool: ToolInfo | null): void {
-  state.currentTool = tool;
+function revokeFilePreviews(files: UploadedFileItem[]): void {
+  for (const item of files) {
+    if (item.previewUrl) {
+      try {
+        URL.revokeObjectURL(item.previewUrl);
+      } catch {
+        // Safe fallback if URL.revokeObjectURL is unsupported
+      }
+    }
+  }
+}
+
+function clearUploadedFiles(): void {
+  revokeFilePreviews(state.files);
   state.files = [];
+}
+
+function removeUploadedFile(id: string | undefined): void {
+  if (!id) return;
+  const target = state.files.find((f) => f.id === id);
+  if (target) {
+    revokeFilePreviews([target]);
+    state.files = state.files.filter((f) => f.id !== id);
+  }
+}
+
+function selectTool(tool: ToolInfo | null): void {
+  clearUploadedFiles();
+  state.currentTool = tool;
   state.isProcessing = false;
   state.progressText = '';
   state.progressPercent = 0;
@@ -221,12 +247,12 @@ function bindWorkspaceEvents(): void {
   });
 
   btnClearFiles?.addEventListener('click', () => {
-    state.files = [];
+    clearUploadedFiles();
     renderApp();
   });
 
   btnResetAll?.addEventListener('click', () => {
-    state.files = [];
+    clearUploadedFiles();
     renderApp();
   });
 
@@ -253,7 +279,7 @@ function bindWorkspaceEvents(): void {
   document.getElementById('btn-process-another')?.addEventListener('click', () => {
     state.resultBlob = null;
     state.resultDetails = undefined;
-    state.files = [];
+    clearUploadedFiles();
     renderApp();
   });
 
@@ -331,7 +357,7 @@ function bindMergeControls(): void {
   document.querySelectorAll('[data-remove]').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       const id = (e.currentTarget as HTMLElement).dataset.remove;
-      state.files = state.files.filter((f) => f.id !== id);
+      removeUploadedFile(id);
       renderApp();
     });
   });
@@ -466,7 +492,7 @@ function bindJpgToPdfControls(): void {
   document.querySelectorAll('[data-remove-img]').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       const id = (e.currentTarget as HTMLElement).dataset.removeImg;
-      state.files = state.files.filter((f) => f.id !== id);
+      removeUploadedFile(id);
       renderApp();
     });
   });
@@ -528,31 +554,37 @@ async function bindSignControls(): Promise<void> {
       }
     };
 
-    canvas.addEventListener('mousedown', (e) => {
+    canvas.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      try {
+        canvas.setPointerCapture(e.pointerId);
+      } catch {
+        // Safe fallback
+      }
       const r = canvas.getBoundingClientRect();
       startDraw(e.clientX - r.left, e.clientY - r.top);
     });
-    window.addEventListener('mousemove', (e) => {
+
+    canvas.addEventListener('pointermove', (e) => {
       if (!isDrawing) return;
+      e.preventDefault();
       const r = canvas.getBoundingClientRect();
       draw(e.clientX - r.left, e.clientY - r.top);
     });
-    window.addEventListener('mouseup', stopDraw);
 
-    // Touch events for mobile
-    canvas.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      const touch = e.touches[0];
-      const r = canvas.getBoundingClientRect();
-      startDraw(touch.clientX - r.left, touch.clientY - r.top);
-    });
-    canvas.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-      const touch = e.touches[0];
-      const r = canvas.getBoundingClientRect();
-      draw(touch.clientX - r.left, touch.clientY - r.top);
-    });
-    canvas.addEventListener('touchend', stopDraw);
+    const finishDraw = (e: PointerEvent) => {
+      if (isDrawing) {
+        stopDraw();
+        try {
+          canvas.releasePointerCapture(e.pointerId);
+        } catch {
+          // Safe fallback
+        }
+      }
+    };
+
+    canvas.addEventListener('pointerup', finishDraw);
+    canvas.addEventListener('pointercancel', finishDraw);
   }
 
   // Clear Signature
@@ -801,6 +833,7 @@ async function handleIncomingFiles(newFiles: File[], append = false): Promise<vo
   if (tool.multiple && append) {
     state.files = [...state.files, ...items];
   } else {
+    revokeFilePreviews(state.files);
     state.files = tool.multiple ? items : [items[0]];
   }
 
@@ -820,7 +853,18 @@ async function executeToolAction(): Promise<void> {
   const updateProgress = (current: number, total: number) => {
     state.progressPercent = Math.min(95, Math.round((current / total) * 90) + 10);
     state.progressText = `Memproses halaman/bagian ${current} dari ${total}...`;
-    renderApp();
+
+    const textEl = document.getElementById('progress-text');
+    const percentEl = document.getElementById('progress-percent');
+    const fillEl = document.getElementById('progress-bar-fill');
+
+    if (textEl && percentEl && fillEl) {
+      textEl.textContent = state.progressText;
+      percentEl.textContent = `${state.progressPercent}%`;
+      fillEl.style.width = `${state.progressPercent}%`;
+    } else {
+      renderApp();
+    }
   };
 
   try {
