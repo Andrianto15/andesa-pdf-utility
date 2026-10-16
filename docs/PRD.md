@@ -222,7 +222,10 @@ graph TD
 
 - **Design Style**: Modern Light Theme, clean card layout, antislop-ui standard (tanpa elemen mengambang berlebih, kontras tinggi WCAG AA).
 - **Color Palette**: Light Slate (`#f8fafc` background, `#ffffff` card surface, `#e2e8f0` border) dengan teks kontras `#0f172a` dan aksen Indigo (`#4f46e5`). Indikator privasi hijau emerald (`#059669`).
-- **Mobile-First Responsive**: Tap target minimal 44px, grid reflow adaptif untuk layar smartphone, zero horizontal overflow.
+- **Mobile-First Responsive & Adaptive Layout**:
+  - Dukungan layar notch mobile dan perangkat tepi melengkung melalui `<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />` serta safe area insets CSS `env(safe-area-inset-top)`, `env(safe-area-inset-bottom)`, `env(safe-area-inset-left)`, `env(safe-area-inset-right)`.
+  - Adaptasi pointer kasar/sentuh (`@media (pointer: coarse)`): memperbesar ukuran sentuh elemen interaktif seperti handle resize tanda tangan dan tombol aksi menjadi minimum 44x44px.
+  - Arsitektur tema adaptif: fondasi CSS variables (`--bg-main`, `--bg-card`, `--border-card`, `--text-main`, `--text-muted`) terintegrasi dengan `@media (prefers-color-scheme: dark)` dan kelas `.dark` untuk mendukung sistem mode gelap tanpa merusak tema terang default.
 - **Accessibility & Hardening (WCAG 2.1 AA Compliance)**:
   - Dukungan navigasi keyboard penuh: elemen interaktif (kartu alat, tab kategori, handle slider kontrol) dilengkapi `role`, `tabindex="0"`, event handler `Enter`/`Space`/Arrow keys, dan visual focus ring kontras tinggi (`:focus-visible`).
   - Semantik ARIA: `role="tablist"` dan `role="tab"` dengan `aria-selected` untuk filter kategori; `aria-label` deskriptif untuk tombol swatch warna, input file tersembunyi, dan kontrol aksi berkas.
@@ -230,7 +233,7 @@ graph TD
   - Atribut teks alternatif (`alt`) untuk seluruh elemen gambar dan pratinjau thumbnail halaman.
   - Dukungan sensitivitas gerakan (`@media (prefers-reduced-motion: reduce)`): otomatis meredam animasi loop dan pulse untuk kenyamanan pengguna dengan gangguan vestibular.
   - Interactive signature resizing: kontrol handle resize tanda tangan dengan target sentuh mobile-friendly minimum 44px dan dukungan gesture pointer serta keyboard.
-- **Testing Framework**: Unit test suite berbasis **Jest** dan `ts-jest` di folder `tests/` mencakup pengujian unit test fungsional dan pengujian keterpenuhan aksesibilitas (`tests/hardening.test.ts`).
+- **Testing Framework**: Unit test suite berbasis **Jest** dan `ts-jest` di folder `tests/` mencakup pengujian unit test fungsional, keterpenuhan aksesibilitas (`tests/hardening.test.ts`), optimasi memori (`tests/optimization.test.ts`), dan adaptasi responsif (`tests/adapt.test.ts`).
 - **Drag-and-Drop Zone**: Indikator visual jelas saat file di-drag masuk.
 - **Thumbnail Page Reorder**: Drag-and-drop interaktif untuk mengatur urutan halaman.
 

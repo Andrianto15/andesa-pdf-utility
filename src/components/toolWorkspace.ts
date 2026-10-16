@@ -485,7 +485,7 @@ function renderSignControls(file: UploadedFileItem): string {
                 role="slider"
                 aria-label="Ubah ukuran tanda tangan"
                 tabindex="0"
-                class="absolute -bottom-2.5 -right-2.5 w-8 h-8 flex items-center justify-center cursor-se-resize touch-none select-none z-10"
+                class="absolute -bottom-3 -right-3 w-10 h-10 sm:w-8 sm:h-8 min-w-[36px] min-h-[36px] flex items-center justify-center cursor-se-resize touch-none select-none z-10"
                 title="Tarik untuk mengubah ukuran tanda tangan"
               >
                 <span class="w-3.5 h-3.5 rounded-full bg-indigo-600 border-2 border-white shadow-xs pointer-events-none"></span>
