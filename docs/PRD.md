@@ -318,4 +318,21 @@ graph TD
   - Nama Berkas Output: File PDF hasil ekspor menggunakan prefix default `andesa-pdf-*.pdf`.
 - **Verifikasi Unit Test**: Suite pengujian `tests/branding.test.ts` memverifikasi konsistensi nama merek, branding Tanpa Batas & Free, dan copyright footer pada package.json, index.html, dan komponen UI.
 
+---
+
+### 16. Design System & Design Tokens (Impeccable Document Standard)
+
+- **Creative North Star**: *"The Precision Document Lab"* (utilitarian, private, tactile, focused).
+- **Spesifikasi DESIGN.md**:
+  - Berada di root repository (`DESIGN.md`) sesuai standar formal Impeccable / Stitch.
+  - Memiliki header YAML frontmatter berisi token mesin: `name`, `description`, `colors`, `typography`, `rounded`, `spacing`, `components`.
+  - Mengikuti 8 seksi kanonikal secara berurutan: Overview, Colors, Typography, Layout, Elevation & Depth, Shapes, Components, Do's and Don'ts.
+- **Sidecar Ekstensi (.impeccable/design.json)**:
+  - Format `schemaVersion: 2` menyimpan metadata ekstensi (`colorMeta` dengan tonal ramps, `typographyMeta`, `shadows`, `motion`, `breakpoints`), komponen HTML/CSS terisolasi, dan narasi panduan (*northStar, rules, dos, donts*).
+- **Arsitektur Token CSS**:
+  - `src/style.css` mengintegrasikan blok `@theme` Tailwind CSS v4 yang memetakan variabel semantik (`--color-bg-main`, `--color-bg-card`, `--color-border-card`, `--color-text-main`, `--color-text-muted`) ke CSS custom properties `:root` dan `.dark`.
+- **Verifikasi Unit Test**:
+  - Suite pengujian `tests/designSystem.test.ts` memverifikasi eksistensi dan validitas token YAML `DESIGN.md`, kepatuhan 8 bagian kanonikal, validitas skema JSON `.impeccable/design.json`, serta token `@theme` di `src/style.css`.
+
+
 

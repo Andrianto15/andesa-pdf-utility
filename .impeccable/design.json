@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-17T06:33:00.000Z",
+  "title": "Design System: Andesa PDF Utility",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Indigo Accent",
+        "canonical": "#4f46e5",
+        "tonalRamp": ["#eef2ff", "#c7d2fe", "#818cf8", "#4f46e5", "#3730a3"]
+      },
+      "accent": {
+        "role": "tertiary",
+        "displayName": "Cyan Glow",
+        "canonical": "#06b6d4",
+        "tonalRamp": ["#ecfeff", "#a5f3fc", "#22d3ee", "#06b6d4", "#0e7490"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Slate Background",
+        "canonical": "#f8fafc",
+        "tonalRamp": ["#f8fafc", "#f1f5f9", "#e2e8f0", "#64748b", "#0f172a"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display Hero",
+        "purpose": "Main title and hero banner headings."
+      },
+      "headline": {
+        "displayName": "Section Headline",
+        "purpose": "Workspace tool headers and modal titles."
+      },
+      "title": {
+        "displayName": "Card Title",
+        "purpose": "Tool grid card titles and section subtitles."
+      },
+      "body": {
+        "displayName": "Body Text",
+        "purpose": "Tool descriptions, file lists, and general interface text."
+      },
+      "label": {
+        "displayName": "Metadata Label",
+        "purpose": "Badge text, form labels, and file size counters."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card-rest",
+        "value": "0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04)",
+        "purpose": "Subtle border lift for interactive cards at rest."
+      },
+      {
+        "name": "card-hover",
+        "value": "0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04)",
+        "purpose": "Floating lift on card hover/focus."
+      },
+      {
+        "name": "modal-float",
+        "value": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
+        "purpose": "Workspace modal overlay elevation."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-smooth",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Smooth acceleration curve for card hovers and dialog transitions."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Tool Card",
+      "kind": "card",
+      "refersTo": "card-tool",
+      "description": "Grid card for selecting a PDF utility tool.",
+      "html": "<div class=\"ds-card-tool\"><div class=\"ds-card-title\">Merge PDF</div><p class=\"ds-card-desc\">Combine multiple PDFs into one document.</p></div>",
+      "css": ".ds-card-tool { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1.5rem; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); } .ds-card-tool:hover { transform: translateY(-2px); border-color: #cbd5e1; box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08); } .ds-card-title { font-weight: 700; color: #0f172a; margin-bottom: 0.25rem; } .ds-card-desc { font-size: 0.875rem; color: #64748b; }"
+    },
+    {
+      "name": "Primary Action Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary action button used for executing operations.",
+      "html": "<button class=\"ds-btn-primary\">Process PDF</button>",
+      "css": ".ds-btn-primary { background: #4f46e5; color: #ffffff; font-weight: 600; padding: 0.625rem 1.25rem; border-radius: 0.5rem; border: none; cursor: pointer; transition: background 0.2s; } .ds-btn-primary:hover { background: #4338ca; } .ds-btn-primary:focus-visible { outline: 2px solid #4f46e5; outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Precision Document Lab",
+    "overview": "Andesa PDF Utility operates as a fast, private, client-side digital workstation. The interface prioritizes tactile feedback, clean spatial hierarchy, and zero clutter to let users process documents with absolute clarity and privacy.",
+    "keyCharacteristics": [
+      "Client-side zero-leak privacy",
+      "Tactile glass-card feedback",
+      "Responsive mobile-first layout with safe area handling",
+      "High-contrast accessible type hierarchy"
+    ],
+    "rules": [
+      {
+        "name": "The Dark Mode Token Rule",
+        "body": "All surfaces and text must map to semantic CSS variables (--bg-main, --bg-card, --border-card, --text-main, --text-muted) rather than hardcoded palette values.",
+        "section": "colors"
+      },
+      {
+        "name": "The Coarse Pointer Rule",
+        "body": "Interactive controls must guarantee at least 44x44px target bounds under coarse pointer environments.",
+        "section": "layout"
+      }
+    ],
+    "dos": [
+      "Do use semantic CSS tokens for all card and background surfaces.",
+      "Do support keyboard navigation with visible focus indicators for all interactive controls.",
+      "Do prioritize mobile viewports with full touch targets before expanding to desktop."
+    ],
+    "donts": [
+      "Don't hardcode fixed px coordinates that cause horizontal scroll on mobile viewports.",
+      "Don't bypass prefers-reduced-motion when adding transitions or animations."
+    ]
+  }
+}

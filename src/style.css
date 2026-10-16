@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+@theme {
+  --color-bg-main: var(--bg-main);
+  --color-bg-card: var(--bg-card);
+  --color-border-card: var(--border-card);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --radius-card: 1rem;
+}
+
 @layer base {
   :root {
     --bg-main: #f8fafc;
@@ -7,6 +18,9 @@
     --border-card: #e2e8f0;
     --text-main: #0f172a;
     --text-muted: #64748b;
+    --color-primary: #4f46e5;
+    --color-primary-hover: #4338ca;
+    --color-accent: #06b6d4;
   }
 
   @media (prefers-color-scheme: dark) {

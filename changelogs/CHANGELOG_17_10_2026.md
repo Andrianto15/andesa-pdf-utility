@@ -13,3 +13,15 @@
 - **Pengujian Unit & Dokumentasi**:
   - Menambahkan test suite baru `tests/adapt.test.ts` (4 unit test baru, total 14 test suite dan 72 test lulus 100%).
   - Memperbarui dokumen spesifikasi `docs/PRD.md` Bagian 8 (Design & UX Requirements).
+
+### Impeccable Document & Design System Tokens
+- **Spesifikasi DESIGN.md Kanonikal**:
+  - Membuat `DESIGN.md` pada root project dengan header YAML frontmatter (`name`, `description`, `colors`, `typography`, `rounded`, `spacing`, `components`) dan 8 seksi kanonikal Impeccable (Overview, Colors, Typography, Layout, Elevation & Depth, Shapes, Components, Do's and Don'ts).
+  - Mendokumentasikan Creative North Star *"The Precision Document Lab"*, aturan kontras legibilitas, dan panduan layout responsif.
+- **Sidecar Ekstensi (.impeccable/design.json)**:
+  - Membuat `.impeccable/design.json` (schemaVersion 2) untuk menampung metadata token tingkat lanjut (`colorMeta` dengan tonal ramps, `typographyMeta`, `shadows`, `motion`, `breakpoints`), komponen HTML/CSS preview, serta narasi prinsip desain.
+- **Konsolidasi Token CSS (@theme)**:
+  - Menambahkan blok `@theme` Tailwind CSS v4 di `src/style.css` untuk mengekspos token semantik `--color-bg-main`, `--color-bg-card`, `--color-border-card`, `--color-text-main`, dan `--color-text-muted`.
+- **Pengujian Unit & PRD**:
+  - Menambahkan test suite `tests/designSystem.test.ts` (4 unit test baru, total 15 test suite dan 76 test lulus 100%).
+  - Memperbarui `docs/PRD.md` dengan Bagian 16 (Design System & Design Tokens).
