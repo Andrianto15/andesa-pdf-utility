@@ -2,10 +2,10 @@ export function renderHero(): string {
   return `
     <section class="relative pt-8 pb-6 sm:pt-14 sm:pb-10 text-center overflow-hidden">
       <!-- Background Ambient Tint -->
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-gradient-to-tr from-indigo-200/50 to-purple-200/40 blur-[100px] rounded-full pointer-events-none"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-slate-200/25 blur-[80px] rounded-full pointer-events-none"></div>
 
       <div class="relative max-w-4xl mx-auto px-4 sm:px-6">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200/80 text-indigo-700 text-xs font-semibold mb-5 shadow-xs">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200/90 text-slate-800 text-xs font-semibold mb-5 shadow-xs">
           <svg class="w-4 h-4 text-indigo-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 2 7 12 12 22 7 12 2"/>
             <polyline points="2 17 12 22 22 17"/>
@@ -16,7 +16,7 @@ export function renderHero(): string {
 
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-4 leading-tight">
           Solusi Dokumen PDF Anda,<br class="hidden sm:inline"/>
-          <span class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-600 bg-clip-text text-transparent">Tanpa Batas dan Bebas Biaya</span>
+          <span class="text-indigo-600">Tanpa Batas dan Bebas Biaya</span>
         </h1>
 
         <p class="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto mb-7 leading-relaxed">

@@ -40,7 +40,7 @@ export function renderToolWorkspace(
       <!-- Tool Header Banner -->
       <div class="p-5 sm:p-7 rounded-3xl bg-white border border-slate-200/90 mb-6 sm:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 shadow-xs">
         <div class="flex items-center gap-4 sm:gap-5">
-          <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr ${tool.accentColor} shadow-md flex-shrink-0 flex items-center justify-center text-white">
+          <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl ${tool.accentColor} shadow-xs flex-shrink-0 flex items-center justify-center text-white">
             ${getToolIconSvg(tool.icon)}
           </div>
           <div>
@@ -93,7 +93,7 @@ function renderUploadDropzone(tool: ToolInfo): string {
 
       <button
         id="btn-browse"
-        class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-md shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all cursor-pointer inline-flex items-center gap-2 min-h-[44px]"
+        class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-xs hover:shadow-sm transition-all cursor-pointer inline-flex items-center gap-2 min-h-[44px]"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         Pilih File dari Perangkat
@@ -181,7 +181,7 @@ function renderToolControlPanel(
           <button
             id="btn-process-action"
             ${isProcessing ? 'disabled' : ''}
-            class="px-6 sm:px-8 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50 min-h-[44px]"
+            class="px-6 sm:px-8 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm shadow-xs hover:shadow-sm transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50 min-h-[44px]"
           >
             <span>${tool.actionText}</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>

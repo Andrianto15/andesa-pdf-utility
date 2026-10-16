@@ -25,3 +25,17 @@
 - **Pengujian Unit & PRD**:
   - Menambahkan test suite `tests/designSystem.test.ts` (4 unit test baru, total 15 test suite dan 76 test lulus 100%).
   - Memperbarui `docs/PRD.md` dengan Bagian 16 (Design System & Design Tokens).
+
+### Impeccable Quieter & Visual Noise Reduction
+- **Tipografi Solid & Eliminasi Teks Gradien**:
+  - Mengganti teks gradien klise AI `bg-clip-text text-transparent` pada judul utama hero dengan tipografi solid kontras tinggi (`text-indigo-600` dan `text-slate-900`).
+- **Palet Warna Tonal & Tenang (10% Accent Rule)**:
+  - Menyederhanakan `accentColor` di `src/tools/index.ts` dari gradien dua warna jenuh (`from-*-500 to-*-600`) menjadi warna solid fungsional yang terdefinisi konsisten (`bg-indigo-600`, `bg-sky-600`, dll.).
+  - Mengganti logo mark dan tombol aksi workspace menjadi bayangan netral alami (`shadow-xs` / `hover:shadow-sm`) alih-alih bayangan glow neon berwarna jenuh.
+- **Pembersihan Elemen Dekorasi Berlebih**:
+  - Mengganti blur blob multi-warna ungu/indigo di background hero dengan ambient tint monokrom yang tenang.
+  - Menghapus animasi `animate-pulse` konstan pada indikator status header.
+- **Pengujian Unit & PRD**:
+  - Menambahkan test suite `tests/quieter.test.ts` (5 unit test baru, total 16 test suite dan 81 test lulus 100%).
+  - Memperbarui `docs/PRD.md` dengan Bagian 17 (Quieter Design Standards).
+

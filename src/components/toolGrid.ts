@@ -52,7 +52,7 @@ export function renderToolGrid(activeCategory: ToolCategory = 'all'): string {
             data-category="${cat.id}"
             class="category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap min-h-[44px] flex items-center justify-center ${
               activeCategory === cat.id
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                ? 'bg-indigo-600 text-white shadow-xs'
                 : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200/80 shadow-xs'
             }"
           >
@@ -78,12 +78,12 @@ function renderSingleToolCard(tool: ToolInfo): string {
       tabindex="0"
       aria-label="${tool.title}: ${tool.description}"
       data-tool-id="${tool.id}"
-      class="tool-card group relative p-6 rounded-2xl bg-white border border-slate-200/90 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/10 focus-visible:ring-2 focus-visible:ring-indigo-600 focus:outline-none transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col justify-between shadow-xs"
+      class="tool-card group relative p-6 rounded-2xl bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-md focus-visible:ring-2 focus-visible:ring-indigo-600 focus:outline-none transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between shadow-xs"
     >
       <div>
         <!-- Top icon and badge -->
         <div class="flex items-start justify-between mb-4">
-          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr ${tool.accentColor} shadow-md flex items-center justify-center text-white group-hover:scale-105 transition-transform duration-300">
+          <div class="w-12 h-12 rounded-xl ${tool.accentColor} shadow-xs flex items-center justify-center text-white group-hover:scale-102 transition-transform duration-200">
             ${getToolIconSvg(tool.icon)}
           </div>
           ${

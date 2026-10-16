@@ -334,5 +334,21 @@ graph TD
 - **Verifikasi Unit Test**:
   - Suite pengujian `tests/designSystem.test.ts` memverifikasi eksistensi dan validitas token YAML `DESIGN.md`, kepatuhan 8 bagian kanonikal, validitas skema JSON `.impeccable/design.json`, serta token `@theme` di `src/style.css`.
 
+---
+
+### 17. Quieter Design & Visual Noise Reduction Standards (Impeccable Quieter)
+
+- **Eliminasi Gradien Teks AI Klise**:
+  - Judul hero menggunakan tipografi solid dengan kontras tinggi (`text-indigo-600` dan `text-slate-900`), menyingkirkan pemotongan teks gradien multi-warna (`bg-clip-text text-transparent`).
+- **Dominasi Netral & Single Accent (Aturan 10%)**:
+  - Ikon kartu alat dan workspace dialihkan dari gradien warna-warni jenuh (`from-*-500 to-*-600`) menjadi warna solid/tonal fungsional yang terdefinisi rapi (`bg-indigo-600`, `bg-sky-600`, `bg-amber-600`, `bg-rose-600`, dll.).
+- **Reduksi Noise Visual & Animasi**:
+  - Mengganti dekorasi blur blob jenuh di latar belakang hero dengan ambient tint monokrom yang tenang (`bg-slate-200/25 blur-[80px]`).
+  - Menghapus animasi kedip konstan (`animate-pulse`) pada indikator status header.
+  - Memperhalus bayangan kartu alat dari glow neon berwarna (`shadow-indigo-500/10`) menjadi bayangan netral alami (`hover:shadow-md`).
+- **Verifikasi Unit Test**:
+  - Suite pengujian `tests/quieter.test.ts` memverifikasi ketiadaan teks gradien klise, ketiadaan animasi pulse status, penggunaan warna solid pada registry alat, serta ketiadaan blur blob jenuh.
+
+
 
 
