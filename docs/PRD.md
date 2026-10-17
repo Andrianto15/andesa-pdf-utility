@@ -369,6 +369,24 @@ graph TD
 - **Formalisasi Token Border & Hover**:
   - Mendaftarkan warna hover batas kontainer `#cbd5e1` (`neutral-border-hover`) dan hover thumb scrollbar `#94a3b8` (`neutral-muted-hover`) serta radius `xs: 4px` ke dalam token `DESIGN.md`.
 
+---
+
+### 20. Dark Mode System & Accessibility Hardening (Impeccable Audit P1 Resolution)
+
+- **Sistem Tema Gelap Responsif & Toggle Persisten**:
+  - Implementasi tombol toggle tema interaktif pada header (`#btn-theme-toggle`) dengan ikon matahari/bulan adaptif dan target sentuh ramah seluler minimal 44px (`min-h-[44px] min-w-[44px]`).
+  - Sinkronisasi state tema via `localStorage.getItem('andesa-theme')` dengan script inisialisasi inline pada `index.html` untuk mengeliminasi FOUC (*Flash of Unstyled Content*).
+  - Styling utilitas tema gelap komprehensif (`dark:`) pada seluruh komponen UI (`header.ts`, `hero.ts`, `toolGrid.ts`, `toolWorkspace.ts`, `footer.ts`), kontainer glassmorphism (`.glass-panel`, `.glass-card`), serta scrollbar kustom di `src/style.css`.
+  - Memastikan rasio kontras tinggi (>11:1) pada tema gelap dengan token `dark:text-slate-300` dan `dark:text-slate-100`.
+- **Aksesibilitas Reduced Motion Terarah (Non-Destructive Reduced Motion)**:
+  - Menggantikan aturan destruktif `0.01ms` blanket kill pada `@media (prefers-reduced-motion: reduce)` dengan transisi non-moving terarah: durasi `0.15s`, `transform: none`, sambil mempertahankan pembatasan durasi `0.01ms` untuk animasi berputar `.animate-spin` demi kenyamanan vestibular pengguna.
+- **Semantik Aksesibilitas Header & Toast**:
+  - Menambahkan accessible `aria-label="Lihat kode sumber Andesa PDF di GitHub"` pada ikon link GitHub di komponen header.
+  - Memastikan kontainer notifikasi toast (`#toast-container`) dilengkapi atribut `role="status"` dan `aria-live="polite"` untuk pembaca layar (screen reader).
+- **Verifikasi Unit Test**:
+  - Suite pengujian `tests/theme.test.ts` dan `tests/hardening.test.ts` memverifikasi fungsionalitas toggle tema, persistensi tema, kelas dark mode di seluruh antarmuka komponen, aturan transisi reduced motion terarah, dan aksesibilitas label link.
+
+
 
 
 

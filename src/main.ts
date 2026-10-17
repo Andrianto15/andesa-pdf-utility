@@ -120,6 +120,21 @@ function bindEvents(): void {
     selectTool(null);
   });
 
+  // Theme Toggle Button
+  document.getElementById('btn-theme-toggle')?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    if (isDark) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      localStorage.setItem('andesa-theme', 'light');
+    } else {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+      localStorage.setItem('andesa-theme', 'dark');
+    }
+    renderApp();
+  });
+
   // Category Tabs
   document.querySelectorAll('.category-btn').forEach((btn) => {
     btn.addEventListener('click', (e) => {

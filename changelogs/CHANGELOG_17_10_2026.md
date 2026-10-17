@@ -86,6 +86,22 @@
   - Memperbarui `tests/quieter.test.ts` untuk assertions kelas warna baru (`text-steelblue-600` dan `bg-steelblue-600`).
   - Total 18 test suites dan 92 tests lulus 100% tanpa error, lolos build Vite & linter (`eslint . --fix`).
 
+### Impeccable Audit P1 Hardening: Dark Mode System & Accessibility
+- **Sistem Tema Gelap Responsif & Toggle Persisten**:
+  - Menambahkan tombol toggle tema interaktif pada header (`#btn-theme-toggle`) dengan ikon matahari/bulan adaptif dan target sentuh minimal 44px (`min-h-[44px] min-w-[44px]`).
+  - Menyediakan script inline pencegah FOUC (*Flash of Unstyled Content*) di `index.html` dan sinkronisasi state ke `localStorage` (`andesa-theme`).
+  - Mengimplementasikan varian styling `dark:` lengkap di seluruh komponen UI: header, hero, katalog alat (`toolGrid`), panel kerja alat (`toolWorkspace`), footer, kontainer glassmorphism (`.glass-panel`, `.glass-card`), serta scrollbar kustom.
+  - Memastikan rasio kontras teks tema gelap memenuhi WCAG AA/AAA (>11:1) dengan kelas `dark:text-slate-300` dan `dark:text-slate-100`.
+- **Aksesibilitas Reduced Motion Terarah (Non-Destructive Reduced Motion)**:
+  - Menggantikan aturan blanket kill `0.01ms` pada `@media (prefers-reduced-motion: reduce)` di `src/style.css` dengan transisi non-moving terarah (`transition-duration: 0.15s`, `transform: none`), sambil mempertahankan durasi `0.01ms` untuk animasi berputar `.animate-spin`.
+- **Semantik Aksesibilitas Header & Toast**:
+  - Menambahkan accessible `aria-label="Lihat kode sumber Andesa PDF di GitHub"` pada link GitHub di `src/components/header.ts`.
+  - Menambahkan atribut `role="status"` dan `aria-live="polite"` pada `#toast-container` di `index.html`.
+- **Pengujian Unit & QA**:
+  - Menambahkan assertions dark mode dan accessibility di `tests/theme.test.ts` dan `tests/hardening.test.ts`.
+  - Seluruh 18 test suite (94 tests) lulus 100%.
+
+
 
 
 

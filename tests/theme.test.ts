@@ -99,4 +99,44 @@ describe('Steel Blue Theme Palette & Harmonization Verification', () => {
     expect(prd).toContain('Steel Blue (`#4682b4`');
     expect(prd).not.toContain('aksen Indigo (`#4f46e5`)');
   });
+
+  test('UI Components should render dark mode utility classes across all surfaces', () => {
+    const headerHtml = renderHeader();
+    const heroHtml = renderHero();
+    const footerHtml = renderFooter();
+    const gridHtml = renderToolGrid('all');
+    const mergeTool = TOOLS_LIST.find((t) => t.id === 'merge')!;
+    const workspaceHtml = renderToolWorkspace(mergeTool, [], false, '', 0, null);
+
+    // Header dark mode & accessibility
+    expect(headerHtml).toContain('dark:bg-slate-900/90');
+    expect(headerHtml).toContain('dark:border-slate-800');
+    expect(headerHtml).toContain('id="btn-theme-toggle"');
+    expect(headerHtml).toContain('aria-label="Lihat kode sumber Andesa PDF di GitHub"');
+
+    // Hero dark mode
+    expect(heroHtml).toContain('dark:text-slate-100');
+    expect(heroHtml).toContain('dark:bg-slate-800/90');
+    expect(heroHtml).toContain('dark:border-slate-700');
+
+    // Grid dark mode
+    expect(gridHtml).toContain('dark:bg-slate-800/90');
+    expect(gridHtml).toContain('dark:border-slate-700/80');
+
+    // Workspace dark mode
+    expect(workspaceHtml).toContain('dark:bg-slate-800/90');
+    expect(workspaceHtml).toContain('dark:bg-slate-800/80');
+
+    // Footer dark mode
+    expect(footerHtml).toContain('dark:bg-slate-900');
+    expect(footerHtml).toContain('dark:border-slate-800');
+  });
+
+  test('style.css should provide dark mode styling for glass panels and scrollbars', () => {
+    const css = fs.readFileSync(path.resolve(rootDir, 'src/style.css'), 'utf8');
+    expect(css).toContain('.dark .glass-panel');
+    expect(css).toContain('.dark .glass-card');
+    expect(css).toContain('.dark ::-webkit-scrollbar-track');
+    expect(css).toContain('.dark .drag-over');
+  });
 });

@@ -80,6 +80,8 @@ describe('Accessibility & Interface Hardening Verification', () => {
 
     expect(css).toContain(':focus-visible');
     expect(css).toContain('@media (prefers-reduced-motion: reduce)');
+    expect(css).toContain('transition-duration: 0.15s !important');
+    expect(css).toContain('transform: none !important');
     expect(css).toContain('animation-duration: 0.01ms !important');
   });
 });
