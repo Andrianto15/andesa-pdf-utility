@@ -86,6 +86,65 @@
   - Memperbarui `tests/quieter.test.ts` untuk assertions kelas warna baru (`text-steelblue-600` dan `bg-steelblue-600`).
   - Total 18 test suites dan 92 tests lulus 100% tanpa error, lolos build Vite & linter (`eslint . --fix`).
 
+## Versi 0.2.1
+
+### Impeccable Audit P1 Hardening: Dark Mode System & Accessibility
+- **Sistem Tema Gelap Responsif & Toggle Persisten**:
+  - Menambahkan tombol toggle tema interaktif pada header (`#btn-theme-toggle`) dengan ikon matahari/bulan adaptif dan target sentuh minimal 44px (`min-h-[44px] min-w-[44px]`).
+  - Menyediakan script inline pencegah FOUC (*Flash of Unstyled Content*) di `index.html` dan sinkronisasi state ke `localStorage` (`andesa-theme`).
+  - Mengimplementasikan varian styling `dark:` lengkap di seluruh komponen UI: header, hero, katalog alat (`toolGrid`), panel kerja alat (`toolWorkspace`), footer, kontainer glassmorphism (`.glass-panel`, `.glass-card`), serta scrollbar kustom.
+  - Memastikan rasio kontras teks tema gelap memenuhi WCAG AA/AAA (>11:1) dengan kelas `dark:text-slate-300` dan `dark:text-slate-100`.
+- **Aksesibilitas Reduced Motion Terarah (Non-Destructive Reduced Motion)**:
+  - Menggantikan aturan blanket kill `0.01ms` pada `@media (prefers-reduced-motion: reduce)` di `src/style.css` dengan transisi non-moving terarah (`transition-duration: 0.15s`, `transform: none`), sambil mempertahankan durasi `0.01ms` untuk animasi berputar `.animate-spin`.
+- **Semantik Aksesibilitas Header & Toast**:
+  - Menambahkan accessible `aria-label="Lihat kode sumber Andesa PDF di GitHub"` pada link GitHub di `src/components/header.ts`.
+  - Menambahkan atribut `role="status"` dan `aria-live="polite"` pada `#toast-container` di `index.html`.
+- **Pengujian Unit & QA**:
+  - Menambahkan assertions dark mode dan accessibility di `tests/theme.test.ts` dan `tests/hardening.test.ts`.
+  - Seluruh 18 test suite (94 tests) lulus 100%.
+
+### Impeccable Audit P2 Resolution: Mobile Controls & Interaction Optimization
+- **Standarisasi Target Sentuh Mobile (WCAG 2.5.5 ≥ 44x44px)**:
+  - Meningkatkan ukuran tombol kontrol urutan file merge (`min-h-[44px] min-w-[44px]`).
+  - Menyediakan pembungkus tap target 44x44px (`w-11 h-11`) pada ketiga swatch pemilih warna tinta tanda tangan (`sign-color-black`, `sign-color-blue`, `sign-color-red`).
+  - Menstandarkan target sentuh 44px pada tombol aksi workspace: pemilih semua halaman (`#btn-select-all-pages`), reset halaman (`#btn-clear-pages`), bersihkan goresan (`#btn-clear-signature`), dan salin markdown (`#btn-copy-markdown`).
+- **Live Regions & Semantik ARIA Lengkap pada Kontainer Progres**:
+  - Menambahkan `role="status"` dan `aria-live="polite"` pada `#progress-container`.
+  - Menambahkan `role="progressbar"`, `aria-valuemin="0"`, `aria-valuemax="100"`, dan pembaruan dinamis `aria-valuenow` saat proses berjalan di `src/main.ts`.
+- **Atribut ARIA Lengkap Slider Resizer Tanda Tangan**:
+  - Menambahkan `aria-valuemin="48"`, `aria-valuemax="800"`, dan `aria-valuenow="180"` pada `#sign-resize-handle`.
+  - Menyinkronkan nilai `aria-valuenow` secara realtime saat pengguna mengubah ukuran tanda tangan via pointer atau tombol keyboard panah.
+- **Optimasi Kinerja Pratinjau Dokumen**:
+  - Mengimplementasikan caching instans `PDFDocumentProxy` pada state pratinjau tanda tangan (`cachedSignPdfDoc`) untuk mengeliminasi pembacaan ulang file berulang saat berpindah halaman pratinjau.
+- **Pengujian Unit & QA**:
+  - Menambahkan assertions live regions, progressbar role, dan target sentuh 44px di `tests/hardening.test.ts`.
+  - Seluruh 18 test suite (96 tests) lulus 100%.
+
+### Impeccable Audit P3 Resolution: Typography & Antipattern Elimination
+- **Migrasi Tipografi ke Public Sans**:
+  - Mengganti font `Plus Jakarta Sans` dengan `Public Sans` di `index.html`, `src/style.css`, dan `DESIGN.md`.
+  - Mengeliminasi peringatan `overused-font` pada scanner mechanical `impeccable detect`.
+- **Formalisasi Palet Warna**:
+  - Mendaftarkan warna dark mode tambahan (`dark-muted-thumb`, `dark-muted-hover`, `dark-drag-bg`, `black`) ke dalam `DESIGN.md`.
+  - Menghasilkan 0 defect, 0 warning, dan 0 advisory pada scan `impeccable detect`.
+- **Pengujian Unit & QA**:
+  - Menambahkan pengujian `Public Sans` dan ketiadaan font klise di `tests/designSystem.test.ts`.
+  - Seluruh 18 test suite (97 tests) lulus 100%.
+
+### Impeccable Polish: Final Quality Gate & Interaction Verification
+- **Verifikasi Kualitas Antarmuka & Kontras WCAG AA**:
+  - Memverifikasi rasio kontras teks pada seluruh tema (`text-slate-500` / `dark:text-slate-300`, rasio kontras > 4.5:1 untuk teks normal dan > 11:1 untuk dark mode).
+  - Mengonfirmasi seluruh kartu alat dilengkapi fokus navigasi keyboard (`focus-visible:ring-2`, `focus-visible:ring-steelblue-500`) dan elevasi interaktif (`hover:shadow-md`).
+  - Mengonfirmasi target sentuh pada tombol header dan kontrol workspace memenuhi standar minimum 44x44px.
+  - Memvalidasi detector mekanikal Impeccable menghasilkan 0 antipattern, 0 defects, dan 0 advisory warnings (`[]`).
+- **Pengujian Unit & QA**:
+  - Menambahkan assertions fokus navigasi keyboard dan interaksi pada `tests/polish.test.ts`.
+  - Seluruh 18 test suite (98 tests) lulus 100%.
+
+
+
+
+
 
 
 

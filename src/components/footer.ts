@@ -1,20 +1,20 @@
 export function renderFooter(): string {
   return `
-    <footer class="mt-auto border-t border-slate-200 bg-white py-10 text-slate-500 text-xs transition-colors">
+    <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-10 text-slate-500 dark:text-slate-300 text-xs transition-colors">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
           <div class="flex flex-col sm:flex-row items-center gap-3">
-            <div class="w-8 h-8 rounded-lg bg-steelblue-50 text-steelblue-600 flex items-center justify-center flex-shrink-0">
+            <div class="w-8 h-8 rounded-lg bg-steelblue-50 dark:bg-steelblue-950 text-steelblue-600 dark:text-steelblue-400 flex items-center justify-center flex-shrink-0">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
             </div>
             <div>
-              <p class="font-bold text-slate-800">Andesa PDF - Toolkit PDF Tanpa Batas & Free</p>
-              <p class="text-[11px] text-slate-500 mt-0.5">Solusi utilitas dokumen PDF lengkap, cepat, bebas biaya, dan tanpa batasan kuota.</p>
+              <p class="font-bold text-slate-800 dark:text-slate-200">Andesa PDF - Toolkit PDF Tanpa Batas & Free</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-300 mt-0.5">Solusi utilitas dokumen PDF lengkap, cepat, bebas biaya, dan tanpa batasan kuota.</p>
             </div>
           </div>
 
-          <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-slate-600 font-medium">
-            <span class="flex items-center gap-1.5 text-emerald-600">
+          <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-slate-600 dark:text-slate-300 font-medium">
+            <span class="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
               <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
               Tanpa Batas Kuota
             </span>
@@ -25,9 +25,9 @@ export function renderFooter(): string {
           </div>
         </div>
 
-        <div class="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-500 text-[11px] text-center sm:text-left">
+        <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-500 text-[11px] dark:text-slate-300 text-center sm:text-left">
           <p>&copy; 2026 Andrian Tonur Iskandar. All rights reserved.</p>
-          <p>Dilisensikan di bawah <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noreferrer" class="underline hover:text-slate-800 transition-colors">MIT License</a>.</p>
+          <p>Dilisensikan di bawah <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noreferrer" class="underline hover:text-slate-800 dark:hover:text-slate-200 transition-colors">MIT License</a>.</p>
         </div>
       </div>
     </footer>

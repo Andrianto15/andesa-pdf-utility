@@ -369,6 +369,72 @@ graph TD
 - **Formalisasi Token Border & Hover**:
   - Mendaftarkan warna hover batas kontainer `#cbd5e1` (`neutral-border-hover`) dan hover thumb scrollbar `#94a3b8` (`neutral-muted-hover`) serta radius `xs: 4px` ke dalam token `DESIGN.md`.
 
+---
+
+### 20. Dark Mode System & Accessibility Hardening (Impeccable Audit P1 Resolution)
+
+- **Sistem Tema Gelap Responsif & Toggle Persisten**:
+  - Implementasi tombol toggle tema interaktif pada header (`#btn-theme-toggle`) dengan ikon matahari/bulan adaptif dan target sentuh ramah seluler minimal 44px (`min-h-[44px] min-w-[44px]`).
+  - Sinkronisasi state tema via `localStorage.getItem('andesa-theme')` dengan script inisialisasi inline pada `index.html` untuk mengeliminasi FOUC (*Flash of Unstyled Content*).
+  - Styling utilitas tema gelap komprehensif (`dark:`) pada seluruh komponen UI (`header.ts`, `hero.ts`, `toolGrid.ts`, `toolWorkspace.ts`, `footer.ts`), kontainer glassmorphism (`.glass-panel`, `.glass-card`), serta scrollbar kustom di `src/style.css`.
+  - Memastikan rasio kontras tinggi (>11:1) pada tema gelap dengan token `dark:text-slate-300` dan `dark:text-slate-100`.
+- **Aksesibilitas Reduced Motion Terarah (Non-Destructive Reduced Motion)**:
+  - Menggantikan aturan destruktif `0.01ms` blanket kill pada `@media (prefers-reduced-motion: reduce)` dengan transisi non-moving terarah: durasi `0.15s`, `transform: none`, sambil mempertahankan pembatasan durasi `0.01ms` untuk animasi berputar `.animate-spin` demi kenyamanan vestibular pengguna.
+- **Semantik Aksesibilitas Header & Toast**:
+  - Menambahkan accessible `aria-label="Lihat kode sumber Andesa PDF di GitHub"` pada ikon link GitHub di komponen header.
+  - Memastikan kontainer notifikasi toast (`#toast-container`) dilengkapi atribut `role="status"` dan `aria-live="polite"` untuk pembaca layar (screen reader).
+- **Verifikasi Unit Test**:
+  - Suite pengujian `tests/theme.test.ts` dan `tests/hardening.test.ts` memverifikasi fungsionalitas toggle tema, persistensi tema, kelas dark mode di seluruh antarmuka komponen, aturan transisi reduced motion terarah, dan aksesibilitas label link.
+
+---
+
+### 21. Mobile Controls & Interaction Optimization (Impeccable Audit P2 Resolution)
+
+- **Standarisasi Ukuran Target Sentuh Mobile (WCAG 2.5.5 ≥ 44x44px)**:
+  - Tombol kontrol manipulasi urutan file merge (`data-move-up`, `data-move-down`, `data-remove`) ditingkatkan dari 36x36px menjadi minimal 44x44px (`min-h-[44px] min-w-[44px]`).
+  - Swatch pemilih warna tinta tanda tangan (`sign-color-black`, `sign-color-blue`, `sign-color-red`) dilengkapi pembungkus target sentuh 44x44px (`w-11 h-11 flex items-center justify-center`) menjaga dot visual tetap presisi 24x24px namun mudah ditekan pada layar sentuh.
+  - Tombol aksi kecil seperti pemilih semua halaman (`#btn-select-all-pages`), reset halaman (`#btn-clear-pages`), pembersih goresan tanda tangan (`#btn-clear-signature`), dan tombol salin markdown (`#btn-copy-markdown`) distandarkan dengan batas sentuh minimal `min-h-[44px]`.
+- **Live Regions & Atribut ARIA Lengkap pada Kontainer Progres**:
+  - Menambahkan semantik `role="status"` dan `aria-live="polite"` pada `#progress-container` agar pembaruan progres pemrosesan dokumen terbaca secara dinamis oleh screen reader.
+  - Menambahkan `role="progressbar"`, `aria-valuemin="0"`, `aria-valuemax="100"`, dan `aria-valuenow` dinamis pada elemen bar progres dokumen.
+- **Kelengkapan Atribut ARIA Slider Resizer Tanda Tangan**:
+  - Handle pengubah ukuran tanda tangan (`#sign-resize-handle`) dilengkapi `aria-valuemin="48"`, `aria-valuemax="800"`, dan `aria-valuenow="180"`.
+  - Nilai `aria-valuenow` disinkronkan secara realtime saat pengguna mengubah ukuran menggunakan gestur pointer maupun tombol panah keyboard.
+- **Optimasi Caching Pratinjau Dokumen Tanda Tangan**:
+  - Menambahkan caching instans `PDFDocumentProxy` pada state pratinjau workspace tanda tangan (`cachedSignPdfDoc`), mengeliminasi overhead membaca ulang file via `readFileAsArrayBuffer` dan `loadPdf` setiap kali pengguna berganti halaman pratinjau.
+- **Verifikasi Unit Test**:
+  - Suite pengujian `tests/hardening.test.ts` memverifikasi kelengkapan atribut ARIA slider, live status progres, dan target sentuh 44px mobile. Total 18 test suite (96 tests) lulus 100%.
+
+---
+
+### 22. Typography & Antipattern Elimination (Impeccable Audit P3 Resolution)
+
+- **Migrasi Tipografi ke Public Sans**:
+  - Mengeliminasi font klise AI generic (`Plus Jakarta Sans`) yang terdeteksi sebagai overused antipattern pada scan mekanikal.
+  - Mengadopsi font open-source `Public Sans` yang dirancang khusus untuk utilitas dokumen, formulir digital, dan keterbacaan presisi tinggi dengan lining numerals tabular.
+  - Memperbarui deklarasi font pada Google Fonts di `index.html`, token `@theme` dan body di `src/style.css`, serta spesifikasi tipografi `DESIGN.md`.
+- **Harmonisasi Palet Warna & Nol Advisory**:
+  - Mendaftarkan warna dark mode tambahan (`dark-muted-thumb: #334155`, `dark-muted-hover: #475569`, `dark-drag-bg: #274057`, `black: #000000`) ke dalam `DESIGN.md`.
+  - Mencapai **0 antipattern, 0 defects, dan 0 advisory warnings** pada mechanical scan `impeccable detect`.
+- **Verifikasi Unit Test**:
+  - Suite pengujian `tests/designSystem.test.ts` memverifikasi pengadopsian `Public Sans` di seluruh codebase serta ketiadaan font klise. Total 18 test suite (97 tests) lulus 100%.
+
+---
+
+### 23. Final Production Polish & Quality Gate (Impeccable Polish)
+
+- **Audit Kualitas Komprehensif Antarmuka**:
+  - Memverifikasi rasio kontras teks di seluruh tema (WCAG AA ≥ 4.5:1 untuk teks biasa, ≥ 3:1 untuk teks besar) dan mengonfirmasi ketiadaan kelas redup tidak standar.
+  - Memastikan fokus navigasi keyboard yang jelas pada kartu alat (`focus-visible:ring-2`, `focus-visible:ring-steelblue-500`) dan tombol header (`min-h-[44px] min-w-[44px]`).
+  - Mengonfirmasi seluruh interaksi sentuh pada perangkat mobile memenuhi standar kenyamanan target sentuh minimal 44x44px.
+  - Memvalidasi kepatuhan 100% terhadap creative north star *"The Precision Document Lab"* tanpa font klise AI dan tanpa advisory warna tak terdaftar.
+- **Verifikasi Unit Test**:
+  - Suite pengujian `tests/polish.test.ts` memverifikasi keterbacaan kontras, ketiadaan kelas teks buram, serta state fokus keyboard interaktif. Total 18 test suite (98 tests) lulus 100%.
+
+
+
+
+
 
 
 

@@ -20,8 +20,8 @@
   --color-steelblue-800: #2b4b68;
   --color-steelblue-900: #274057;
   --color-steelblue-950: #1a2939;
-  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Public Sans', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Public Sans', system-ui, -apple-system, sans-serif;
   --radius-card: 1rem;
 }
 
@@ -64,7 +64,7 @@
   body {
     background-color: #f8fafc;
     color: #0f172a;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Public Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
     padding-top: env(safe-area-inset-top, 0px);
@@ -87,11 +87,21 @@
   border: 1px solid #e2e8f0;
 }
 
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: #1e293b;
+}
+
 .glass-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .glass-card {
+  background: #0f172a;
+  border-color: #1e293b;
 }
 
 .glass-card:hover {
@@ -100,7 +110,12 @@
   box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
 }
 
-/* Light Theme Scrollbars */
+.dark .glass-card:hover {
+  border-color: #334155;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+}
+
+/* Light & Dark Theme Scrollbars */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
@@ -108,12 +123,21 @@
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
 }
+.dark ::-webkit-scrollbar-track {
+  background: #090d16;
+}
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 4px;
 }
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }
 
 /* Signature Pad Canvas styling */
@@ -126,6 +150,11 @@
 .drag-over {
   border-color: #4682b4 !important;
   background-color: #f0f6fa !important;
+}
+
+.dark .drag-over {
+  border-color: #6ba3ce !important;
+  background-color: rgba(39, 64, 87, 0.35) !important;
 }
 
 /* Floating Toast Safe Area Placement */
@@ -142,12 +171,15 @@
   }
 }
 
-/* Motion sensitivity adaptation */
+/* Motion sensitivity adaptation - intentional non-jarring feedback preserving state changes */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
-    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0.15s !important;
     scroll-behavior: auto !important;
+    transform: none !important;
+  }
+  .animate-spin {
+    animation-duration: 0.01ms !important;
   }
 }
