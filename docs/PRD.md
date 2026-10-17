@@ -431,6 +431,24 @@ graph TD
 - **Verifikasi Unit Test**:
   - Suite pengujian `tests/polish.test.ts` memverifikasi keterbacaan kontras, ketiadaan kelas teks buram, serta state fokus keyboard interaktif. Total 18 test suite (98 tests) lulus 100%.
 
+---
+
+### 24. Standardisasi Form Select Controls & Dropdown Arrow Alignment
+
+- **Eliminasi Arrow Mepet pada Dropdown Native**:
+  - Menghilangkan rendering panah native bawaan browser yang mepet ke tepi kanan border pada modul PSD ESign (`sign-page-select`) dan konversi JPG to PDF (`jpg-page-size`, `jpg-orientation`, `jpg-margin`).
+  - Menerapkan utilitas `appearance-none` secara konsisten pada semua elemen `<select>`.
+- **Integrasi Custom Chevron Down & Spasi Proporsional**:
+  - Membungkus elemen `<select>` dengan kontainer `relative` dan menyematkan ikon SVG Chevron Down kustom yang diposisikan secara absolut (`right-2.5` / `right-3.5`, `top-1/2 -translate-y-1/2`).
+  - Menerapkan padding internal kanan yang lega (`pr-8` pada kontrol ringkas, `pr-10` pada kontrol ukuran penuh) sehingga teks opsi tidak pernah tumpang tindih dengan ikon panah.
+  - Mengonfigurasi event bypass `pointer-events-none` dan `aria-hidden="true"` pada ikon chevron agar interaksi klik dan assistive technology tetap terarah penuh ke elemen `<select>`.
+- **Kepatuhan Aksesibilitas & Kontras Warna**:
+  - Menggunakan palet kontras tinggi `text-slate-500 dark:text-slate-300` untuk ikon chevron tanpa menggunakan kelas redup tak standar.
+  - Menyediakan efek fokus interaktif `focus:ring-2 focus:ring-steelblue-500/20 focus:border-steelblue-600` yang seragam pada tema terang maupun gelap.
+- **Verifikasi Unit Test**:
+  - Suite pengujian `tests/hardening.test.ts` memverifikasi keberadaan kelas `appearance-none`, padding kanan proporsional, serta penempatan ikon chevron pada seluruh kontrol select. Total 18 test suite (98 tests) lulus 100%.
+
+
 
 
 
