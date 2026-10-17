@@ -41,4 +41,18 @@ describe('Polish and Contrast Quality Verification', () => {
       expect(content).not.toContain('text-slate-400');
     }
   });
+
+  test('Interactive cards and header actions should have accessible focus-visible rings and hover transitions', () => {
+    const componentsDir = path.resolve(rootDir, 'src/components');
+    const toolGridContent = fs.readFileSync(path.join(componentsDir, 'toolGrid.ts'), 'utf8');
+    const headerContent = fs.readFileSync(path.join(componentsDir, 'header.ts'), 'utf8');
+
+    expect(toolGridContent).toContain('focus-visible:ring-2');
+    expect(toolGridContent).toContain('focus-visible:ring-steelblue-500');
+    expect(toolGridContent).toContain('hover:shadow-md');
+
+    expect(headerContent).toContain('min-h-[44px]');
+    expect(headerContent).toContain('min-w-[44px]');
+    expect(headerContent).toContain('transition-colors');
+  });
 });
