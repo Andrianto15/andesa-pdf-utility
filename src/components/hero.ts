@@ -6,7 +6,7 @@ export function renderHero(): string {
 
       <div class="relative max-w-4xl mx-auto px-4 sm:px-6">
         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200/90 text-slate-800 text-xs font-semibold mb-5 shadow-xs">
-          <svg class="w-4 h-4 text-indigo-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="w-4 h-4 text-steelblue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 2 7 12 12 22 7 12 2"/>
             <polyline points="2 17 12 22 22 17"/>
             <polyline points="2 12 12 17 22 12"/>
@@ -16,7 +16,7 @@ export function renderHero(): string {
 
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-4 leading-tight">
           Solusi Dokumen PDF Anda,<br class="hidden sm:inline"/>
-          <span class="text-indigo-600">Tanpa Batas dan Bebas Biaya</span>
+          <span class="text-steelblue-600">Tanpa Batas dan Bebas Biaya</span>
         </h1>
 
         <p class="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto mb-7 leading-relaxed">

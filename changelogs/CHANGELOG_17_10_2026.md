@@ -66,6 +66,27 @@
   - Mendaftarkan `#cbd5e1` (`neutral-border-hover`) dan `#94a3b8` (`neutral-muted-hover`) serta radius `xs: 4px` ke dalam token `DESIGN.md`, menghasilkan 0 advisory warnings pada scan detector.
   - Memperbarui `docs/PRD.md` Bagian 19 (Card Heading & Palette Polish Standards).
 
+## Versi 0.2.0
+
+### Steel Blue Theme & Color Palette Harmonization
+- **Palet Warna Utama Steel Blue (`#4682b4`)**:
+  - Mengubah warna tema utama dari indigo (`#4f46e5`) menjadi Steel Blue (`#4682b4`) dengan turunan hover `#36648b` dan active `#31587d`.
+  - Mengonfigurasi skala rampa warna `@theme` Tailwind CSS v4 (`--color-steelblue-50` hingga `--color-steelblue-950`) di `src/style.css`.
+  - Menyelaraskan token semantik CSS `:root` (`--color-primary: #4682b4`, `--color-primary-hover: #36648b`, `--color-accent: #0ea5e9`).
+- **Harmonisasi Warna Sekunder & Aksesibilitas**:
+  - Menyelaraskan aksen sekunder ke Sky Glow (`#0ea5e9` / dark `#38bdf8`) dan netral slate dengan undertone sejuk.
+  - Memperbarui `:focus-visible` outline menjadi `#4682b4` dan drag-over dropzone tint (`#4682b4` border & `#f0f6fa` background).
+  - Menyesuaikan SVG favicon stroke (`%234682B4`) dan selection highlight (`selection:bg-steelblue-500/20`) di `index.html`.
+  - Memperbarui seluruh komponen UI (`header.ts`, `hero.ts`, `footer.ts`, `toolGrid.ts`, `toolWorkspace.ts`, `format.ts`, `main.ts`, `tools/index.ts`) dari kelas utilitas `indigo` ke `steelblue`.
+- **Dokumentasi & Sistem Desain**:
+  - Memperbarui token warna dan narasi spesifikasi di `DESIGN.md` dan `.impeccable/design.json`.
+  - Memperbarui dokumen `docs/PRD.md` Bagian 8 (Design & UX Requirements).
+- **Pengujian Unit & QA**:
+  - Menambahkan test suite baru `tests/theme.test.ts` (8 unit test baru memvalidasi token, rampa warna, CSS variables, dan komponen UI).
+  - Memperbarui `tests/quieter.test.ts` untuk assertions kelas warna baru (`text-steelblue-600` dan `bg-steelblue-600`).
+  - Total 18 test suites dan 92 tests lulus 100% tanpa error, lolos build Vite & linter (`eslint . --fix`).
+
+
 
 
 

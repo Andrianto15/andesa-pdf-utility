@@ -52,7 +52,7 @@ export function renderToolGrid(activeCategory: ToolCategory = 'all'): string {
             data-category="${cat.id}"
             class="category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap min-h-[44px] flex items-center justify-center ${
               activeCategory === cat.id
-                ? 'bg-indigo-600 text-white shadow-xs'
+                ? 'bg-steelblue-600 text-white shadow-xs'
                 : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200/80 shadow-xs'
             }"
           >
@@ -78,7 +78,7 @@ function renderSingleToolCard(tool: ToolInfo): string {
       tabindex="0"
       aria-label="${tool.title}: ${tool.description}"
       data-tool-id="${tool.id}"
-      class="tool-card group relative p-6 rounded-2xl bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-md focus-visible:ring-2 focus-visible:ring-indigo-600 focus:outline-none transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between shadow-xs"
+      class="tool-card group relative p-6 rounded-2xl bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-md focus-visible:ring-2 focus-visible:ring-steelblue-500 focus:outline-none transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between shadow-xs"
     >
       <div>
         <!-- Top icon and badge -->
@@ -88,7 +88,7 @@ function renderSingleToolCard(tool: ToolInfo): string {
           </div>
           ${
             tool.badge
-              ? `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/80">${tool.badge}</span>`
+              ? `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-steelblue-50 text-steelblue-700 border border-steelblue-200/80">${tool.badge}</span>`
               : ''
           }
         </div>
@@ -101,7 +101,7 @@ function renderSingleToolCard(tool: ToolInfo): string {
         </p>
       </div>
 
-      <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600 group-hover:text-indigo-700">
+      <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-steelblue-600 group-hover:text-steelblue-700">
         <span>Buka Alat</span>
         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </div>
