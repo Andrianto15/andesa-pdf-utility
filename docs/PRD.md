@@ -405,6 +405,21 @@ graph TD
 - **Verifikasi Unit Test**:
   - Suite pengujian `tests/hardening.test.ts` memverifikasi kelengkapan atribut ARIA slider, live status progres, dan target sentuh 44px mobile. Total 18 test suite (96 tests) lulus 100%.
 
+---
+
+### 22. Typography & Antipattern Elimination (Impeccable Audit P3 Resolution)
+
+- **Migrasi Tipografi ke Public Sans**:
+  - Mengeliminasi font klise AI generic (`Plus Jakarta Sans`) yang terdeteksi sebagai overused antipattern pada scan mekanikal.
+  - Mengadopsi font open-source `Public Sans` yang dirancang khusus untuk utilitas dokumen, formulir digital, dan keterbacaan presisi tinggi dengan lining numerals tabular.
+  - Memperbarui deklarasi font pada Google Fonts di `index.html`, token `@theme` dan body di `src/style.css`, serta spesifikasi tipografi `DESIGN.md`.
+- **Harmonisasi Palet Warna & Nol Advisory**:
+  - Mendaftarkan warna dark mode tambahan (`dark-muted-thumb: #334155`, `dark-muted-hover: #475569`, `dark-drag-bg: #274057`, `black: #000000`) ke dalam `DESIGN.md`.
+  - Mencapai **0 antipattern, 0 defects, dan 0 advisory warnings** pada mechanical scan `impeccable detect`.
+- **Verifikasi Unit Test**:
+  - Suite pengujian `tests/designSystem.test.ts` memverifikasi pengadopsian `Public Sans` di seluruh codebase serta ketiadaan font klise. Total 18 test suite (97 tests) lulus 100%.
+
+
 
 
 

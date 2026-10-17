@@ -78,4 +78,20 @@ describe('Design System Documentation & Token Verification', () => {
     expect(css).toContain('--color-text-main: var(--text-main);');
     expect(css).toContain('--color-text-muted: var(--text-muted);');
   });
+
+  test('Typography system should use Public Sans for document precision and eliminate overused font', () => {
+    const designMd = fs.readFileSync(path.resolve(rootDir, 'DESIGN.md'), 'utf8');
+    const css = fs.readFileSync(path.resolve(rootDir, 'src/style.css'), 'utf8');
+    const html = fs.readFileSync(path.resolve(rootDir, 'index.html'), 'utf8');
+
+    expect(designMd).toContain('Public Sans');
+    expect(designMd).not.toContain('Plus Jakarta Sans');
+
+    expect(css).toContain("'Public Sans'");
+    expect(css).not.toContain('Plus Jakarta Sans');
+
+    expect(html).toContain('Public+Sans');
+    expect(html).toContain("font-['Public_Sans',sans-serif]");
+    expect(html).not.toContain('Plus Jakarta Sans');
+  });
 });

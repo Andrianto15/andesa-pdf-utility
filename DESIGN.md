@@ -15,33 +15,37 @@ colors:
   dark-bg: "#090d16"
   dark-surface: "#0f172a"
   dark-border: "#1e293b"
+  dark-muted-thumb: "#334155"
+  dark-muted-hover: "#475569"
+  dark-drag-bg: "#274057"
+  black: "#000000"
 typography:
   display:
-    fontFamily: "Plus Jakarta Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+    fontFamily: "Public Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
     fontSize: "clamp(2rem, 5vw, 3rem)"
     fontWeight: 800
     lineHeight: 1.15
     letterSpacing: "-0.02em"
   headline:
-    fontFamily: "Plus Jakarta Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+    fontFamily: "Public Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
     fontSize: "1.75rem"
     fontWeight: 700
     lineHeight: 1.25
     letterSpacing: "-0.01em"
   title:
-    fontFamily: "Plus Jakarta Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+    fontFamily: "Public Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
     fontSize: "1.125rem"
     fontWeight: 600
     lineHeight: 1.4
     letterSpacing: "normal"
   body:
-    fontFamily: "Plus Jakarta Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+    fontFamily: "Public Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
     fontSize: "0.875rem"
     fontWeight: 400
     lineHeight: 1.5
     letterSpacing: "normal"
   label:
-    fontFamily: "Plus Jakarta Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+    fontFamily: "Public Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
     fontSize: "0.75rem"
     fontWeight: 600
     lineHeight: 1.4
@@ -53,13 +57,13 @@ typography:
     lineHeight: 1.4
     letterSpacing: "normal"
   micro:
-    fontFamily: "Plus Jakarta Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+    fontFamily: "Public Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
     fontSize: "0.6875rem"
     fontWeight: 500
     lineHeight: 1.35
     letterSpacing: "normal"
   nano:
-    fontFamily: "Plus Jakarta Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+    fontFamily: "Public Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
     fontSize: "0.625rem"
     fontWeight: 700
     lineHeight: 1.3
@@ -136,12 +140,12 @@ The color palette centers around purposeful slate neutrals accented with precise
 
 ## Typography
 
-**Display Font:** Plus Jakarta Sans (fallback: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif)  
-**Body Font:** Plus Jakarta Sans (fallback: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif)  
+**Display Font:** Public Sans (fallback: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif)  
+**Body Font:** Public Sans (fallback: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif)  
 **Label/Mono Font:** JetBrains Mono (fallback: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace)  
 **Document Fonts:** Helvetica, Courier New, Times New Roman (standard embedded PDF reader fonts)  
 
-**Character:** Modern geometric sans-serif with humanist warmth, high x-height, and open apertures for optimal legibility at small sizes and high-density tabular viewports.
+**Character:** Utilitarian geometric sans-serif engineered for digital interfaces and official forms, high x-height, clear aperture definitions, and tabular lining numerals for precise document metadata display.
 
 ### Hierarchy
 - **Display** (800, clamp(2rem, 5vw, 3rem), 1.15, -0.02em): Main hero heading and branding titles.

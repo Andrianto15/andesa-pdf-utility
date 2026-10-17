@@ -118,6 +118,18 @@
   - Menambahkan assertions live regions, progressbar role, dan target sentuh 44px di `tests/hardening.test.ts`.
   - Seluruh 18 test suite (96 tests) lulus 100%.
 
+### Impeccable Audit P3 Resolution: Typography & Antipattern Elimination
+- **Migrasi Tipografi ke Public Sans**:
+  - Mengganti font `Plus Jakarta Sans` dengan `Public Sans` di `index.html`, `src/style.css`, dan `DESIGN.md`.
+  - Mengeliminasi peringatan `overused-font` pada scanner mechanical `impeccable detect`.
+- **Formalisasi Palet Warna**:
+  - Mendaftarkan warna dark mode tambahan (`dark-muted-thumb`, `dark-muted-hover`, `dark-drag-bg`, `black`) ke dalam `DESIGN.md`.
+  - Menghasilkan 0 defect, 0 warning, dan 0 advisory pada scan `impeccable detect`.
+- **Pengujian Unit & QA**:
+  - Menambahkan pengujian `Public Sans` dan ketiadaan font klise di `tests/designSystem.test.ts`.
+  - Seluruh 18 test suite (97 tests) lulus 100%.
+
+
 
 
 
