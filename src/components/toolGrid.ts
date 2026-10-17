@@ -93,7 +93,7 @@ function renderSingleToolCard(tool: ToolInfo): string {
           }
         </div>
 
-        <h3 class="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors mb-1.5">
+        <h3 class="text-lg font-bold text-slate-900 group-hover:text-slate-950 transition-colors mb-1.5">
           ${tool.title}
         </h3>
         <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">

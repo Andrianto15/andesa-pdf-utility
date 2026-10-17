@@ -8,6 +8,8 @@ colors:
   neutral-bg: "#f8fafc"
   neutral-surface: "#ffffff"
   neutral-border: "#e2e8f0"
+  neutral-border-hover: "#cbd5e1"
+  neutral-muted-hover: "#94a3b8"
   text-primary: "#0f172a"
   text-secondary: "#64748b"
   dark-bg: "#090d16"
@@ -69,6 +71,7 @@ typography:
     lineHeight: 1.5
     letterSpacing: "normal"
 rounded:
+  xs: "4px"
   sm: "0.375rem"
   md: "0.5rem"
   lg: "0.75rem"

@@ -360,6 +360,16 @@ graph TD
 - **Verifikasi Unit Test**:
   - Suite pengujian `tests/polish.test.ts` memverifikasi footer dan seluruh file komponen di `src/components/` tidak menggunakan kelas kontras rendah `text-slate-400`.
 
+---
+
+### 19. Card Heading & Palette Polish Standards (Impeccable Polish P3)
+
+- **Otoritas Tipografi Judul Kartu**:
+  - Judul kartu alat menggunakan `group-hover:text-slate-950` alih-alih warna indigo aksen, mengeliminasi peringatan palette detector dan memusatkan aksen warna secara eksklusif pada tombol CTA bawah ("Buka Alat").
+- **Formalisasi Token Border & Hover**:
+  - Mendaftarkan warna hover batas kontainer `#cbd5e1` (`neutral-border-hover`) dan hover thumb scrollbar `#94a3b8` (`neutral-muted-hover`) serta radius `xs: 4px` ke dalam token `DESIGN.md`.
+
+
 
 
 

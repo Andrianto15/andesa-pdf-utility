@@ -57,5 +57,13 @@
   - Mendefinisikan token ukuran `micro` (0.6875rem / 11px) dan `nano` (0.625rem / 10px) untuk melegitimasi ukuran teks metadata, status badge, dan subtext footer dalam token sistem desain.
   - Memperbarui assertions di `tests/designSystem.test.ts` untuk memvalidasi token tipografi baru.
 
+### Impeccable Card Heading & Palette Polish (P3 Audit Resolution)
+- **Otoritas Tipografi Judul**:
+  - Mengubah hover judul kartu alat dari `group-hover:text-indigo-600` menjadi `group-hover:text-slate-950` di `src/components/toolGrid.ts`, menuntaskan peringatan palette detector dan mempertahankan hierarki visual tenang.
+- **Pembersihan Advisories & Token Formal**:
+  - Mendaftarkan `#cbd5e1` (`neutral-border-hover`) dan `#94a3b8` (`neutral-muted-hover`) serta radius `xs: 4px` ke dalam token `DESIGN.md`, menghasilkan 0 advisory warnings pada scan detector.
+  - Memperbarui `docs/PRD.md` Bagian 19 (Card Heading & Palette Polish Standards).
+
+
 
 
