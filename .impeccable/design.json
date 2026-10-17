@@ -6,15 +6,15 @@
     "colorMeta": {
       "primary": {
         "role": "primary",
-        "displayName": "Indigo Accent",
-        "canonical": "#4f46e5",
-        "tonalRamp": ["#eef2ff", "#c7d2fe", "#818cf8", "#4f46e5", "#3730a3"]
+        "displayName": "Steel Blue Accent",
+        "canonical": "#4682b4",
+        "tonalRamp": ["#f0f6fa", "#c5dbee", "#6ba3ce", "#4682b4", "#31587d"]
       },
       "accent": {
         "role": "tertiary",
-        "displayName": "Cyan Glow",
-        "canonical": "#06b6d4",
-        "tonalRamp": ["#ecfeff", "#a5f3fc", "#22d3ee", "#06b6d4", "#0e7490"]
+        "displayName": "Sky Glow",
+        "canonical": "#0ea5e9",
+        "tonalRamp": ["#f0f9ff", "#bae6fd", "#38bdf8", "#0ea5e9", "#0369a1"]
       },
       "neutral-bg": {
         "role": "neutral",

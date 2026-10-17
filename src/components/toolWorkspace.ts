@@ -46,7 +46,7 @@ export function renderToolWorkspace(
           <div>
             <div class="flex items-center gap-2.5">
               <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900">${tool.title}</h1>
-              ${tool.badge ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase bg-indigo-50 text-indigo-700 border border-indigo-200/80">${tool.badge}</span>` : ''}
+              ${tool.badge ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase bg-steelblue-50 text-steelblue-700 border border-steelblue-200/80">${tool.badge}</span>` : ''}
             </div>
             <p class="text-slate-500 text-xs sm:text-sm mt-1 max-w-xl leading-relaxed">${tool.description}</p>
           </div>
@@ -69,7 +69,7 @@ function renderUploadDropzone(tool: ToolInfo): string {
   return `
     <div
       id="dropzone"
-      class="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-3xl p-8 sm:p-14 text-center bg-white hover:bg-indigo-50/[0.3] transition-all duration-300 cursor-pointer group shadow-xs"
+      class="border-2 border-dashed border-slate-300 hover:border-steelblue-500 rounded-3xl p-8 sm:p-14 text-center bg-white hover:bg-steelblue-50/[0.3] transition-all duration-300 cursor-pointer group shadow-xs"
     >
       <input
         type="file"
@@ -79,7 +79,7 @@ function renderUploadDropzone(tool: ToolInfo): string {
         ${tool.multiple ? 'multiple' : ''}
         aria-label="Pilih berkas dokumen"
       />
-      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 mx-auto flex items-center justify-center mb-5 group-hover:scale-105 group-hover:bg-indigo-100/70 transition-all duration-300 shadow-xs">
+      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-steelblue-50 border border-steelblue-100 text-steelblue-600 mx-auto flex items-center justify-center mb-5 group-hover:scale-105 group-hover:bg-steelblue-100/70 transition-all duration-300 shadow-xs">
         <svg class="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
       </div>
 
@@ -88,12 +88,12 @@ function renderUploadDropzone(tool: ToolInfo): string {
       </h3>
       <p class="text-xs sm:text-sm text-slate-500 mb-6 max-w-md mx-auto">
         ${tool.multiple ? 'Dapat memilih beberapa file sekaligus.' : 'Pilih 1 file untuk diproses.'}
-        Format didukung: <span class="text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded font-mono text-xs">${tool.accept}</span>
+        Format didukung: <span class="text-steelblue-700 bg-steelblue-50 px-2 py-0.5 rounded font-mono text-xs">${tool.accept}</span>
       </p>
 
       <button
         id="btn-browse"
-        class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-xs hover:shadow-sm transition-all cursor-pointer inline-flex items-center gap-2 min-h-[44px]"
+        class="px-6 py-3 rounded-xl bg-steelblue-600 hover:bg-steelblue-700 text-white font-semibold text-xs sm:text-sm shadow-xs hover:shadow-sm transition-all cursor-pointer inline-flex items-center gap-2 min-h-[44px]"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         Pilih File dari Perangkat
@@ -126,7 +126,7 @@ function renderToolControlPanel(
       <div class="p-5 sm:p-7 rounded-3xl bg-white border border-slate-200/90 shadow-xs">
         <div class="flex items-center justify-between pb-5 border-b border-slate-100 mb-6">
           <div class="flex items-center gap-2.5">
-            <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-steelblue-600"></span>
             <h3 class="font-bold text-slate-900 text-base sm:text-lg">Dokumen Siap Diproses (${files.length})</h3>
           </div>
           ${
@@ -156,13 +156,13 @@ function renderToolControlPanel(
           <div id="progress-container" class="mt-6 pt-5 border-t border-slate-100">
             <div class="flex items-center justify-between text-xs font-semibold text-slate-700 mb-2">
               <span class="flex items-center gap-2">
-                <svg class="w-4 h-4 animate-spin text-indigo-600" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <svg class="w-4 h-4 animate-spin text-steelblue-600" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                 <span id="progress-text">${progressText || 'Sedang memproses...'}</span>
               </span>
               <span id="progress-percent">${progressPercent}%</span>
             </div>
             <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-              <div id="progress-bar-fill" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: ${progressPercent}%"></div>
+              <div id="progress-bar-fill" class="bg-steelblue-600 h-2.5 rounded-full transition-all duration-300" style="width: ${progressPercent}%"></div>
             </div>
           </div>
         `
@@ -181,7 +181,7 @@ function renderToolControlPanel(
           <button
             id="btn-process-action"
             ${isProcessing ? 'disabled' : ''}
-            class="px-6 sm:px-8 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm shadow-xs hover:shadow-sm transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50 min-h-[44px]"
+            class="px-6 sm:px-8 py-3 rounded-xl bg-steelblue-600 hover:bg-steelblue-700 text-white font-bold text-xs sm:text-sm shadow-xs hover:shadow-sm transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50 min-h-[44px]"
           >
             <span>${tool.actionText}</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
@@ -223,7 +223,7 @@ function renderMergeControls(files: UploadedFileItem[]): string {
           (item, idx) => `
         <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors" data-file-id="${item.id}">
           <div class="flex items-center gap-3 min-w-0">
-            <span class="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center flex-shrink-0">${idx + 1}</span>
+            <span class="w-6 h-6 rounded-lg bg-steelblue-100 text-steelblue-700 text-xs font-bold flex items-center justify-center flex-shrink-0">${idx + 1}</span>
             <div class="truncate">
               <p class="text-sm font-semibold text-slate-900 truncate">${item.file.name}</p>
               <p class="text-xs text-slate-500">${item.sizeFormatted}</p>
@@ -262,7 +262,7 @@ function renderSplitControls(file: UploadedFileItem): string {
       <div>
         <label class="block text-xs font-semibold text-slate-700 mb-2">Mode Output Ekstraksi</label>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <label class="p-4 rounded-xl border border-indigo-500 bg-indigo-50/50 cursor-pointer flex items-start gap-3">
+          <label class="p-4 rounded-xl border border-steelblue-500 bg-steelblue-50/50 cursor-pointer flex items-start gap-3">
             <input type="radio" name="split-mode" value="single" checked class="mt-1" />
             <div>
               <p class="text-sm font-bold text-slate-900">Gabungkan Halaman Terpilih</p>
@@ -282,14 +282,14 @@ function renderSplitControls(file: UploadedFileItem): string {
       <!-- Input Rentang Halaman -->
       <div>
         <label for="split-range-input" class="block text-xs font-semibold text-slate-700 mb-2">
-          Rentang Halaman (Contoh: <code class="text-indigo-600 bg-indigo-50 px-1 py-0.5 rounded">1-3, 5</code>)
+          Rentang Halaman (Contoh: <code class="text-steelblue-600 bg-steelblue-50 px-1 py-0.5 rounded">1-3, 5</code>)
         </label>
         <input
           type="text"
           id="split-range-input"
           value="1"
           placeholder="Contoh: 1-3, 5"
-          class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 font-mono text-sm focus:border-indigo-600 focus:outline-none min-h-[44px]"
+          class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 font-mono text-sm focus:border-steelblue-600 focus:outline-none min-h-[44px]"
         />
         <p class="text-[11px] text-slate-500 mt-1">Kosongkan atau ketik "1-${file.pageCount || 1}" untuk memilih semua halaman.</p>
       </div>
@@ -299,7 +299,7 @@ function renderSplitControls(file: UploadedFileItem): string {
         <div class="flex items-center justify-between mb-3">
           <h5 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Pilih Halaman Secara Visual</h5>
           <div class="flex items-center gap-2 text-xs">
-            <button id="btn-select-all-pages" class="text-indigo-600 hover:text-indigo-700 font-semibold cursor-pointer">Pilih Semua</button>
+            <button id="btn-select-all-pages" class="text-steelblue-600 hover:text-steelblue-700 font-semibold cursor-pointer">Pilih Semua</button>
             <span class="text-slate-300">•</span>
             <button id="btn-clear-pages" class="text-slate-500 hover:text-slate-700 font-semibold cursor-pointer">Reset</button>
           </div>
@@ -318,7 +318,7 @@ function renderCompressControls(file: UploadedFileItem): string {
       <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
         <div>
           <h4 class="text-sm font-bold text-slate-900">${file.file.name}</h4>
-          <p class="text-xs text-slate-500">Ukuran Saat Ini: <span class="text-indigo-600 font-semibold">${file.sizeFormatted}</span></p>
+          <p class="text-xs text-slate-500">Ukuran Saat Ini: <span class="text-steelblue-600 font-semibold">${file.sizeFormatted}</span></p>
         </div>
         <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Siap Dikompres</span>
       </div>
@@ -335,10 +335,10 @@ function renderCompressControls(file: UploadedFileItem): string {
             </div>
           </label>
 
-          <label class="relative p-5 rounded-2xl border-2 border-indigo-600 bg-indigo-50/50 cursor-pointer flex flex-col justify-between transition-all group shadow-sm">
+          <label class="relative p-5 rounded-2xl border-2 border-steelblue-600 bg-steelblue-50/50 cursor-pointer flex flex-col justify-between transition-all group shadow-sm">
             <input type="radio" name="compress-level" value="recommended" checked class="absolute top-4 right-4" />
             <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-indigo-700">Rekomendasi</span>
+              <span class="text-xs font-bold uppercase tracking-wider text-steelblue-700">Rekomendasi</span>
               <h5 class="text-base font-bold text-slate-900 mt-1">Kualitas Bagus</h5>
               <p class="text-xs text-slate-500 mt-2">Keseimbangan ideal antara keterbacaan teks dan ukuran (~40-60% hemat).</p>
             </div>
@@ -364,7 +364,7 @@ function renderJpgToPdfControls(files: UploadedFileItem[]): string {
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
           <label for="jpg-page-size" class="block text-xs font-semibold text-slate-700 mb-2">Ukuran Halaman</label>
-          <select id="jpg-page-size" class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:border-indigo-600 focus:outline-none cursor-pointer min-h-[44px]">
+          <select id="jpg-page-size" class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:border-steelblue-600 focus:outline-none cursor-pointer min-h-[44px]">
             <option value="a4" selected>A4 (Standar)</option>
             <option value="letter">Letter</option>
             <option value="fit">Sesuai Ukuran Gambar</option>
@@ -373,7 +373,7 @@ function renderJpgToPdfControls(files: UploadedFileItem[]): string {
 
         <div>
           <label for="jpg-orientation" class="block text-xs font-semibold text-slate-700 mb-2">Orientasi</label>
-          <select id="jpg-orientation" class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:border-indigo-600 focus:outline-none cursor-pointer min-h-[44px]">
+          <select id="jpg-orientation" class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:border-steelblue-600 focus:outline-none cursor-pointer min-h-[44px]">
             <option value="auto" selected>Otomatis (Sesuai Gambar)</option>
             <option value="portrait">Tegak (Portrait)</option>
             <option value="landscape">Mendatar (Landscape)</option>
@@ -382,7 +382,7 @@ function renderJpgToPdfControls(files: UploadedFileItem[]): string {
 
         <div>
           <label for="jpg-margin" class="block text-xs font-semibold text-slate-700 mb-2">Margin Halaman</label>
-          <select id="jpg-margin" class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:border-indigo-600 focus:outline-none cursor-pointer min-h-[44px]">
+          <select id="jpg-margin" class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:border-steelblue-600 focus:outline-none cursor-pointer min-h-[44px]">
             <option value="0" selected>Tanpa Margin</option>
             <option value="20">Kecil (20pt)</option>
             <option value="40">Sedang (40pt)</option>
@@ -438,7 +438,7 @@ function renderSignControls(file: UploadedFileItem): string {
             <div class="flex items-center justify-between mb-3">
               <h5 class="text-xs font-bold uppercase tracking-wider text-slate-700">Buat Tanda Tangan</h5>
               <div class="flex items-center gap-2">
-                <button id="sign-color-black" aria-label="Pilih tinta hitam" class="w-6 h-6 rounded-full bg-black border-2 border-indigo-600 cursor-pointer" title="Hitam"></button>
+                <button id="sign-color-black" aria-label="Pilih tinta hitam" class="w-6 h-6 rounded-full bg-black border-2 border-steelblue-600 cursor-pointer" title="Hitam"></button>
                 <button id="sign-color-blue" aria-label="Pilih tinta biru" class="w-6 h-6 rounded-full bg-blue-600 border border-slate-300 cursor-pointer" title="Biru"></button>
                 <button id="sign-color-red" aria-label="Pilih tinta merah" class="w-6 h-6 rounded-full bg-rose-600 border border-slate-300 cursor-pointer" title="Merah"></button>
               </div>
@@ -454,7 +454,7 @@ function renderSignControls(file: UploadedFileItem): string {
 
             <div class="flex items-center justify-between mt-3">
               <button id="btn-clear-signature" class="text-xs text-rose-600 hover:text-rose-700 font-semibold cursor-pointer min-h-[36px]">Bersihkan Goresan</button>
-              <label class="text-xs text-indigo-600 hover:text-indigo-700 font-semibold cursor-pointer min-h-[36px] flex items-center">
+              <label class="text-xs text-steelblue-600 hover:text-steelblue-700 font-semibold cursor-pointer min-h-[36px] flex items-center">
                 Upload PNG Transparan
                 <input type="file" id="sign-upload-png" class="hidden" accept="image/png" aria-label="Upload gambar tanda tangan format PNG" />
               </label>
@@ -476,7 +476,7 @@ function renderSignControls(file: UploadedFileItem): string {
             <!-- Draggable Signature Box Overlay -->
             <div
               id="draggable-signature-box"
-              class="absolute top-10 left-10 w-36 h-20 border-2 border-indigo-600 bg-indigo-50/40 cursor-move flex items-center justify-center select-none"
+              class="absolute top-10 left-10 w-36 h-20 border-2 border-steelblue-600 bg-steelblue-50/40 cursor-move flex items-center justify-center select-none"
               style="touch-action: none;"
             >
               <img id="overlay-signature-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="Pratinjau tanda tangan" class="max-w-full max-h-full pointer-events-none hidden" />
@@ -488,7 +488,7 @@ function renderSignControls(file: UploadedFileItem): string {
                 class="absolute -bottom-3 -right-3 w-10 h-10 sm:w-8 sm:h-8 min-w-[36px] min-h-[36px] flex items-center justify-center cursor-se-resize touch-none select-none z-10"
                 title="Tarik untuk mengubah ukuran tanda tangan"
               >
-                <span class="w-3.5 h-3.5 rounded-full bg-indigo-600 border-2 border-white shadow-xs pointer-events-none"></span>
+                <span class="w-3.5 h-3.5 rounded-full bg-steelblue-600 border-2 border-white shadow-xs pointer-events-none"></span>
               </div>
             </div>
           </div>
@@ -504,7 +504,7 @@ function renderPdfToMarkdownControls(file: UploadedFileItem): string {
     <div class="space-y-4">
       <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div class="flex items-center gap-3 min-w-0">
-          <div class="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center flex-shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-steelblue-50 border border-steelblue-100 text-steelblue-600 flex items-center justify-center flex-shrink-0">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           </div>
           <div class="truncate">
@@ -518,24 +518,24 @@ function renderPdfToMarkdownControls(file: UploadedFileItem): string {
       <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 shadow-xs">
         <h5 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Opsi Optimasi Markdown</h5>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-300 transition-colors cursor-pointer min-h-[44px]">
-            <input type="checkbox" id="md-opt-smart-paragraphs" class="mt-0.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer" checked />
+          <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-steelblue-300 transition-colors cursor-pointer min-h-[44px]">
+            <input type="checkbox" id="md-opt-smart-paragraphs" class="mt-0.5 rounded border-slate-300 text-steelblue-600 focus:ring-steelblue-500 cursor-pointer" checked />
             <div class="text-left">
               <span class="text-xs font-semibold text-slate-800 block">Gabungkan Paragraf</span>
               <span class="text-[11px] text-slate-500 block leading-tight">Sambung baris yang terputus & rapikan tanda hubung</span>
             </div>
           </label>
 
-          <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-300 transition-colors cursor-pointer min-h-[44px]">
-            <input type="checkbox" id="md-opt-headings" class="mt-0.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer" checked />
+          <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-steelblue-300 transition-colors cursor-pointer min-h-[44px]">
+            <input type="checkbox" id="md-opt-headings" class="mt-0.5 rounded border-slate-300 text-steelblue-600 focus:ring-steelblue-500 cursor-pointer" checked />
             <div class="text-left">
               <span class="text-xs font-semibold text-slate-800 block">Deteksi Heading</span>
               <span class="text-[11px] text-slate-500 block leading-tight">Ubah font besar & tebal jadi #, ##, ###</span>
             </div>
           </label>
 
-          <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-300 transition-colors cursor-pointer min-h-[44px]">
-            <input type="checkbox" id="md-opt-page-breaks" class="mt-0.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer" checked />
+          <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-steelblue-300 transition-colors cursor-pointer min-h-[44px]">
+            <input type="checkbox" id="md-opt-page-breaks" class="mt-0.5 rounded border-slate-300 text-steelblue-600 focus:ring-steelblue-500 cursor-pointer" checked />
             <div class="text-left">
               <span class="text-xs font-semibold text-slate-800 block">Pemisah Halaman</span>
               <span class="text-[11px] text-slate-500 block leading-tight">Sertakan pembatas (---) antar halaman</span>
@@ -551,7 +551,7 @@ function renderStandardSingleFileControls(file: UploadedFileItem): string {
   return `
     <div class="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
       <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center shadow-xs">
+        <div class="w-12 h-12 rounded-xl bg-steelblue-50 border border-steelblue-100 text-steelblue-600 flex items-center justify-center shadow-xs">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         </div>
         <div>
@@ -622,7 +622,7 @@ function renderResultView(
               }
               ${
                 details.wordCount !== undefined
-                  ? `<span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-[11px] font-medium">${details.wordCount} Kata</span>`
+                  ? `<span class="px-2 py-0.5 rounded-md bg-steelblue-50 text-steelblue-700 text-[11px] font-medium">${details.wordCount} Kata</span>`
                   : ''
               }
               ${
@@ -631,7 +631,7 @@ function renderResultView(
                   : ''
               }
             </div>
-            <button id="btn-copy-markdown" class="px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold cursor-pointer border border-indigo-200 transition-colors min-h-[36px] flex items-center justify-center">
+            <button id="btn-copy-markdown" class="px-3 py-1.5 rounded-lg bg-steelblue-50 hover:bg-steelblue-100 text-steelblue-700 text-xs font-semibold cursor-pointer border border-steelblue-200 transition-colors min-h-[36px] flex items-center justify-center">
               Salin ke Clipboard
             </button>
           </div>

@@ -14,7 +14,7 @@ describe('Quieter Design & Reduced Visual Noise Verification', () => {
     expect(heroHtml).not.toContain('bg-clip-text');
     expect(heroHtml).not.toContain('text-transparent');
     expect(heroHtml).not.toContain(['from', 'indigo-600 via-indigo-700 to-purple-600'].join('-'));
-    expect(heroHtml).toContain('text-indigo-600');
+    expect(heroHtml).toContain('text-steelblue-600');
   });
 
   test('Header component should use solid logo mark and calm status indicator without pulse animation', () => {
@@ -23,7 +23,7 @@ describe('Quieter Design & Reduced Visual Noise Verification', () => {
     expect(headerHtml).not.toContain(['bg-gradient-to-tr from', 'indigo-600 to-indigo-500'].join('-'));
     expect(headerHtml).not.toContain('shadow-indigo-500/20');
     expect(headerHtml).not.toContain('animate-pulse');
-    expect(headerHtml).toContain('bg-indigo-600');
+    expect(headerHtml).toContain('bg-steelblue-600');
   });
 
   test('Tool grid and cards should not use clashing gradient icons or aggressive colored shadows', () => {

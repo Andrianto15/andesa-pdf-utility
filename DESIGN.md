@@ -2,9 +2,9 @@
 name: Andesa PDF Utility
 description: Free, private, client-side in-browser PDF manipulation suite
 colors:
-  primary: "#4f46e5"
-  primary-hover: "#4338ca"
-  accent: "#06b6d4"
+  primary: "#4682b4"
+  primary-hover: "#36648b"
+  accent: "#0ea5e9"
   neutral-bg: "#f8fafc"
   neutral-surface: "#ffffff"
   neutral-border: "#e2e8f0"
@@ -116,13 +116,13 @@ The aesthetic blends clean Scandinavian minimalism with utilitarian precision. E
 
 ## Colors
 
-The color palette centers around purposeful slate neutrals accented with precise indigo and cyan highlights to guide focus.
+The color palette centers around purposeful slate neutrals accented with precise Steel Blue and sky highlights to guide focus.
 
 ### Primary
-- **Indigo Accent** (`#4f46e5` / dark: `#6366f1`): Primary call-to-action buttons, active tabs, and primary state indicators.
+- **Steel Blue Accent** (`#4682b4` / dark: `#6ba3ce`): Primary call-to-action buttons, active tabs, and primary state indicators.
 
 ### Secondary
-- **Cyan Glow** (`#06b6d4` / dark: `#22d3ee`): Subtle progress bars, secondary badges, and selection indicators.
+- **Sky Glow** (`#0ea5e9` / dark: `#38bdf8`): Subtle progress bars, secondary badges, and selection indicators.
 
 ### Neutral
 - **Slate Main Background** (`#f8fafc` / dark: `#090d16`): The foundational canvas backdrop.
@@ -187,8 +187,8 @@ Surfaces are predominantly flat with subtle tonal borders at rest. Depth is intr
 
 ### Buttons
 - **Shape:** Rounded corners (`0.5rem` / `rounded-lg`).
-- **Primary:** Background `var(--color-primary)` (`#4f46e5`), text white, font-weight 600, padding `0.625rem 1.25rem`.
-- **Hover / Focus:** Hover darkens to `#4338ca`; focus displays an accessible `:focus-visible` ring (`2px solid #4f46e5` with `2px` offset).
+- **Primary:** Background `var(--color-primary)` (`#4682b4`), text white, font-weight 600, padding `0.625rem 1.25rem`.
+- **Hover / Focus:** Hover darkens to `#36648b`; focus displays an accessible `:focus-visible` ring (`2px solid #4682b4` with `2px` offset).
 - **Secondary / Ghost:** Transparent or white surface with border `1px solid var(--border-card)`, hover `rgba(0,0,0,0.03)`.
 
 ### Cards / Containers
@@ -199,7 +199,7 @@ Surfaces are predominantly flat with subtle tonal borders at rest. Depth is intr
 
 ### Inputs / Fields
 - **Style:** Stroke `1px solid #cbd5e1`, radius `0.5rem`, padding `0.5rem 0.75rem`.
-- **Focus:** Ring `2px solid #4f46e5` with border transition.
+- **Focus:** Ring `2px solid #4682b4` with border transition.
 - **Disabled:** Background `rgba(0, 0, 0, 0.04)`, opacity 0.6, cursor not-allowed.
 
 ### Signature Pad

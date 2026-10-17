@@ -412,7 +412,7 @@ async function bindSplitControls(): Promise<void> {
         const isChecked = state.splitSelectedPages.has(pageIdx);
 
         card.className = `split-thumb-card relative rounded-xl border p-1 cursor-pointer transition-all ${
-          isChecked ? 'border-indigo-500 bg-indigo-500/10 shadow-md' : 'border-white/10 bg-white/5 opacity-70'
+          isChecked ? 'border-steelblue-500 bg-steelblue-500/10 shadow-md' : 'border-white/10 bg-white/5 opacity-70'
         }`;
         card.dataset.pageIndex = `${pageIdx}`;
         card.innerHTML = `
@@ -455,10 +455,10 @@ function updateSplitThumbnailCheckboxes(): void {
 
     if (cb) cb.checked = isSelected;
     if (isSelected) {
-      el.classList.add('border-indigo-500', 'bg-indigo-500/10', 'shadow-md');
+      el.classList.add('border-steelblue-500', 'bg-steelblue-500/10', 'shadow-md');
       el.classList.remove('border-white/10', 'bg-white/5', 'opacity-70');
     } else {
-      el.classList.remove('border-indigo-500', 'bg-indigo-500/10', 'shadow-md');
+      el.classList.remove('border-steelblue-500', 'bg-steelblue-500/10', 'shadow-md');
       el.classList.add('border-white/10', 'bg-white/5', 'opacity-70');
     }
   });

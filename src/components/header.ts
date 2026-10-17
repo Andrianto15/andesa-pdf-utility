@@ -3,7 +3,7 @@ export function renderHeader(): string {
     <header class="border-b border-slate-200/80 bg-white/90 backdrop-blur-md sticky top-0 z-40 transition-colors">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <a href="#" id="nav-logo" class="flex items-center gap-3 group">
-          <div class="w-10 h-10 rounded-xl bg-indigo-600 shadow-xs flex items-center justify-center text-white group-hover:bg-indigo-700 transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-steelblue-600 shadow-xs flex items-center justify-center text-white group-hover:bg-steelblue-700 transition-colors">
             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14 2 14 8 20 8"/>
@@ -13,7 +13,7 @@ export function renderHeader(): string {
           <div>
             <div class="flex items-center gap-2">
               <span class="font-extrabold text-xl tracking-tight text-slate-900">Andesa PDF</span>
-              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">Tanpa Batas</span>
+              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-steelblue-50 text-steelblue-700 border border-steelblue-200">Tanpa Batas</span>
             </div>
             <p class="text-[11px] text-slate-500 font-medium hidden sm:block">Tanpa Batas • Bebas Biaya • 100% Free</p>
           </div>

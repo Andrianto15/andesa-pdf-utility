@@ -221,7 +221,7 @@ graph TD
 ### 8. Design & UX Requirements
 
 - **Design Style**: Modern Light Theme, clean card layout, antislop-ui standard (tanpa elemen mengambang berlebih, kontras tinggi WCAG AA).
-- **Color Palette**: Light Slate (`#f8fafc` background, `#ffffff` card surface, `#e2e8f0` border) dengan teks kontras `#0f172a` dan aksen Indigo (`#4f46e5`). Indikator privasi hijau emerald (`#059669`).
+- **Color Palette**: Light Slate (`#f8fafc` background, `#ffffff` card surface, `#e2e8f0` border) dengan teks kontras `#0f172a` dan warna utama Steel Blue (`#4682b4` / hover `#36648b`) serta aksen Sky Glow (`#0ea5e9`). Indikator privasi hijau emerald (`#059669`).
 - **Mobile-First Responsive & Adaptive Layout**:
   - Dukungan layar notch mobile dan perangkat tepi melengkung melalui `<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />` serta safe area insets CSS `env(safe-area-inset-top)`, `env(safe-area-inset-bottom)`, `env(safe-area-inset-left)`, `env(safe-area-inset-right)`.
   - Adaptasi pointer kasar/sentuh (`@media (pointer: coarse)`): memperbesar ukuran sentuh elemen interaktif seperti handle resize tanda tangan dan tombol aksi menjadi minimum 44x44px.
