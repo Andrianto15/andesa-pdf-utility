@@ -386,6 +386,26 @@ graph TD
 - **Verifikasi Unit Test**:
   - Suite pengujian `tests/theme.test.ts` dan `tests/hardening.test.ts` memverifikasi fungsionalitas toggle tema, persistensi tema, kelas dark mode di seluruh antarmuka komponen, aturan transisi reduced motion terarah, dan aksesibilitas label link.
 
+---
+
+### 21. Mobile Controls & Interaction Optimization (Impeccable Audit P2 Resolution)
+
+- **Standarisasi Ukuran Target Sentuh Mobile (WCAG 2.5.5 ≥ 44x44px)**:
+  - Tombol kontrol manipulasi urutan file merge (`data-move-up`, `data-move-down`, `data-remove`) ditingkatkan dari 36x36px menjadi minimal 44x44px (`min-h-[44px] min-w-[44px]`).
+  - Swatch pemilih warna tinta tanda tangan (`sign-color-black`, `sign-color-blue`, `sign-color-red`) dilengkapi pembungkus target sentuh 44x44px (`w-11 h-11 flex items-center justify-center`) menjaga dot visual tetap presisi 24x24px namun mudah ditekan pada layar sentuh.
+  - Tombol aksi kecil seperti pemilih semua halaman (`#btn-select-all-pages`), reset halaman (`#btn-clear-pages`), pembersih goresan tanda tangan (`#btn-clear-signature`), dan tombol salin markdown (`#btn-copy-markdown`) distandarkan dengan batas sentuh minimal `min-h-[44px]`.
+- **Live Regions & Atribut ARIA Lengkap pada Kontainer Progres**:
+  - Menambahkan semantik `role="status"` dan `aria-live="polite"` pada `#progress-container` agar pembaruan progres pemrosesan dokumen terbaca secara dinamis oleh screen reader.
+  - Menambahkan `role="progressbar"`, `aria-valuemin="0"`, `aria-valuemax="100"`, dan `aria-valuenow` dinamis pada elemen bar progres dokumen.
+- **Kelengkapan Atribut ARIA Slider Resizer Tanda Tangan**:
+  - Handle pengubah ukuran tanda tangan (`#sign-resize-handle`) dilengkapi `aria-valuemin="48"`, `aria-valuemax="800"`, dan `aria-valuenow="180"`.
+  - Nilai `aria-valuenow` disinkronkan secara realtime saat pengguna mengubah ukuran menggunakan gestur pointer maupun tombol panah keyboard.
+- **Optimasi Caching Pratinjau Dokumen Tanda Tangan**:
+  - Menambahkan caching instans `PDFDocumentProxy` pada state pratinjau workspace tanda tangan (`cachedSignPdfDoc`), mengeliminasi overhead membaca ulang file via `readFileAsArrayBuffer` dan `loadPdf` setiap kali pengguna berganti halaman pratinjau.
+- **Verifikasi Unit Test**:
+  - Suite pengujian `tests/hardening.test.ts` memverifikasi kelengkapan atribut ARIA slider, live status progres, dan target sentuh 44px mobile. Total 18 test suite (96 tests) lulus 100%.
+
+
 
 
 

@@ -101,6 +101,24 @@
   - Menambahkan assertions dark mode dan accessibility di `tests/theme.test.ts` dan `tests/hardening.test.ts`.
   - Seluruh 18 test suite (94 tests) lulus 100%.
 
+### Impeccable Audit P2 Resolution: Mobile Controls & Interaction Optimization
+- **Standarisasi Target Sentuh Mobile (WCAG 2.5.5 ≥ 44x44px)**:
+  - Meningkatkan ukuran tombol kontrol urutan file merge (`min-h-[44px] min-w-[44px]`).
+  - Menyediakan pembungkus tap target 44x44px (`w-11 h-11`) pada ketiga swatch pemilih warna tinta tanda tangan (`sign-color-black`, `sign-color-blue`, `sign-color-red`).
+  - Menstandarkan target sentuh 44px pada tombol aksi workspace: pemilih semua halaman (`#btn-select-all-pages`), reset halaman (`#btn-clear-pages`), bersihkan goresan (`#btn-clear-signature`), dan salin markdown (`#btn-copy-markdown`).
+- **Live Regions & Semantik ARIA Lengkap pada Kontainer Progres**:
+  - Menambahkan `role="status"` dan `aria-live="polite"` pada `#progress-container`.
+  - Menambahkan `role="progressbar"`, `aria-valuemin="0"`, `aria-valuemax="100"`, dan pembaruan dinamis `aria-valuenow` saat proses berjalan di `src/main.ts`.
+- **Atribut ARIA Lengkap Slider Resizer Tanda Tangan**:
+  - Menambahkan `aria-valuemin="48"`, `aria-valuemax="800"`, dan `aria-valuenow="180"` pada `#sign-resize-handle`.
+  - Menyinkronkan nilai `aria-valuenow` secara realtime saat pengguna mengubah ukuran tanda tangan via pointer atau tombol keyboard panah.
+- **Optimasi Kinerja Pratinjau Dokumen**:
+  - Mengimplementasikan caching instans `PDFDocumentProxy` pada state pratinjau tanda tangan (`cachedSignPdfDoc`) untuk mengeliminasi pembacaan ulang file berulang saat berpindah halaman pratinjau.
+- **Pengujian Unit & QA**:
+  - Menambahkan assertions live regions, progressbar role, dan target sentuh 44px di `tests/hardening.test.ts`.
+  - Seluruh 18 test suite (96 tests) lulus 100%.
+
+
 
 
 

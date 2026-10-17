@@ -643,14 +643,19 @@ async function bindSignControls(): Promise<void> {
     }
   });
 
+  // Cache parsed PDFDocument for preview
+  let cachedSignPdfDoc: Awaited<ReturnType<typeof loadPdf>> | null = null;
+
   // Render PDF Target Page on Preview Canvas
   const loadPagePreview = async (pageIdx: number) => {
     state.signTargetPage = pageIdx;
     try {
-      const buffer = await readFileAsArrayBuffer(fileItem.file);
-      const pdfDoc = await loadPdf(buffer);
-      fileItem.pageCount = pdfDoc.numPages;
-      const { canvas: rendered, width, height } = await renderPageToCanvas(pdfDoc, pageIdx + 1, 1.2);
+      if (!cachedSignPdfDoc) {
+        const buffer = await readFileAsArrayBuffer(fileItem.file);
+        cachedSignPdfDoc = await loadPdf(buffer);
+        fileItem.pageCount = cachedSignPdfDoc.numPages;
+      }
+      const { canvas: rendered, width, height } = await renderPageToCanvas(cachedSignPdfDoc, pageIdx + 1, 1.2);
 
       if (pdfCanvas) {
         pdfCanvas.width = width;
@@ -751,6 +756,7 @@ async function bindSignControls(): Promise<void> {
 
         dragBox.style.width = `${newW}px`;
         dragBox.style.height = `${newH}px`;
+        resizeHandle.setAttribute('aria-valuenow', String(Math.round(newW)));
 
         state.signBoxNorm.w = newW / wrapper.clientWidth;
         state.signBoxNorm.h = newH / wrapper.clientHeight;
@@ -789,6 +795,8 @@ async function bindSignControls(): Promise<void> {
           const newH = Math.max(28, Math.min(wrapper.clientHeight - dragBox.offsetTop, dragBox.offsetHeight + deltaH));
           dragBox.style.width = `${newW}px`;
           dragBox.style.height = `${newH}px`;
+          resizeHandle.setAttribute('aria-valuenow', String(Math.round(newW)));
+
           state.signBoxNorm.w = newW / wrapper.clientWidth;
           state.signBoxNorm.h = newH / wrapper.clientHeight;
         }
@@ -877,6 +885,7 @@ async function executeToolAction(): Promise<void> {
       textEl.textContent = state.progressText;
       percentEl.textContent = `${state.progressPercent}%`;
       fillEl.style.width = `${state.progressPercent}%`;
+      fillEl.parentElement?.setAttribute('aria-valuenow', String(state.progressPercent));
     } else {
       renderApp();
     }
