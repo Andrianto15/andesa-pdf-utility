@@ -86,6 +86,8 @@
   - Memperbarui `tests/quieter.test.ts` untuk assertions kelas warna baru (`text-steelblue-600` dan `bg-steelblue-600`).
   - Total 18 test suites dan 92 tests lulus 100% tanpa error, lolos build Vite & linter (`eslint . --fix`).
 
+## Versi 0.2.1
+
 ### Impeccable Audit P1 Hardening: Dark Mode System & Accessibility
 - **Sistem Tema Gelap Responsif & Toggle Persisten**:
   - Menambahkan tombol toggle tema interaktif pada header (`#btn-theme-toggle`) dengan ikon matahari/bulan adaptif dan target sentuh minimal 44px (`min-h-[44px] min-w-[44px]`).
