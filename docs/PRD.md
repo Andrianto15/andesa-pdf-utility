@@ -325,10 +325,10 @@ graph TD
 - **Creative North Star**: *"The Precision Document Lab"* (utilitarian, private, tactile, focused).
 - **Spesifikasi DESIGN.md**:
   - Berada di root repository (`DESIGN.md`) sesuai standar formal Impeccable / Stitch.
-  - Memiliki header YAML frontmatter berisi token mesin: `name`, `description`, `colors`, `typography`, `rounded`, `spacing`, `components`.
+  - Memiliki header YAML frontmatter berisi token mesin: `name`, `description`, `colors`, `typography` (termasuk `mono: JetBrains Mono`, `micro: 11px`, `nano: 10px`, dan `document: Helvetica/Courier New`), `rounded`, `spacing`, `components`.
   - Mengikuti 8 seksi kanonikal secara berurutan: Overview, Colors, Typography, Layout, Elevation & Depth, Shapes, Components, Do's and Don'ts.
 - **Sidecar Ekstensi (.impeccable/design.json)**:
-  - Format `schemaVersion: 2` menyimpan metadata ekstensi (`colorMeta` dengan tonal ramps, `typographyMeta`, `shadows`, `motion`, `breakpoints`), komponen HTML/CSS terisolasi, dan narasi panduan (*northStar, rules, dos, donts*).
+  - Format `schemaVersion: 2` menyimpan metadata ekstensi (`colorMeta` dengan tonal ramps, `typographyMeta` lengkap dengan skala `mono/micro/nano`, `shadows`, `motion`, `breakpoints`), komponen HTML/CSS terisolasi, dan narasi panduan (*northStar, rules, dos, donts*).
 - **Arsitektur Token CSS**:
   - `src/style.css` mengintegrasikan blok `@theme` Tailwind CSS v4 yang memetakan variabel semantik (`--color-bg-main`, `--color-bg-card`, `--color-border-card`, `--color-text-main`, `--color-text-muted`) ke CSS custom properties `:root` dan `.dark`.
 - **Verifikasi Unit Test**:

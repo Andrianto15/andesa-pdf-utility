@@ -44,6 +44,30 @@ typography:
     fontWeight: 600
     lineHeight: 1.4
     letterSpacing: "0.02em"
+  mono:
+    fontFamily: "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+    fontSize: "0.75rem"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "normal"
+  micro:
+    fontFamily: "Plus Jakarta Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+    fontSize: "0.6875rem"
+    fontWeight: 500
+    lineHeight: 1.35
+    letterSpacing: "normal"
+  nano:
+    fontFamily: "Plus Jakarta Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+    fontSize: "0.625rem"
+    fontWeight: 700
+    lineHeight: 1.3
+    letterSpacing: "0.02em"
+  document:
+    fontFamily: "Helvetica, Courier New, Times New Roman, sans-serif"
+    fontSize: "0.875rem"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "normal"
 rounded:
   sm: "0.375rem"
   md: "0.5rem"
@@ -111,7 +135,8 @@ The color palette centers around purposeful slate neutrals accented with precise
 
 **Display Font:** Plus Jakarta Sans (fallback: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif)  
 **Body Font:** Plus Jakarta Sans (fallback: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif)  
-**Label/Mono Font:** Plus Jakarta Sans / ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace  
+**Label/Mono Font:** JetBrains Mono (fallback: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace)  
+**Document Fonts:** Helvetica, Courier New, Times New Roman (standard embedded PDF reader fonts)  
 
 **Character:** Modern geometric sans-serif with humanist warmth, high x-height, and open apertures for optimal legibility at small sizes and high-density tabular viewports.
 
@@ -121,6 +146,9 @@ The color palette centers around purposeful slate neutrals accented with precise
 - **Title** (600, 1.125rem, 1.4, normal): Tool grid card titles and section headers.
 - **Body** (400, 0.875rem, 1.5, normal): Main content, tool descriptions, and operational instructions (max 65–75ch).
 - **Label** (600, 0.75rem, 1.4, 0.02em): Badges, table headers, file metadata, and input labels.
+- **Micro** (500, 0.6875rem / 11px, 1.35, normal): Secondary metadata, timestamps, and compact footer legal notes.
+- **Nano** (700, 0.625rem / 10px, 1.3, 0.02em): Uppercase badge pills and compact count indicators.
+- **Mono** (400, 0.75rem, 1.4, normal): Supported file formats, code blocks, and technical parameters.
 
 ### Named Rules
 **The Legibility First Rule.** All interactive labels and form descriptions must maintain a minimum contrast ratio of 4.5:1 against their surface backgrounds in both light and dark themes.

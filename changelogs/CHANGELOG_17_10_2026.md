@@ -14,6 +14,8 @@
   - Menambahkan test suite baru `tests/adapt.test.ts` (4 unit test baru, total 14 test suite dan 72 test lulus 100%).
   - Memperbarui dokumen spesifikasi `docs/PRD.md` Bagian 8 (Design & UX Requirements).
 
+## Versi 0.1.5
+
 ### Impeccable Document & Design System Tokens
 - **Spesifikasi DESIGN.md Kanonikal**:
   - Membuat `DESIGN.md` pada root project dengan header YAML frontmatter (`name`, `description`, `colors`, `typography`, `rounded`, `spacing`, `components`) dan 8 seksi kanonikal Impeccable (Overview, Colors, Typography, Layout, Elevation & Depth, Shapes, Components, Do's and Don'ts).
@@ -46,5 +48,14 @@
 - **Pengujian Unit & PRD**:
   - Menambahkan test suite `tests/polish.test.ts` (3 unit test baru, total 17 test suite dan 84 test lulus 100%).
   - Memperbarui `docs/PRD.md` dengan Bagian 18 (Contrast Polish & Visual Quality Standards).
+
+### Impeccable Typography & Type Ramp Synchronization (P2 Audit Resolution)
+- **Sinkronisasi Font Monospace & Dokumen**:
+  - Mendaftarkan `JetBrains Mono` sebagai `mono font` formal di `DESIGN.md` dan `.impeccable/design.json`, menyelaraskan font deklarasi Google Fonts di `index.html`.
+  - Mendaftarkan font dokumen standar reader PDF (`Helvetica`, `Courier New`, `Times New Roman`) ke dalam token tipografi `document`.
+- **Standarisasi Rampa Tipografi Micro & Nano**:
+  - Mendefinisikan token ukuran `micro` (0.6875rem / 11px) dan `nano` (0.625rem / 10px) untuk melegitimasi ukuran teks metadata, status badge, dan subtext footer dalam token sistem desain.
+  - Memperbarui assertions di `tests/designSystem.test.ts` untuk memvalidasi token tipografi baru.
+
 
 

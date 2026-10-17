@@ -18,6 +18,9 @@ describe('Design System Documentation & Token Verification', () => {
     expect(content).toContain('rounded:');
     expect(content).toContain('spacing:');
     expect(content).toContain('components:');
+    expect(content).toContain('JetBrains Mono');
+    expect(content).toContain('micro:');
+    expect(content).toContain('nano:');
   });
 
   test('DESIGN.md should include all 8 canonical sections in exact order', () => {

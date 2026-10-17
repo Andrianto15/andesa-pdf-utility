@@ -43,6 +43,18 @@
       "label": {
         "displayName": "Metadata Label",
         "purpose": "Badge text, form labels, and file size counters."
+      },
+      "mono": {
+        "displayName": "Code & Format Mono",
+        "purpose": "Supported file extension tags and technical parameters."
+      },
+      "micro": {
+        "displayName": "Micro Metadata",
+        "purpose": "Subtext, timestamps, and compact legal disclaimers."
+      },
+      "nano": {
+        "displayName": "Nano Badge",
+        "purpose": "Uppercase badge pills and compact counters."
       }
     },
     "shadows": [
