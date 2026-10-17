@@ -364,29 +364,44 @@ function renderJpgToPdfControls(files: UploadedFileItem[]): string {
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
           <label for="jpg-page-size" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">Ukuran Halaman</label>
-          <select id="jpg-page-size" class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-sm focus:border-steelblue-600 focus:outline-none cursor-pointer min-h-[44px]">
-            <option value="a4" selected>A4 (Standar)</option>
-            <option value="letter">Letter</option>
-            <option value="fit">Sesuai Ukuran Gambar</option>
-          </select>
+          <div class="relative w-full">
+            <select id="jpg-page-size" class="w-full appearance-none pl-4 pr-10 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-sm focus:border-steelblue-600 focus:ring-2 focus:ring-steelblue-500/20 focus:outline-none cursor-pointer min-h-[44px] transition-colors">
+              <option value="a4" selected>A4 (Standar)</option>
+              <option value="letter">Letter</option>
+              <option value="fit">Sesuai Ukuran Gambar</option>
+            </select>
+            <div class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center text-slate-500 dark:text-slate-300" aria-hidden="true">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+          </div>
         </div>
 
         <div>
           <label for="jpg-orientation" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">Orientasi</label>
-          <select id="jpg-orientation" class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-sm focus:border-steelblue-600 focus:outline-none cursor-pointer min-h-[44px]">
-            <option value="auto" selected>Otomatis (Sesuai Gambar)</option>
-            <option value="portrait">Tegak (Portrait)</option>
-            <option value="landscape">Mendatar (Landscape)</option>
-          </select>
+          <div class="relative w-full">
+            <select id="jpg-orientation" class="w-full appearance-none pl-4 pr-10 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-sm focus:border-steelblue-600 focus:ring-2 focus:ring-steelblue-500/20 focus:outline-none cursor-pointer min-h-[44px] transition-colors">
+              <option value="auto" selected>Otomatis (Sesuai Gambar)</option>
+              <option value="portrait">Tegak (Portrait)</option>
+              <option value="landscape">Mendatar (Landscape)</option>
+            </select>
+            <div class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center text-slate-500 dark:text-slate-300" aria-hidden="true">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+          </div>
         </div>
 
         <div>
           <label for="jpg-margin" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">Margin Halaman</label>
-          <select id="jpg-margin" class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-sm focus:border-steelblue-600 focus:outline-none cursor-pointer min-h-[44px]">
-            <option value="0" selected>Tanpa Margin</option>
-            <option value="20">Kecil (20pt)</option>
-            <option value="40">Sedang (40pt)</option>
-          </select>
+          <div class="relative w-full">
+            <select id="jpg-margin" class="w-full appearance-none pl-4 pr-10 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-sm focus:border-steelblue-600 focus:ring-2 focus:ring-steelblue-500/20 focus:outline-none cursor-pointer min-h-[44px] transition-colors">
+              <option value="0" selected>Tanpa Margin</option>
+              <option value="20">Kecil (20pt)</option>
+              <option value="40">Sedang (40pt)</option>
+            </select>
+            <div class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center text-slate-500 dark:text-slate-300" aria-hidden="true">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -423,11 +438,16 @@ function renderSignControls(file: UploadedFileItem): string {
           <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100">${file.file.name}</h4>
           <p class="text-xs text-slate-500 dark:text-slate-300">${file.sizeFormatted} • ${file.pageCount || 1} Halaman</p>
         </div>
-        <div class="flex items-center gap-2">
-          <label for="sign-page-select" class="text-xs font-medium text-slate-700 dark:text-slate-300">Pilih Halaman Target:</label>
-          <select id="sign-page-select" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs focus:outline-none min-h-[36px]">
-            ${Array.from({ length: file.pageCount || 1 }, (_, i) => `<option value="${i}">Halaman ${i + 1}</option>`).join('')}
-          </select>
+        <div class="flex items-center gap-2.5">
+          <label for="sign-page-select" class="text-xs font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap">Pilih Halaman Target:</label>
+          <div class="relative inline-flex items-center">
+            <select id="sign-page-select" class="appearance-none pl-3 pr-8 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs focus:outline-none focus:border-steelblue-600 focus:ring-2 focus:ring-steelblue-500/20 cursor-pointer min-h-[36px] transition-colors">
+              ${Array.from({ length: file.pageCount || 1 }, (_, i) => `<option value="${i}">Halaman ${i + 1}</option>`).join('')}
+            </select>
+            <div class="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center text-slate-500 dark:text-slate-300" aria-hidden="true">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+          </div>
         </div>
       </div>
 

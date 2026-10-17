@@ -141,6 +141,21 @@
   - Menambahkan assertions fokus navigasi keyboard dan interaksi pada `tests/polish.test.ts`.
   - Seluruh 18 test suite (98 tests) lulus 100%.
 
+## Versi 0.2.2
+
+### Standardisasi Form Select Controls & Dropdown Arrow Alignment
+- **Perapian Ikon Panah Dropdown (Modul PSD ESign & JPG to PDF)**:
+  - Mengeliminasi panah dropdown native yang mepet ke tepi border kanan pada `<select id="sign-page-select">` serta kontrol JPG to PDF (`jpg-page-size`, `jpg-orientation`, `jpg-margin`).
+  - Menerapkan `appearance-none` secara merata pada seluruh elemen dropdown.
+  - Membungkus `<select>` dengan kontainer `relative` dan menambahkan custom SVG Chevron Down dengan posisi presisi (`right-2.5` / `right-3.5`, `top-1/2 -translate-y-1/2`, `pointer-events-none`).
+  - Menambahkan padding kanan proporsional (`pr-8` / `pr-10`) agar label teks opsi tidak bertabrakan dengan ikon panah.
+  - Memastikan kontras ikon memenuhi standar WCAG AA (`text-slate-500 dark:text-slate-300`) serta mempertahankan efek fokus interaktif `focus:ring-2 focus:ring-steelblue-500/20`.
+- **Pengujian Unit & QA**:
+  - Menambahkan pengujian `appearance-none`, padding kanan, dan penempatan chevron pada `tests/hardening.test.ts`.
+  - Seluruh 18 test suite (98 tests) lulus 100% dan lolos `eslint . --fix`.
+
+
+
 
 
 

@@ -38,6 +38,9 @@ describe('Accessibility & Interface Hardening Verification', () => {
     // Form labels and associations
     expect(signHtml).toContain('for="sign-page-select"');
     expect(signHtml).toContain('id="sign-page-select"');
+    expect(signHtml).toContain('appearance-none');
+    expect(signHtml).toContain('pr-8');
+    expect(signHtml).toContain('right-2.5');
 
     // Color swatch aria-labels
     expect(signHtml).toContain('aria-label="Pilih tinta hitam"');
@@ -114,6 +117,9 @@ describe('Accessibility & Interface Hardening Verification', () => {
     expect(jpgHtml).toContain('for="jpg-page-size"');
     expect(jpgHtml).toContain('for="jpg-orientation"');
     expect(jpgHtml).toContain('for="jpg-margin"');
+    expect(jpgHtml).toContain('appearance-none');
+    expect(jpgHtml).toContain('pr-10');
+    expect(jpgHtml).toContain('right-3.5');
     expect(jpgHtml).toContain('alt="Pratinjau berkas gambar 1"');
     expect(jpgHtml).toContain('aria-label="Hapus gambar 1"');
   });
