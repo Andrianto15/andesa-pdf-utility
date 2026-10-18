@@ -139,4 +139,40 @@ describe('Steel Blue Theme Palette & Harmonization Verification', () => {
     expect(css).toContain('.dark ::-webkit-scrollbar-track');
     expect(css).toContain('.dark .drag-over');
   });
+
+  test('style.css should declare @custom-variant dark to scope Tailwind v4 dark: variants to .dark class', () => {
+    const css = fs.readFileSync(path.resolve(rootDir, 'src/style.css'), 'utf8');
+    expect(css).toContain('@custom-variant dark (&:where(.dark, .dark *));');
+  });
+
+  test('renderHeader should adapt sun and moon icons based on .dark class', () => {
+    const originalDocument = (globalThis as unknown as { document?: unknown }).document;
+    try {
+      // Mock document with .dark
+      (globalThis as unknown as { document: unknown }).document = {
+        documentElement: {
+          classList: {
+            contains: (cls: string) => cls === 'dark',
+          },
+        },
+      };
+      const darkHeader = renderHeader();
+      expect(darkHeader).toContain('id="theme-icon-sun"');
+      expect(darkHeader).toContain('aria-label="Beralih ke mode terang"');
+
+      // Mock document without .dark
+      (globalThis as unknown as { document: unknown }).document = {
+        documentElement: {
+          classList: {
+            contains: () => false,
+          },
+        },
+      };
+      const lightHeader = renderHeader();
+      expect(lightHeader).toContain('id="theme-icon-moon"');
+      expect(lightHeader).toContain('aria-label="Beralih ke mode gelap"');
+    } finally {
+      (globalThis as unknown as { document?: unknown }).document = originalDocument;
+    }
+  });
 });

@@ -31,7 +31,7 @@ describe('Branding and Identity Verification (Andesa PDF)', () => {
     expect(footerHtml).toContain('Andesa PDF');
     expect(footerHtml).toContain('Tanpa Batas');
     expect(footerHtml).toContain('Free');
-    expect(footerHtml).toContain('2026 Andrian Tonur Iskandar');
+    expect(footerHtml).toContain('2026 Andrianto Nur Iskandar');
     expect(footerHtml).toContain('MIT License');
     expect(footerHtml).not.toContain('DA-PDF');
     expect(footerHtml).not.toContain('Client-Side');

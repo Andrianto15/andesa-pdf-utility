@@ -24,13 +24,13 @@ Aplikasi dibangun dengan stack **Vite + TypeScript + Tailwind CSS** menggunakan 
 
 ### 3. Goals & Objectives
 
-| Tujuan                        | Target                                                              |
-| ----------------------------- | ------------------------------------------------------------------- |
-| **Tanpa Batas Kuota & Biaya** | 100% free tanpa kuota harian atau paywall tersembunyi              |
-| **Hybrid Conversion Engine**  | Konversi dokumen presisi tinggi via backend dengan fallback lokal  |
-| **Comprehensive MVP Toolkit** | 8 modul utama siap pakai di peluncuran perdana                      |
-| **Blazing Fast Execution**    | Operasi standar (merge/split/jpg-to-pdf) selesai < 2 detik          |
-| **Zero Friction**             | Tidak ada login, tidak ada database, langsung drag-and-drop         |
+| Tujuan                        | Target                                                            |
+| ----------------------------- | ----------------------------------------------------------------- |
+| **Tanpa Batas Kuota & Biaya** | 100% free tanpa kuota harian atau paywall tersembunyi             |
+| **Hybrid Conversion Engine**  | Konversi dokumen presisi tinggi via backend dengan fallback lokal |
+| **Comprehensive MVP Toolkit** | 8 modul utama siap pakai di peluncuran perdana                    |
+| **Blazing Fast Execution**    | Operasi standar (merge/split/jpg-to-pdf) selesai < 2 detik        |
+| **Zero Friction**             | Tidak ada login, tidak ada database, langsung drag-and-drop       |
 
 ---
 
@@ -285,12 +285,12 @@ graph TD
 
 - **README.md**: Dokumentasi esensial untuk developer dan pengguna, mencakup ikhtisar ringkas fitur, garansi privasi client-side, panduan setup lokal (`npm run dev`, `npm run build`, `npm test`, `npm run lint`, `npm run lint:fix`), serta tautan lisensi.
   - **Status Badges**: Dilengkapi status badges resmi dari Shields.io untuk GitHub display:
-    - *App Version*: Dynamic sync via `img.shields.io/github/package-json/v/Andrianto15/andesa-pdf-utility`.
-    - *NPM Version*: Custom badge terstruktur `img.shields.io/badge/npm-v0.1.3-CB3837?logo=npm` terhubung ke direktori npm `andesa-pdf`.
-    - *License*: MIT badge dari GitHub repository metadata.
-    - *Test Suite*: Status kelulusan test suite Jest.
-    - *Tech Stack*: Badge ekosistem Node.js, TypeScript, Vite, dan Tailwind CSS.
-    - *Community*: Badge `PRs welcome`.
+    - _App Version_: Dynamic sync via `img.shields.io/github/package-json/v/Andrianto15/andesa-pdf-utility`.
+    - _NPM Version_: Custom badge terstruktur `img.shields.io/badge/npm-v0.1.3-CB3837?logo=npm` terhubung ke direktori npm `andesa-pdf`.
+    - _License_: MIT badge dari GitHub repository metadata.
+    - _Test Suite_: Status kelulusan test suite Jest.
+    - _Tech Stack_: Badge ekosistem Node.js, TypeScript, Vite, dan Tailwind CSS.
+    - _Community_: Badge `PRs welcome`.
 - **PRD.md**: Spesifikasi fungsional, arsitektur teknis, kriteria penerimaan, dan acuan implementasi mendalam.
 
 ---
@@ -312,7 +312,7 @@ graph TD
 - **Tagline & Nilai Utama**: Tanpa Batas & Free (Bebas Biaya, Tanpa Batasan Kuota).
 - **Komponen Identitas UI**:
   - Header: Menampilkan teks `Andesa PDF` dengan badge `Tanpa Batas`, subjudul `Tanpa Batas • Bebas Biaya • 100% Free`, dan pill `Tanpa Batas & Free`.
-  - Footer: Menampilkan label `Andesa PDF - Toolkit PDF Tanpa Batas & Free`, indikator `Tanpa Batas Kuota`, serta pemberitahuan hak cipta `© 2026 Andrian Tonur Iskandar. All rights reserved.` dan tautan lisensi MIT.
+  - Footer: Menampilkan label `Andesa PDF - Toolkit PDF Tanpa Batas & Free`, indikator `Tanpa Batas Kuota`, serta pemberitahuan hak cipta `© 2026 Andrianto Nur Iskandar. All rights reserved.` dan tautan lisensi MIT.
   - Hero: Menampilkan `Toolkit PDF Lengkap Tanpa Batas & 100% Free` dan `Tanpa Batas dan Bebas Biaya`.
   - Halaman Web (`index.html`): Title tag `Andesa PDF - Utilitas PDF Tanpa Batas & Free` dan meta description yang selaras.
   - Nama Berkas Output: File PDF hasil ekspor menggunakan prefix default `andesa-pdf-*.pdf`.
@@ -322,13 +322,13 @@ graph TD
 
 ### 16. Design System & Design Tokens (Impeccable Document Standard)
 
-- **Creative North Star**: *"The Precision Document Lab"* (utilitarian, private, tactile, focused).
+- **Creative North Star**: _"The Precision Document Lab"_ (utilitarian, private, tactile, focused).
 - **Spesifikasi DESIGN.md**:
   - Berada di root repository (`DESIGN.md`) sesuai standar formal Impeccable / Stitch.
   - Memiliki header YAML frontmatter berisi token mesin: `name`, `description`, `colors`, `typography` (termasuk `mono: JetBrains Mono`, `micro: 11px`, `nano: 10px`, dan `document: Helvetica/Courier New`), `rounded`, `spacing`, `components`.
   - Mengikuti 8 seksi kanonikal secara berurutan: Overview, Colors, Typography, Layout, Elevation & Depth, Shapes, Components, Do's and Don'ts.
 - **Sidecar Ekstensi (.impeccable/design.json)**:
-  - Format `schemaVersion: 2` menyimpan metadata ekstensi (`colorMeta` dengan tonal ramps, `typographyMeta` lengkap dengan skala `mono/micro/nano`, `shadows`, `motion`, `breakpoints`), komponen HTML/CSS terisolasi, dan narasi panduan (*northStar, rules, dos, donts*).
+  - Format `schemaVersion: 2` menyimpan metadata ekstensi (`colorMeta` dengan tonal ramps, `typographyMeta` lengkap dengan skala `mono/micro/nano`, `shadows`, `motion`, `breakpoints`), komponen HTML/CSS terisolasi, dan narasi panduan (_northStar, rules, dos, donts_).
 - **Arsitektur Token CSS**:
   - `src/style.css` mengintegrasikan blok `@theme` Tailwind CSS v4 yang memetakan variabel semantik (`--color-bg-main`, `--color-bg-card`, `--color-border-card`, `--color-text-main`, `--color-text-muted`) ke CSS custom properties `:root` dan `.dark`.
 - **Verifikasi Unit Test**:
@@ -375,7 +375,8 @@ graph TD
 
 - **Sistem Tema Gelap Responsif & Toggle Persisten**:
   - Implementasi tombol toggle tema interaktif pada header (`#btn-theme-toggle`) dengan ikon matahari/bulan adaptif dan target sentuh ramah seluler minimal 44px (`min-h-[44px] min-w-[44px]`).
-  - Sinkronisasi state tema via `localStorage.getItem('andesa-theme')` dengan script inisialisasi inline pada `index.html` untuk mengeliminasi FOUC (*Flash of Unstyled Content*).
+  - Sinkronisasi state tema via `localStorage.getItem('andesa-theme')` dengan script inisialisasi inline pada `index.html` untuk mengeliminasi FOUC (_Flash of Unstyled Content_).
+  - Integrasi direktif `@custom-variant dark (&:where(.dark, .dark *));` di `src/style.css` pada Tailwind CSS v4 untuk mengesampingkan perilaku default media query `@media (prefers-color-scheme: dark)` agar utilitas `dark:*` sepenuhnya dikendalikan oleh hierarki kelas `.dark` pada dokumen, memastikan peralihan ke mode terang berfungsi dengan sempurna ketika preferensi sistem operasi pengguna berada pada dark mode.
   - Styling utilitas tema gelap komprehensif (`dark:`) pada seluruh komponen UI (`header.ts`, `hero.ts`, `toolGrid.ts`, `toolWorkspace.ts`, `footer.ts`), kontainer glassmorphism (`.glass-panel`, `.glass-card`), serta scrollbar kustom di `src/style.css`.
   - Memastikan rasio kontras tinggi (>11:1) pada tema gelap dengan token `dark:text-slate-300` dan `dark:text-slate-100`.
 - **Aksesibilitas Reduced Motion Terarah (Non-Destructive Reduced Motion)**:
@@ -384,7 +385,7 @@ graph TD
   - Menambahkan accessible `aria-label="Lihat kode sumber Andesa PDF di GitHub"` pada ikon link GitHub di komponen header.
   - Memastikan kontainer notifikasi toast (`#toast-container`) dilengkapi atribut `role="status"` dan `aria-live="polite"` untuk pembaca layar (screen reader).
 - **Verifikasi Unit Test**:
-  - Suite pengujian `tests/theme.test.ts` dan `tests/hardening.test.ts` memverifikasi fungsionalitas toggle tema, persistensi tema, kelas dark mode di seluruh antarmuka komponen, aturan transisi reduced motion terarah, dan aksesibilitas label link.
+  - Suite pengujian `tests/theme.test.ts` dan `tests/hardening.test.ts` memverifikasi fungsionalitas toggle tema, persistensi tema, kelas dark mode di seluruh antarmuka komponen, aturan transisi reduced motion terarah, direktif `@custom-variant dark`, dan aksesibilitas label link.
 
 ---
 
@@ -427,7 +428,7 @@ graph TD
   - Memverifikasi rasio kontras teks di seluruh tema (WCAG AA ≥ 4.5:1 untuk teks biasa, ≥ 3:1 untuk teks besar) dan mengonfirmasi ketiadaan kelas redup tidak standar.
   - Memastikan fokus navigasi keyboard yang jelas pada kartu alat (`focus-visible:ring-2`, `focus-visible:ring-steelblue-500`) dan tombol header (`min-h-[44px] min-w-[44px]`).
   - Mengonfirmasi seluruh interaksi sentuh pada perangkat mobile memenuhi standar kenyamanan target sentuh minimal 44x44px.
-  - Memvalidasi kepatuhan 100% terhadap creative north star *"The Precision Document Lab"* tanpa font klise AI dan tanpa advisory warna tak terdaftar.
+  - Memvalidasi kepatuhan 100% terhadap creative north star _"The Precision Document Lab"_ tanpa font klise AI dan tanpa advisory warna tak terdaftar.
 - **Verifikasi Unit Test**:
   - Suite pengujian `tests/polish.test.ts` memverifikasi keterbacaan kontras, ketiadaan kelas teks buram, serta state fokus keyboard interaktif. Total 18 test suite (98 tests) lulus 100%.
 
@@ -447,14 +448,3 @@ graph TD
   - Menyediakan efek fokus interaktif `focus:ring-2 focus:ring-steelblue-500/20 focus:border-steelblue-600` yang seragam pada tema terang maupun gelap.
 - **Verifikasi Unit Test**:
   - Suite pengujian `tests/hardening.test.ts` memverifikasi keberadaan kelas `appearance-none`, padding kanan proporsional, serta penempatan ikon chevron pada seluruh kontrol select. Total 18 test suite (98 tests) lulus 100%.
-
-
-
-
-
-
-
-
-
-
-

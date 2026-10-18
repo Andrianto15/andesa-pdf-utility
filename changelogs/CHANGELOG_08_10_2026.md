@@ -3,10 +3,12 @@
 ## Versi 0.0.0
 
 ### Inisialisasi Aplikasi (MVP)
+
 - Implementasi 8 modul utilitas PDF client-side: Merge, Split, Kompres, JPG to PDF, Tanda Tangan (E-Sign), PDF to Markdown, Word to PDF, PDF to Word.
 - Zero-server architecture menggunakan `pdf-lib`, `pdfjs-dist`, `docx`, `docx-preview`, `jszip`.
 
 ### Rebranding & Light Theme Redesign
+
 - Rebranding nama aplikasi dari PrivaPDF menjadi **DA-PDF**.
 - Mengubah tema default menjadi **Light Theme** modern:
   - Latar belakang slate bersih (`#f8fafc`).
@@ -20,8 +22,9 @@
 - Pembaruan dokumen `docs/PRD.md` sesuai spesifikasi DA-PDF dan light theme.
 
 ### Penambahan Lisensi MIT
-- Menambahkan file `LICENSE` resmi berbasis **MIT License** dengan hak cipta Copyright (c) 2026 Andrian Tonur Iskandar.
-- Memperbolehkan penggunaan bebas, modifikasi, redistribusi, serta komersialisasi dengan syarat menyertakan *copyright notice*.
+
+- Menambahkan file `LICENSE` resmi berbasis **MIT License** dengan hak cipta Copyright (c) 2026 Andrianto Nur Iskandar.
+- Memperbolehkan penggunaan bebas, modifikasi, redistribusi, serta komersialisasi dengan syarat menyertakan _copyright notice_.
 - Menambahkan konfigurasi `"license": "MIT"` pada `package.json`.
 - Memperbarui dokumentasi `docs/PRD.md` mencakup klausul Licensing & Distribution Policy.
 - Menambahkan unit testing Jest `tests/license.test.ts` untuk memvalidasi integritas file lisensi dan konfigurasi package.
@@ -29,6 +32,7 @@
 ## Versi 0.1.0
 
 ### Dokumentasi Repositori (README.md)
+
 - Membuat file `README.md` yang ringkas, esensial, dan informatif mencakup:
   - Ringkasan DA-PDF (zero-server, pemrosesan client-side in-browser).
   - Ikhtisar 8 modul MVP (Merge, Split, Kompres, Sign, JPG/PNG to PDF, PDF to Markdown, Word to PDF, PDF to Word).
@@ -40,6 +44,7 @@
 - Memperbarui `docs/PRD.md` Bagian 13 (Project Documentation).
 
 ### Konfigurasi Linting & Autofix (ESLint)
+
 - Konfigurasi ESLint flat configuration (`eslint.config.js`) berbasis `typescript-eslint` dan `@eslint/js`.
 - Menambahkan skrip linting di `package.json`:
   - `npm run lint`: pemeriksaan linting statis file TS/JS.
@@ -49,6 +54,7 @@
 - Menambahkan unit test Jest `tests/lint.test.ts` serta pembaruan verifikasi di `tests/readme.test.ts`.
 
 ### Rebranding Aplikasi: Andesa PDF
+
 - Rebranding menyeluruh dari DA-PDF menjadi **Andesa PDF**.
 - Pembaruan komponen UI Header (`src/components/header.ts`) dan Footer (`src/components/footer.ts`).
 - Pembaruan tag `<title>` dan `<meta name="description">` pada `index.html`.
@@ -59,6 +65,7 @@
 - Penambahan unit test verifikasi identitas merek di `tests/branding.test.ts` dan pembaruan `tests/readme.test.ts`.
 
 ### Perbaikan Konversi Word ke PDF (High-Fidelity Rendering)
+
 - Memperbaiki bug kritis penumpukan teks (superimposed/overlapping text) di mana seluruh baris halaman berikutnya menimpa halaman pertama pada `src/tools/wordToPdf.ts`.
 - Mengimplementasikan pipeline visual rendering presisi tinggi: `docx-preview` -> `html2canvas` (2x DPI) -> `pdf-lib`.
 - Menjaga keutuhan tata letak dokumen Word asli: tabel, garis border, kolom, heading, warna teks, margin, dan tanda tangan (sign-off).
@@ -67,6 +74,7 @@
 - Memperbarui dokumentasi kebutuhan produk `docs/PRD.md` Bagian US-07 dan Arsitektur Teknis.
 
 ### Backend Microservice Word ke PDF (LibreOffice Native Engine)
+
 - Menambahkan backend service di folder `server/` berbasis Node.js Express + LibreOffice headless (`soffice`).
 - Menyediakan endpoint REST API `POST /api/convert/word-to-pdf` untuk konversi dokumen DOCX dengan fidelity visual 99% (render tabel, font, margin, dan tanda tangan native).
 - Menyediakan endpoint health check `GET /api/health` untuk mendeteksi kesiapan LibreOffice engine di server.
@@ -78,6 +86,7 @@
 ## Versi 0.1.1
 
 ### Backend Microservice PDF ke Word (LibreOffice Native Engine)
+
 - Menambahkan endpoint REST API `POST /api/convert/pdf-to-word` pada `server/src/index.js` menggunakan LibreOffice headless dengan filter import `writer_pdf_import`.
 - Menjaga keutuhan tata letak dokumen Word hasil konversi dari PDF: tabel, teks multi-kolom, styling heading, dan penataan paragraf.
 - Memperbarui `server/Dockerfile` dengan penambahan paket `libreoffice-draw` untuk kelengkapan PDF import filter di lingkungan Debian Linux.
@@ -87,6 +96,7 @@
 - Memperbarui dokumen spesifikasi `docs/PRD.md` Bagian US-08 dan Arsitektur Teknis.
 
 ### Rebranding: Tanpa Batas & Free (Peniadaan Klaim 100% No-Backend)
+
 - Menghapus klaim mutlak "100% client-side", "Zero Server", "Zero Leak", dan "Tanpa Server Backend" dari seluruh komponen antarmuka pengguna seiring diterapkannya arsitektur hybrid backend.
 - Memperbarui branding utama menjadi **Tanpa Batas & Free**:
   - Header (`src/components/header.ts`): badge `Tanpa Batas`, subjudul `Tanpa Batas • Bebas Biaya • 100% Free`, dan pill status `Tanpa Batas & Free`.
@@ -101,8 +111,9 @@
 ## Versi 0.1.2
 
 ### Penambahan Copyright Footer & Konsistensi Identitas
+
 - Menambahkan baris copyright resmi di bagian bawah footer (`src/components/footer.ts`):
-  - Copyright notice: `© 2026 Andrian Tonur Iskandar. All rights reserved.`
+  - Copyright notice: `© 2026 Andrianto Nur Iskandar. All rights reserved.`
   - Tautan lisensi MIT: `MIT License`.
   - Tata letak responsif mobile-first (`flex-col sm:flex-row`), pemusatan di viewport sempit, serta spasi padding rapi.
 - Sinkronisasi versi package `0.1.2` pada `package.json` dan `package-lock.json`.
@@ -110,6 +121,7 @@
 - Memperbarui dokumentasi spesifikasi identitas `docs/PRD.md` Bagian 15.
 
 ### Optimasi Fitur PDF to Markdown (Rekonstruksi Spasial & Tipografi)
+
 - Mengoptimalkan modul konversi PDF ke Markdown (`src/tools/pdfToMarkdown.ts`):
   - Pengurutan teks spasial (Y descending, X ascending) berdasarkan toleransi baseline baris visual untuk menjamin urutan baca (reading order) yang akurat.
   - Rekonstruksi struktur heading otomatis (`#`, `##`, `###`) dengan menghitung font size dominan dokumen dan mendeteksi bobot font (bold).
@@ -130,6 +142,7 @@
 ## Versi 0.1.3
 
 ### Penambahan GitHub Status Badges pada README.md
+
 - Menambahkan status badges resmi (Shields.io) pada bagian header `README.md`:
   - **App Version**: Terhubung secara dinamis via metadata GitHub repository `Andrianto15/andesa-pdf-utility`.
   - **NPM Version**: Menampilkan versi npm dengan tautan ke registry package `andesa-pdf`.
@@ -144,6 +157,7 @@
 ## Versi 0.1.4
 
 ### Konfigurasi Environment Variables Frontend & Standarisasi Resolusi Backend URL
+
 - Menambahkan berkas template environment `.env.example` dan berkas `.env` lokal dengan konfigurasi variabel `VITE_BACKEND_URL`.
 - Memperbarui `.gitignore` agar mengabaikan `.env` dan `.env.*` untuk keamanan, dengan pengecualian `.env.example`.
 - Membuat helper konfigurasi terpusat `src/utils/config.ts` (`getBackendUrl`) dengan hirarki resolusi bertingkat:
