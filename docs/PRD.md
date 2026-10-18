@@ -216,6 +216,36 @@ graph TD
 - **Verifikasi & Pengujian**:
   - Validasi menyeluruh pada modul `tests/config.test.ts`.
 
+#### Frontend Security & XSS Defense (Phase 1)
+
+- **HTML Entity Sanitization (`escapeHtml`)**:
+  - Implementasi utilitas `escapeHtml()` di `src/utils/format.ts` untuk memfilter karakter rentan (`&`, `<`, `>`, `"`, `'`).
+  - Seluruh nama berkas pengguna (`item.file.name`, `file.file.name`, `filename`) dan atribut ARIA disanitasi sebelum diinterpolasi ke template HTML `src/components/toolWorkspace.ts`.
+  - Konten pratinjau teks Markdown hasil konversi PDF di dalam elemen `<pre>` disanitasi secara ketat untuk mencegah injeksi tag HTML atau eksekusi skrip berbahaya.
+  - Pesan notifikasi toast (`showToast`) dan pesan galat render thumbnail di-escape sebelum dirender ke DOM.
+- **Content Security Policy (CSP)**:
+  - Penetapan meta tag CSP ketat di `index.html` dengan pembatasan domain skrip, Google Fonts, CDNJS PDF.js worker, `object-src 'none'`, dan pembatasan koneksi WebSocket/HTTP.
+- **Verifikasi & Pengujian**:
+  - Validasi ketahanan XSS dan CSP melalui test suite `tests/security.test.ts`.
+
+#### Backend Microservice Security & Isolation (Phase 2)
+
+- **LibreOffice Execution Isolation & Hardening Flags**:
+  - Setiap proses konversi mengisolasi direktori profil pengguna melalui argumen `-env:UserInstallation=file://${tempDir}/user_profile` untuk mencegah bentrok lock file dan state collision saat eksekusi konkuren.
+  - Parameter keamanan ketat: `--headless`, `--norestore`, `--nofirststartwizard`, `--nologo`, `--nodefault` untuk menonaktifkan wizard grafis, recovery cache, dan interaksi interaktif.
+- **Validasi Magic Bytes / File Signatures**:
+  - Memverifikasi byte header berkas sebelum diproses ke disk: berkas DOCX divalidasi memiliki ZIP signature (`PK\x03\x04`), dan berkas PDF divalidasi memiliki signature `%PDF`. Menolak berkas palsu/disguised payload dengan status HTTP 400.
+- **CORS Whitelisting**:
+  - Konfigurasi CORS dengan whitelist asal terverifikasi (`CORS_ORIGIN` atau localhost dev ports `5173`/`3000`), menolak wildcard unauthenticated intranet scan.
+- **Proteksi DoS & Pembatas Konkurensi**:
+  - Pengendali semaphore konkurensi (`MAX_CONCURRENT_CONVERSIONS`, default 3) mengembalikan HTTP 503 saat server sedang memproses kapasitas penuh, mencegah lonjakan CPU/RAM exhaustion akibat spam proses `soffice`.
+- **Sanitasi Error Output**:
+  - Output stderr dan path internal sistem disanitasi; respons 500 mengembalikan pesan kesalahan generik yang aman tanpa membocorkan trace internal.
+- **Container Non-Root User**:
+  - Dockerfile microservice backend dikonfigurasi untuk berjalan di bawah `USER node` non-root UID 1000 dengan kepemilikan direktori `/app` yang terkontrol.
+- **Verifikasi & Pengujian**:
+  - Validasi menyeluruh pada test suite `tests/serverSecurity.test.ts`.
+
 ---
 
 ### 8. Design & UX Requirements

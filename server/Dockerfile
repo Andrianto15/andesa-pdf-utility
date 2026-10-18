@@ -15,6 +15,10 @@ RUN npm install --omit=dev
 
 COPY src/ ./src/
 
+RUN chown -R node:node /app
+
+USER node
+
 ENV PORT=3001
 ENV NODE_ENV=production
 
