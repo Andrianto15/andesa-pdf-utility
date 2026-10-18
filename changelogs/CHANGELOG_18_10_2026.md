@@ -39,3 +39,8 @@
   - Memperbarui `server/Dockerfile` agar container dijalankan dengan hak akses non-root (`USER node` UID 1000).
 - **Pengujian Unit Keamanan**:
   - Menambahkan test suite baru `tests/security.test.ts` dan `tests/serverSecurity.test.ts` (100% pass) untuk validasi mitigasi XSS, CSP, magic bytes, isolasi proses LibreOffice, CORS whitelist, dan konfigurasi Dockerfile non-root.
+- **Proteksi Boundary & Evaluasi Aman PDF.js (Phase 3)**:
+  - Mengonfigurasi `isEvalSupported: false` pada PDF.js `loadPdf()` untuk mencegah evaluasi skrip dinamis saat membaca berkas PDF.
+  - Memperketat validasi batas input pada `parsePageRangeString()` dan pemeriksaan rentang halaman aktif pada `splitPdf()`.
+  - Memvalidasi format payload data URL tanda tangan dan memvalidasi batas indeks halaman target pada `applySignatureToPdf()`.
+  - Menambahkan pengujian ketahanan batas input dan verifikasi konfigurasi PDF.js pada `tests/security.test.ts`.

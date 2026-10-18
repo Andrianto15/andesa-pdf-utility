@@ -14,11 +14,16 @@ export async function splitPdf(
 
   const buffer = await readFileAsArrayBuffer(file);
   const srcDoc = await PDFDocument.load(buffer, { ignoreEncryption: true });
+  const totalPages = srcDoc.getPageCount();
+  const validIndices = pageIndices.filter((idx) => idx >= 0 && idx < totalPages);
+  if (validIndices.length === 0) {
+    throw new Error('Pilih minimal 1 halaman valid untuk diekstrak');
+  }
   const baseName = file.name.replace(/\.[^/.]+$/, '');
 
   if (mode === 'single') {
     const newDoc = await PDFDocument.create();
-    const copiedPages = await newDoc.copyPages(srcDoc, pageIndices);
+    const copiedPages = await newDoc.copyPages(srcDoc, validIndices);
     copiedPages.forEach((page) => newDoc.addPage(page));
     const pdfBytes = await newDoc.save();
     return {
@@ -28,11 +33,11 @@ export async function splitPdf(
   } else {
     // Mode zip: tiap halaman jadi 1 file PDF
     const zip = new JSZip();
-    const total = pageIndices.length;
+    const total = validIndices.length;
 
     for (let i = 0; i < total; i++) {
       onProgress?.(i + 1, total);
-      const pageIdx = pageIndices[i];
+      const pageIdx = validIndices[i];
       const singlePageDoc = await PDFDocument.create();
       const [copiedPage] = await singlePageDoc.copyPages(srcDoc, [pageIdx]);
       singlePageDoc.addPage(copiedPage);
@@ -49,6 +54,9 @@ export async function splitPdf(
 }
 
 export function parsePageRangeString(rangeStr: string, maxPages: number): number[] {
+  if (!rangeStr || typeof rangeStr !== 'string' || maxPages <= 0 || !Number.isFinite(maxPages)) {
+    return [];
+  }
   const parts = rangeStr.split(',').map((s) => s.trim()).filter(Boolean);
   const selected = new Set<number>();
 

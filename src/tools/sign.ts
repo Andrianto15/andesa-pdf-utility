@@ -16,8 +16,17 @@ export async function applySignatureToPdf(
 ): Promise<Blob> {
   const buffer = await readFileAsArrayBuffer(file);
   const pdfDoc = await PDFDocument.load(buffer, { ignoreEncryption: true });
+  const totalPages = pdfDoc.getPageCount();
 
   for (const placement of placements) {
+    if (placement.pageIndex < 0 || placement.pageIndex >= totalPages) {
+      throw new Error(`Indeks halaman tanda tangan (${placement.pageIndex + 1}) di luar batas dokumen`);
+    }
+
+    if (!placement.signatureDataUrl || !placement.signatureDataUrl.includes(',')) {
+      throw new Error('Format data tanda tangan tidak valid');
+    }
+
     const page = pdfDoc.getPage(placement.pageIndex);
     const pageWidth = page.getWidth();
     const pageHeight = page.getHeight();

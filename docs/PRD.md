@@ -246,6 +246,17 @@ graph TD
 - **Verifikasi & Pengujian**:
   - Validasi menyeluruh pada test suite `tests/serverSecurity.test.ts`.
 
+#### Input Boundary Validation & PDF.js Safety Hardening (Phase 3)
+
+- **PDF.js Dynamic Evaluation Prevention**:
+  - Konfigurasi `isEvalSupported: false` pada `loadPdf()` di `src/utils/pdf.ts` untuk mematikan evaluasi fungsi dinamis / `eval()` saat parsing dokumen font PDF.
+- **Validasi Batas Rentang Halaman Dokumen (`parsePageRangeString`)**:
+  - Validasi ketat terhadap input non-string, string kosong, `NaN`, serta batasan non-positif/non-finit `maxPages` untuk mencegah memory allocation loop dan pengecualian runtime pada modul Split PDF.
+- **Validasi Data URL & Batas Halaman Tanda Tangan (`applySignatureToPdf`)**:
+  - Pengecekan integritas payload Base64 data URL tanda tangan dan validasi batas indeks halaman target terhadap total halaman PDF (`0 <= pageIndex < totalPages`).
+- **Verifikasi & Pengujian**:
+  - Validasi menyeluruh pada modul pengujian `tests/security.test.ts`.
+
 ---
 
 ### 8. Design & UX Requirements

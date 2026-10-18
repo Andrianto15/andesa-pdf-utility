@@ -28,6 +28,7 @@ export async function loadPdf(data: ArrayBuffer | Uint8Array) {
     data: new Uint8Array(data),
     cMapUrl: `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/cmaps/`,
     cMapPacked: true,
+    isEvalSupported: false,
   });
   return await loadingTask.promise;
 }

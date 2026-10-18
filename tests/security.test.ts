@@ -137,4 +137,48 @@ describe('Security Hardening & XSS Defense (Phase 1)', () => {
       expect(htmlContent).toContain("object-src 'none'");
     });
   });
+
+  describe('PDF.js & Input Boundary Hardening', () => {
+    test('src/utils/pdf.ts should enforce isEvalSupported: false', () => {
+      const pdfUtilPath = path.resolve(rootDir, 'src/utils/pdf.ts');
+      const content = fs.readFileSync(pdfUtilPath, 'utf8');
+
+      expect(content).toContain('isEvalSupported: false');
+    });
+
+    test('parsePageRangeString should safely handle invalid, negative, or non-finite inputs', async () => {
+      const { parsePageRangeString } = await import('../src/tools/split');
+
+      expect(parsePageRangeString('', 10)).toEqual([]);
+      expect(parsePageRangeString(null as unknown as string, 10)).toEqual([]);
+      expect(parsePageRangeString('1-5', 0)).toEqual([]);
+      expect(parsePageRangeString('1-5', -5)).toEqual([]);
+      expect(parsePageRangeString('1-5', NaN)).toEqual([]);
+      expect(parsePageRangeString('malicious,invalid-range', 5)).toEqual([]);
+    });
+
+    test('applySignatureToPdf should reject malformed signatureDataUrl', async () => {
+      const { applySignatureToPdf } = await import('../src/tools/sign');
+      const dummyPdfFile = new File(
+        [
+          '%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 100 100] >>\nendobj\nxref\n0 4\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \ntrailer\n<< /Size 4 /Root 1 0 R >>\nstartxref\n190\n%%EOF',
+        ],
+        'test.pdf',
+        { type: 'application/pdf' }
+      );
+
+      await expect(
+        applySignatureToPdf(dummyPdfFile, [
+          {
+            pageIndex: 0,
+            normX: 0.1,
+            normY: 0.1,
+            normWidth: 0.2,
+            normHeight: 0.1,
+            signatureDataUrl: 'invalid-no-comma-data',
+          },
+        ])
+      ).rejects.toThrow('Format data tanda tangan tidak valid');
+    });
+  });
 });
