@@ -14,7 +14,7 @@ describe('License and Legal Verification', () => {
     const licenseText = fs.readFileSync(licensePath, 'utf8');
 
     expect(licenseText).toContain('MIT License');
-    expect(licenseText).toContain('Copyright (c) 2026 Andrian Tonur Iskandar');
+    expect(licenseText).toContain('Copyright (c) 2026 Andrianto Nur Iskandar');
     expect(licenseText).toContain('Permission is hereby granted, free of charge');
     expect(licenseText).toContain('without restriction, including without limitation the rights');
     expect(licenseText).toContain('and/or sell');

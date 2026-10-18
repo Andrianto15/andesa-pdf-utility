@@ -26,7 +26,7 @@ export function renderFooter(): string {
         </div>
 
         <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-500 text-[11px] dark:text-slate-300 text-center sm:text-left">
-          <p>&copy; 2026 Andrian Tonur Iskandar. All rights reserved.</p>
+          <p>&copy; 2026 Andrianto Nur Iskandar. All rights reserved.</p>
           <p>Dilisensikan di bawah <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noreferrer" class="underline hover:text-slate-800 dark:hover:text-slate-200 transition-colors">MIT License</a>.</p>
         </div>
       </div>
