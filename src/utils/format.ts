@@ -39,6 +39,16 @@ export function readFileAsDataURL(file: File): Promise<string> {
   });
 }
 
+export function escapeHtml(str: string): string {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 export function showToast(message: string, type: 'success' | 'error' | 'info' = 'info'): void {
   const container = document.getElementById('toast-container');
   if (!container) return;
@@ -53,7 +63,7 @@ export function showToast(message: string, type: 'success' | 'error' | 'info' = 
   toast.className = `pointer-events-auto px-4 py-3 rounded-xl border shadow-lg text-sm flex items-center gap-2 transform transition-all duration-300 translate-y-2 opacity-0 font-medium ${bgColors[type]}`;
   toast.innerHTML = `
     <span class="w-2 h-2 rounded-full ${type === 'success' ? 'bg-emerald-500' : type === 'error' ? 'bg-rose-500' : 'bg-steelblue-600'}"></span>
-    <span>${message}</span>
+    <span>${escapeHtml(message)}</span>
   `;
 
   container.appendChild(toast);

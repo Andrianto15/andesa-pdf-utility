@@ -7,10 +7,68 @@ import path from 'path';
 import os from 'os';
 import crypto from 'crypto';
 
+export function isValidDocxBuffer(buffer) {
+  if (!buffer || buffer.length < 4) return false;
+  // ZIP signature: PK\x03\x04 or empty PK\x05\x06 or spanned PK\x07\x08
+  return (
+    buffer[0] === 0x50 &&
+    buffer[1] === 0x4b &&
+    (buffer[2] === 0x03 || buffer[2] === 0x05 || buffer[2] === 0x07)
+  );
+}
+
+export function isValidPdfBuffer(buffer) {
+  if (!buffer || buffer.length < 4) return false;
+  // PDF signature: %PDF
+  return buffer[0] === 0x25 && buffer[1] === 0x50 && buffer[2] === 0x44 && buffer[3] === 0x46;
+}
+
+export function getAllowedCorsOrigins(envOrigin) {
+  if (envOrigin) {
+    return envOrigin.split(',').map((o) => o.trim()).filter(Boolean);
+  }
+  return [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:3000',
+  ];
+}
+
+export function buildLibreOfficeArgs({ tempDir, inputPath, format, inFilter }) {
+  const profileUri = `file://${path.join(tempDir, 'user_profile').replace(/\\/g, '/')}`;
+  const args = [
+    `-env:UserInstallation=${profileUri}`,
+    '--headless',
+    '--norestore',
+    '--nofirststartwizard',
+    '--nologo',
+    '--nodefault',
+  ];
+  if (inFilter) {
+    args.push(`--infilter=${inFilter}`);
+  }
+  args.push('--convert-to', format, '--outdir', tempDir, inputPath);
+  return args;
+}
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+const allowedOrigins = getAllowedCorsOrigins(process.env.CORS_ORIGIN);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Origin tidak diizinkan oleh kebijakan CORS'));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 const upload = multer({
@@ -19,6 +77,9 @@ const upload = multer({
     fileSize: 50 * 1024 * 1024, // 50MB
   },
 });
+
+const MAX_CONCURRENT_CONVERSIONS = parseInt(process.env.MAX_CONCURRENT_CONVERSIONS || '3', 10);
+let activeConversions = 0;
 
 function getLibreOfficeCandidates() {
   const candidates = [];
@@ -75,6 +136,18 @@ app.post('/api/convert/word-to-pdf', upload.single('file'), async (req, res) => 
     return res.status(400).json({ error: 'Format berkas harus berupa .docx' });
   }
 
+  if (!isValidDocxBuffer(req.file.buffer)) {
+    return res.status(400).json({
+      error: 'Format berkas rusak atau signature bukan dokumen DOCX yang valid',
+    });
+  }
+
+  if (activeConversions >= MAX_CONCURRENT_CONVERSIONS) {
+    return res.status(503).json({
+      error: 'Layanan konversi sedang sibuk. Silakan coba kembali dalam beberapa saat.',
+    });
+  }
+
   const binary = await findLibreOfficeBinary();
   if (!binary) {
     return res.status(503).json({
@@ -82,6 +155,7 @@ app.post('/api/convert/word-to-pdf', upload.single('file'), async (req, res) => 
     });
   }
 
+  activeConversions++;
   const randomId = crypto.randomBytes(8).toString('hex');
   const tempDir = path.join(os.tmpdir(), `andesa-pdf-${randomId}`);
   await fs.mkdir(tempDir, { recursive: true });
@@ -93,18 +167,15 @@ app.post('/api/convert/word-to-pdf', upload.single('file'), async (req, res) => 
   try {
     await fs.writeFile(inputPath, req.file.buffer);
 
+    const args = buildLibreOfficeArgs({ tempDir, inputPath, format: 'pdf' });
     await new Promise((resolve, reject) => {
-      execFile(
-        binary,
-        ['--headless', '--convert-to', 'pdf', '--outdir', tempDir, inputPath],
-        { timeout: 45000 },
-        (error, stdout, stderr) => {
-          if (error) {
-            return reject(new Error(`Konversi gagal: ${stderr || error.message}`));
-          }
-          resolve(stdout);
+      execFile(binary, args, { timeout: 45000 }, (error, stdout, stderr) => {
+        if (error) {
+          console.error('LibreOffice conversion failed:', stderr || error.message);
+          return reject(new Error('Gagal mengonversi dokumen Word ke PDF'));
         }
-      );
+        resolve(stdout);
+      });
     });
 
     const pdfBuffer = await fs.readFile(expectedPdfPath);
@@ -114,9 +185,10 @@ app.post('/api/convert/word-to-pdf', upload.single('file'), async (req, res) => 
     res.setHeader('Content-Disposition', `attachment; filename="${encodedFilename}"`);
     res.send(pdfBuffer);
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Terjadi kesalahan internal konversi';
-    res.status(500).json({ error: message });
+    console.error('API word-to-pdf error:', err);
+    res.status(500).json({ error: 'Terjadi kesalahan saat memproses konversi dokumen' });
   } finally {
+    activeConversions = Math.max(0, activeConversions - 1);
     try {
       await fs.rm(tempDir, { recursive: true, force: true });
     } catch {
@@ -135,6 +207,18 @@ app.post('/api/convert/pdf-to-word', upload.single('file'), async (req, res) => 
     return res.status(400).json({ error: 'Format berkas harus berupa .pdf' });
   }
 
+  if (!isValidPdfBuffer(req.file.buffer)) {
+    return res.status(400).json({
+      error: 'Format berkas rusak atau signature bukan dokumen PDF yang valid',
+    });
+  }
+
+  if (activeConversions >= MAX_CONCURRENT_CONVERSIONS) {
+    return res.status(503).json({
+      error: 'Layanan konversi sedang sibuk. Silakan coba kembali dalam beberapa saat.',
+    });
+  }
+
   const binary = await findLibreOfficeBinary();
   if (!binary) {
     return res.status(503).json({
@@ -142,6 +226,7 @@ app.post('/api/convert/pdf-to-word', upload.single('file'), async (req, res) => 
     });
   }
 
+  activeConversions++;
   const randomId = crypto.randomBytes(8).toString('hex');
   const tempDir = path.join(os.tmpdir(), `andesa-pdf-${randomId}`);
   await fs.mkdir(tempDir, { recursive: true });
@@ -153,26 +238,20 @@ app.post('/api/convert/pdf-to-word', upload.single('file'), async (req, res) => 
   try {
     await fs.writeFile(inputPath, req.file.buffer);
 
+    const args = buildLibreOfficeArgs({
+      tempDir,
+      inputPath,
+      format: 'docx',
+      inFilter: 'writer_pdf_import',
+    });
     await new Promise((resolve, reject) => {
-      execFile(
-        binary,
-        [
-          '--headless',
-          '--infilter=writer_pdf_import',
-          '--convert-to',
-          'docx',
-          '--outdir',
-          tempDir,
-          inputPath,
-        ],
-        { timeout: 45000 },
-        (error, stdout, stderr) => {
-          if (error) {
-            return reject(new Error(`Konversi gagal: ${stderr || error.message}`));
-          }
-          resolve(stdout);
+      execFile(binary, args, { timeout: 45000 }, (error, stdout, stderr) => {
+        if (error) {
+          console.error('LibreOffice conversion failed:', stderr || error.message);
+          return reject(new Error('Gagal mengonversi dokumen PDF ke Word'));
         }
-      );
+        resolve(stdout);
+      });
     });
 
     const docxBuffer = await fs.readFile(expectedDocxPath);
@@ -185,9 +264,10 @@ app.post('/api/convert/pdf-to-word', upload.single('file'), async (req, res) => 
     res.setHeader('Content-Disposition', `attachment; filename="${encodedFilename}"`);
     res.send(docxBuffer);
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Terjadi kesalahan internal konversi';
-    res.status(500).json({ error: message });
+    console.error('API pdf-to-word error:', err);
+    res.status(500).json({ error: 'Terjadi kesalahan saat memproses konversi dokumen' });
   } finally {
+    activeConversions = Math.max(0, activeConversions - 1);
     try {
       await fs.rm(tempDir, { recursive: true, force: true });
     } catch {
@@ -196,6 +276,10 @@ app.post('/api/convert/pdf-to-word', upload.single('file'), async (req, res) => 
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Andesa PDF Backend running on http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Andesa PDF Backend running on http://localhost:${PORT}`);
+  });
+}
+
+export { app };

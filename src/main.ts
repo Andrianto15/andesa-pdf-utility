@@ -1,7 +1,7 @@
 import './style.css';
 import { TOOLS_LIST } from './tools';
 import type { ToolCategory, ToolId, ToolInfo, UploadedFileItem } from './types';
-import { formatBytes, downloadBlob, readFileAsDataURL, showToast, readFileAsArrayBuffer } from './utils/format';
+import { formatBytes, downloadBlob, readFileAsDataURL, showToast, readFileAsArrayBuffer, escapeHtml } from './utils/format';
 import { loadPdf, renderPageThumbnail, renderPageToCanvas } from './utils/pdf';
 import { renderHeader } from './components/header';
 import { renderHero } from './components/hero';
@@ -456,7 +456,7 @@ async function bindSplitControls(): Promise<void> {
         grid.appendChild(card);
       }
     } catch (err: any) {
-      grid.innerHTML = `<div class="col-span-full py-4 text-center text-xs text-rose-400">Gagal render thumbnail: ${err.message}</div>`;
+      grid.innerHTML = `<div class="col-span-full py-4 text-center text-xs text-rose-400">Gagal render thumbnail: ${escapeHtml(err?.message || 'Error tidak diketahui')}</div>`;
     }
   }
 }

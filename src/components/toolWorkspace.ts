@@ -1,6 +1,6 @@
 import { getToolIconSvg } from './toolGrid';
 import type { ToolInfo, UploadedFileItem } from '../types';
-import { formatBytes } from '../utils/format';
+import { formatBytes, escapeHtml } from '../utils/format';
 
 export function renderToolWorkspace(
   tool: ToolInfo,
@@ -225,18 +225,18 @@ function renderMergeControls(files: UploadedFileItem[]): string {
           <div class="flex items-center gap-3 min-w-0">
             <span class="w-6 h-6 rounded-lg bg-steelblue-100 dark:bg-steelblue-950 text-steelblue-700 dark:text-steelblue-300 text-xs font-bold flex items-center justify-center flex-shrink-0">${idx + 1}</span>
             <div class="truncate">
-              <p class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">${item.file.name}</p>
+              <p class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">${escapeHtml(item.file.name)}</p>
               <p class="text-xs text-slate-500 dark:text-slate-300">${item.sizeFormatted}</p>
             </div>
           </div>
           <div class="flex items-center gap-1.5 flex-shrink-0">
-            <button data-move-up="${item.id}" aria-label="Geser ${item.file.name} ke atas" class="p-2 rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-600 transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center" title="Geser ke Atas">
+            <button data-move-up="${item.id}" aria-label="Geser ${escapeHtml(item.file.name)} ke atas" class="p-2 rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-600 transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center" title="Geser ke Atas">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
             </button>
-            <button data-move-down="${item.id}" aria-label="Geser ${item.file.name} ke bawah" class="p-2 rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-600 transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center" title="Geser ke Bawah">
+            <button data-move-down="${item.id}" aria-label="Geser ${escapeHtml(item.file.name)} ke bawah" class="p-2 rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-600 transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center" title="Geser ke Bawah">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </button>
-            <button data-remove="${item.id}" aria-label="Hapus ${item.file.name}" class="p-2 rounded-lg bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 transition-colors cursor-pointer border border-rose-200 dark:border-rose-800 min-h-[44px] min-w-[44px] flex items-center justify-center" title="Hapus">
+            <button data-remove="${item.id}" aria-label="Hapus ${escapeHtml(item.file.name)}" class="p-2 rounded-lg bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 transition-colors cursor-pointer border border-rose-200 dark:border-rose-800 min-h-[44px] min-w-[44px] flex items-center justify-center" title="Hapus">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
             </button>
           </div>
@@ -253,7 +253,7 @@ function renderSplitControls(file: UploadedFileItem): string {
     <div class="space-y-6">
       <div class="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
         <div>
-          <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100">${file.file.name}</h4>
+          <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100">${escapeHtml(file.file.name)}</h4>
           <p class="text-xs text-slate-500 dark:text-slate-300">${file.sizeFormatted} • ${file.pageCount || '?'} Halaman</p>
         </div>
       </div>
@@ -317,7 +317,7 @@ function renderCompressControls(file: UploadedFileItem): string {
     <div class="space-y-6">
       <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
         <div>
-          <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100">${file.file.name}</h4>
+          <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100">${escapeHtml(file.file.name)}</h4>
           <p class="text-xs text-slate-500 dark:text-slate-300">Ukuran Saat Ini: <span class="text-steelblue-600 dark:text-steelblue-400 font-semibold">${file.sizeFormatted}</span></p>
         </div>
         <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">Siap Dikompres</span>
@@ -435,7 +435,7 @@ function renderSignControls(file: UploadedFileItem): string {
     <div class="space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 gap-3">
         <div>
-          <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100">${file.file.name}</h4>
+          <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100">${escapeHtml(file.file.name)}</h4>
           <p class="text-xs text-slate-500 dark:text-slate-300">${file.sizeFormatted} • ${file.pageCount || 1} Halaman</p>
         </div>
         <div class="flex items-center gap-2.5">
@@ -537,7 +537,7 @@ function renderPdfToMarkdownControls(file: UploadedFileItem): string {
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           </div>
           <div class="truncate">
-            <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100 truncate">${file.file.name}</h4>
+            <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100 truncate">${escapeHtml(file.file.name)}</h4>
             <p class="text-xs text-slate-500 dark:text-slate-300">${file.sizeFormatted} • Siap dikonversi</p>
           </div>
         </div>
@@ -584,7 +584,7 @@ function renderStandardSingleFileControls(file: UploadedFileItem): string {
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         </div>
         <div>
-          <h4 class="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100">${file.file.name}</h4>
+          <h4 class="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100">${escapeHtml(file.file.name)}</h4>
           <p class="text-xs text-slate-500 dark:text-slate-300">${file.sizeFormatted} • Siap diproses</p>
         </div>
       </div>
@@ -664,7 +664,7 @@ function renderResultView(
               Salin ke Clipboard
             </button>
           </div>
-          <pre class="w-full p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono text-slate-800 dark:text-slate-200 max-h-64 overflow-y-auto whitespace-pre-wrap">${details.markdownText}</pre>
+          <pre class="w-full p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono text-slate-800 dark:text-slate-200 max-h-64 overflow-y-auto whitespace-pre-wrap">${escapeHtml(details.markdownText || '')}</pre>
         </div>
       `
           : ''
@@ -676,7 +676,7 @@ function renderResultView(
           class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base shadow-md shadow-emerald-600/20 hover:shadow-emerald-600/30 transition-all cursor-pointer flex items-center justify-center gap-2 min-h-[44px]"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-          <span>Unduh ${filename}</span>
+          <span>Unduh ${escapeHtml(filename)}</span>
         </button>
 
         <button
